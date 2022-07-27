@@ -1,5 +1,4 @@
 const fs = require("fs")
-const { resourceLimits } = require("worker_threads")
 
 class Contenedor{
     
@@ -105,7 +104,9 @@ const objeto1 = {
     apellido: "APELLIDO"
 }
 
-objeto.save(objeto1)
+module.exports = Contenedor
+
+/* objeto.save(objeto1) */
 /* objeto.getById(2).then(x => console.log(x)) */
 /* objeto.getAll().then(x => console.log(x))  */
 /* objeto.deleteById(3).then(x => console.log(x)) */
