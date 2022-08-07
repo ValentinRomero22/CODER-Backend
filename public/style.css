@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --raleway: 'Raleway', sans-serif;
+    --open-sans: 'Open Sans', sans-serif;
+}
+
+body{
+    background-color: #fff;
+}
+
+h1{
+    margin: 15px;
+    text-align: center;
+    font-size: 3rem;
+    font-family: var(--raleway);
+    color: #2044a5;
+}
+
+form{
+    width: 300px;
+    height: 250px;
+    margin: 10px auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* border: 1px solid #adadad;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 0px #2044a5; */
+    font-family: var(--open-sans);
+    text-align: center;
+}
+
+form input{
+    font-family: var(--open-sans);
+    font-size: 1rem;
+    border: transparent;
+    border-bottom: 1px solid #808080;
+}
+
+form input[type=submit]{
+    width: 50%;
+    margin: 0 auto;
+    padding: 5px 0px;
+    font-weight: bold;
+    color: #2044a5;
+    background-color: #fff;
+    border: 3px solid #2044a5;
+    border-radius: 50px;
+}
+
+form input[type=submit]:hover{
+    color: #fff;
+    background-color: #2044a5;
+    cursor: pointer;
+}
+

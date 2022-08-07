@@ -9,7 +9,6 @@ class Contenedor{
     async save(object){
         try{
             const json = await this.getAll()
-            if(json == undefined){console.log('por aca')}
             
             const index = json.map(i => i.id).sort((a, b) =>{
                 return a - b
@@ -35,21 +34,23 @@ class Contenedor{
 
     async getById(id){
         const json = await this.getAll()
+        
+        if(json){
+            const object = json.find(element => element.id == id)
 
-        const object = json.find(element => element.id === id)
-
-        if(object){
-            return object
+            if(object){
+                return object
+            }
+            else{
+                return null
+            } 
         }
-        else{
-            return null
-        } 
     }
 
     async getAll(){
         try{
             const data = await fs.promises.readFile(this.name, "utf-8")
-            return JSON.parse(data)
+            return JSON.parse(data)            
         }
         catch (error){
             if(error.code == "ENOENT"){
@@ -67,15 +68,12 @@ class Contenedor{
 
     async deleteById(id){
         const json = await this.getAll()
-        const filterJson = json.filter((element) => element.id !== id)
+        const filterJson = json.filter((element) => element.id != id)
         
         try{
             if(json.length != filterJson.length){
                 await fs.promises.writeFile(this.name, JSON.stringify(filterJson))
-                return "Objeto eliminado"
-            }
-            else{
-                return `No se encontró el objeto con el id ${id}`
+                return "Producto eliminado"
             }
         }
         catch(error){
@@ -95,9 +93,31 @@ class Contenedor{
             console.log(`Error ${error}`)
         }
     }
+
+    async update(product){
+        const json = await this.getAll()
+        const aux = json.find((p) => p.id == product.id)
+
+        if(aux){
+            try{
+                aux.title = product.title
+                aux.price = product.price
+                aux.thumbnail = product.thumbnail
+    
+                await fs.promises.writeFile(this.name, JSON.stringify(json))
+                return aux
+            }
+            catch(error){
+                console.log(`Error ${error}`)
+            }
+        } else{
+            return null
+        }
+
+    }
 }
 
-const objeto = new Contenedor("archivo")
+const objeto = new Contenedor("productos")
 
 const objeto1 = {
     nombre: "NOMBRE",
