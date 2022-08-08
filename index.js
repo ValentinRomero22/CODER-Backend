@@ -49,7 +49,7 @@ router.get('/form', (req, res) =>{
 router.post('/form', (req, res) =>{
     console.log('aca')
     let title = req.body.title
-    let price = parseInt(req.body.price)
+    let price = parseFloat(req.body.price)
     let thumbnail = req.body.thumbnail;
 
     const product = {

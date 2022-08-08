@@ -154,3 +154,10 @@ footer{
     margin-bottom: 10px;
 }
 
+.success_text{
+    font-family: var(--open-sans);
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
