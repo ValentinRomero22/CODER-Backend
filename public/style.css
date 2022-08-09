@@ -79,6 +79,7 @@ form input[type=submit]:hover{
     font-size: 3rem;
     font-weight: bold;
     color: #fff;
+    text-decoration: none;
 }
 
 .header__nav{
