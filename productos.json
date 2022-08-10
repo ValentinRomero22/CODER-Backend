@@ -1,21 +1,50 @@
 [
     {
-      "title": "Escuadra",
-      "price": 123.45,
-      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
-      "id": 1
+        "title": "Escuadra",
+        "price": 123.45,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+        "id": 1
     },
     {
-      "title": "Calculadora",
-      "price": 234.56,
-      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
-      "id": 2
+        "title": "Calculadora",
+        "price": 234.56,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+        "id": 2
     },
     {
-      "title": "Globo Terráqueo",
-      "price": 345.67,
-      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
-      "id": 3
+        "title": "Globo Terráqueo",
+        "price": 345.67,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+        "id": 3
+    },
+    {
+        "title": "Libro",
+        "price": 165.02,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/book-note-paper-school-512.png",
+        "id": 4
+    },
+    {
+        "title": "Lápiz",
+        "price": 10.5,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/pencil-pen-stationery-school-512.png",
+        "id": 5
+    },
+    {
+        "title": "Microscopio",
+        "price": 876.3,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/microscope-lab-science-school-512.png",
+        "id": 6
+    },
+    {
+        "title": "Pizarra",
+        "price": 423,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-512.png",
+        "id": 7
+    },
+    {
+        "title": "Mochila",
+        "price": 95.6,
+        "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-512.png",
+        "id": 8
     }
-   ]
-   
+]

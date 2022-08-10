@@ -1,0 +1,19 @@
+html
+    head
+        title='Pug'
+        style
+            include ../../public/style.css
+    body
+        header
+            a(href="/api/products", class="brand")="Pug"
+            a(href="/api/products", class="header__nav")="Ver productos"
+        h1="Agregar producto"
+        div(class="products")
+            form(action="/api/products/form" method="post")
+                input(type="text" name="title" id="title" placeholder="Title")
+                input(type="number" step="any" name="price" id="price" placeholder="Price")
+                input(type="text" name="thumbnail" id="thumbnail" placeholder="Thumbnail")
+                input(type="submit" value="Guardar")
+        if message 
+            p(class="success__text")=message
+        include ../partials/footer

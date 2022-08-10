@@ -1,0 +1,19 @@
+html
+    head
+        title='Pug'
+        style
+            include ../../public/style.css
+    body
+        header
+            a(href="/api/products", class="brand")="Pug"
+            a(href="/api/products/form", class="header__nav")="Agregar Producto"
+        h1="Listado de productos"
+        if exists
+            div(class="catalog")
+                for p in products
+                    div(class="product")
+                        img(class='product__image', src=p.thumbnail)
+                        p(class="product__id")=p.id
+                        p(class="product__title")=p.title
+                        p(class="product__price")=p.price
+        include ../partials/footer
