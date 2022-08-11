@@ -13,6 +13,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/products', router)
 app.use('/public', express.static(__dirname + '/public'))
 
+app.set('view engine', 'ejs')
+
 const server = app.listen(PORT, () =>{
     console.log(`Servidor escuchando en el puerto ${server.address().port}`)
 })
@@ -23,33 +25,20 @@ router.get('/', (req, res) =>{
     (async () => {
         await container.getAll().then((response) =>{
             const info = JSON.stringify(response) 
+            console.log(info)
 
-            info == '[]' ?
-                res.json({ mensaje: "Aún no se han ingresado productos" }):
-                res.json(response)
+            info != '[]' ?
+                res.render('pages/products', { products: response, exists: true }) :
+                res.render('pages/products', { exists: false })
         })
     })()
 })
 
-router.get('/newproduct', (req, res) =>{
-    res.sendFile(__dirname + '/public/index.html')
+router.get('/form', (req, res) =>{
+    res.render('pages/newProduct', { message: false })
 })
 
-router.get('/:id', (req, res) =>{
-    const { id } = req.params;
-    
-    (async () => {
-        await container.getById(id).then((response) => {
-            const found = response
-
-            found ? 
-                res.json(found) : 
-                res.json({ error: `No se encontró el producto con el id ${id}` })
-        })
-    })()  
-})
-
-router.post('/', (req, res) =>{
+router.post('/form', (req, res) =>{
     let title = req.body.title
     let price = parseInt(req.body.price)
     let thumbnail = req.body.thumbnail;
@@ -62,10 +51,7 @@ router.post('/', (req, res) =>{
 
     (async () =>{
         await container.save(product)
-        res.json({
-            succes: 'ok',
-            newProduct: product
-        })
+        res.render('pages/newProduct', { message: 'Producto agregado con éxito!'})
     })()
 })
 

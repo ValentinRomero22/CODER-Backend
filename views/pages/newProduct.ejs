@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="../../public/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="../../public/style.css">
+        <title>Ejs</title>
+    </head>
+    <header>
+        <a href="/api/products" class="brand">Ejs</a>
+        <a class="header__nav" href="/api/products">Ver productos</a>
+    </header>
+    <body>
+        <h1>Agregar producto</h1>
+        <div class="products">
+            <form action="/api/products/form" method="post">
+                <input type="text" name="title" id="title" placeholder="Title">
+                <input type="numbre" name="price" id="price" placeholder="Price" step="any">
+                <input type="text" name="thumbnail" id="thumbnail" placeholder="Thumbnail">
+                <input type="submit" value="Guardar">
+            </form>
+        </div>
+        <% if (message) { %>
+            <p class="success__text"><%= message %></p>
+        <% } %>
+        <%- include('../partials/footer'); %>
+    </body>
+</html>

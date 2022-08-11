@@ -14,27 +14,38 @@
 
 body{
     background-color: #fff;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header{
+    width: 100%;
+    min-height: 70px;
+    padding: 0 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2044a5;
 }
 
 h1{
     margin: 15px;
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-family: var(--raleway);
     color: #2044a5;
 }
 
 form{
     width: 300px;
-    height: 250px;
+    height: 200px;
     margin: 10px auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* border: 1px solid #adadad;
-    border-radius: 5px;
-    box-shadow: 0 0 15px 0px #2044a5; */
     font-family: var(--open-sans);
     text-align: center;
 }
@@ -63,3 +74,90 @@ form input[type=submit]:hover{
     cursor: pointer;
 }
 
+.brand{
+    font-family: var(--raleway);
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+.header__nav{
+    padding-bottom: 5px;
+    font-family: var(--raleway);
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+}
+
+.header__nav:hover{
+    border-bottom: 3px solid #fff;
+}
+
+.catalog{
+    width: 80%;
+    margin: 0 auto 100px;
+    padding: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    justify-content: space-between;
+    gap: 3%;
+    font-family: var(--open-sans);
+    font-size: 20px;
+}
+
+.product{
+    padding: 10px;
+    border: 1px solid #808080;
+    border-radius: 10px;
+}
+
+.product:hover{
+    box-shadow: 0px 0px 10px 0px;
+}
+
+.product__image{
+    display: block;
+    width: 250px;
+    height: 250px;
+    margin: 0px auto 10px;
+    text-align: center;
+}
+
+.product__id{
+    color: #808080;
+    margin-bottom: 5px;
+}
+
+.product__title{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+footer{
+    width: 100%;
+    height: max-content;
+    margin-top: auto;
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: var(--open-sans);
+    color: #fff;
+    background-color: #2044a5;
+}
+
+.footer__brand{
+    font-family: var(--raleway);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.success__text{
+    font-family: var(--open-sans);
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
