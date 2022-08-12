@@ -24,8 +24,7 @@ server.on('error', error => console.log(`Error ${error}`))
 router.get('/', (req, res) =>{
     (async () => {
         await container.getAll().then((response) =>{
-            const info = JSON.stringify(response) 
-            console.log(info)
+            const info = JSON.stringify(response)
 
             info != '[]' ?
                 res.render('pages/products', { products: response, exists: true }) :
