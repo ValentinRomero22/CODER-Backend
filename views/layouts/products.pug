@@ -1,8 +1,9 @@
 html
     head
+        link(rel="shortcut icon", href="../../public/favicon.ico", type="image/x-icon")
         title='Pug'
         style
-            include ../../public/style.css
+            include ../../public/style.css        
     body
         header
             a(href="/api/products", class="brand")="Pug"
@@ -16,4 +17,6 @@ html
                         p(class="product__id")=p.id
                         p(class="product__title")=p.title
                         p(class="product__price")=p.price
+        else 
+            p(class="success__text")='No hay productos!'
         include ../partials/footer

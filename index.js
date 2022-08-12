@@ -13,32 +13,33 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/products', router)
 app.use('/public', express.static(__dirname + '/public'))
 
+app.set('view engine', 'pug')
+
 const server = app.listen(PORT, () =>{
     console.log(`Servidor escuchando en el puerto ${server.address().port}`)
 })
 
 server.on('error', error => console.log(`Error ${error}`))
 
-app.set('view engine', 'pug')
-app.set('views', './views/layouts/')
-
 router.get('/', (req, res) =>{
     (async () => {
         await container.getAll().then((response) =>{
-            JSON.stringify(response) != '[]' ?
-                res.render('products', { products: response, exists: true }) :
-                res.render('products', { exists: false })
+            const info = JSON.stringify(response) 
+
+            info != '[]' ?
+                res.render('layouts/products', { products: response, exists: true }) :
+                res.render('layouts/products', { exists: false })
         })
     })()
 })
 
 router.get('/form', (req, res) =>{
-    res.render('newProduct')
+    res.render('layouts/newProduct', { message: false })
 })
 
 router.post('/form', (req, res) =>{
     let title = req.body.title
-    let price = parseFloat(req.body.price)
+    let price = parseInt(req.body.price)
     let thumbnail = req.body.thumbnail;
 
     const product = {
@@ -49,6 +50,39 @@ router.post('/form', (req, res) =>{
 
     (async () =>{
         await container.save(product)
-        res.render('newProduct', { message: 'Producto agregado con éxito' })
+        res.render('layouts/newProduct', { message: 'Producto agregado con éxito!'})
     })()
 })
+
+router.put('/:id', (req, res) =>{    
+    const { id } = req.params;
+    const { body } = req;
+    const { title, price, thumbnail } = body;
+    const product = {
+        id,
+        title,
+        price,
+        thumbnail
+    };
+
+    (async () =>{
+        await container.update(product).then((response) => {
+            response ?
+                res.json({ success: "Se actualizó el producto" }):
+                res.json({ error: `No se encontró el producto con el id ${id}` })
+        })
+    })()
+})
+
+router.delete('/:id', (req, res) =>{
+    const { id } = req.params;
+
+    (async () => {
+        await container.deleteById(id).then((response) => {
+            response ?
+                res.json({ success: response }):
+                res.json({ error: `No se encontró el producto con el id ${id}` })
+        })
+    })()
+})
+
