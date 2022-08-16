@@ -7,17 +7,22 @@ const container = new Contenedor("productos")
 
 const app = express()
 const router = Router()
-const PORT = process.env.PORT || 8080
+//const PORT = process.env.PORT || 8080
+
+const httpServer = require("http").createServer(app)
+const io = require("socket.io")(httpServer)
+
+httpServer.listen(process.env.PORT || 8080, () => console.log("SERVER ON"))
 
 app.use(express.urlencoded({ extended: true }))
 app.use('/api/products', router)
 app.use('/public', express.static(__dirname + '/public'))
 
-const server = app.listen(PORT, () =>{
+/* const server = app.listen(PORT, () =>{
     console.log(`Servidor escuchando en el puerto ${server.address().port}`)
-})
+}) */
 
-server.on('error', error => console.log(`Error ${error}`))
+//server.on('error', error => console.log(`Error ${error}`))
 
 app.set('view engine', 'hbs')
 app.set('views', './views')
@@ -32,6 +37,8 @@ app.engine(
     })
 )
 
+let chat = []
+
 router.get('/', (req, res) =>{
     (async () => {
         await container.getAll().then((response) =>{
@@ -42,11 +49,7 @@ router.get('/', (req, res) =>{
     })()
 })
 
-router.get('/form', (req, res) =>{
-    res.render('newProduct')
-})
-
-router.post('/form', (req, res) =>{
+router.post('/', (req, res) =>{
     let title = req.body.title
     let price = parseFloat(req.body.price)
     let thumbnail = req.body.thumbnail;
@@ -59,7 +62,16 @@ router.post('/form', (req, res) =>{
 
     (async () =>{
         await container.save(product)
-        res.render('newProduct', { message: 'Producto agregado con éxito!' })
+        res.render('products', { message: 'Producto agregado con éxito!' })
     })()
 })
 
+io.on("connection", (socket) =>{
+    chat.push("Se unió al chat" + socket.id)
+    io.sockets.emit("arr-chat", chat)
+
+    socket.on("generic-data", (data) => {
+        chat.push(data)
+        io.sockets.emit("arr-chat", chat)
+    })
+})

@@ -1,8 +1,21 @@
-<header>
-    <a href="/api/products" class="brand">Handlebars</a>
+{{!-- <header>
+    <a href="/api/products" class="brand">Websockets</a>
     <a class="header__nav" href="/api/products/form">Agregar producto</a>
-</header>
-<h1>Listado de productos</h1>
+</header> --}}
+{{> header}}
+<h2>Agregar nuevo producto</h2>
+<div class="products">
+    <form action="/api/products" method="post">
+        <input type="text" name="title" id="title" placeholder="Title">
+        <input type="number" step="any" name="price" id="price" placeholder="Price">
+        <input type="text" name="thumbnail" id="thumbnail" placeholder="Thumbnail">
+        <input type="submit" value="Guardar">
+    </form>
+</div>
+{{#if message}}
+    <p class="success__text">{{message}}</p>
+{{/if}}
+<h2>Listado de productos</h2>
 {{#if exists}}
     <div class="catalog">
         {{#each products}}
@@ -17,4 +30,13 @@
 {{else}}
     <p class="success__text">No hay productos!</p>
 {{/if}}
+<h2>Chat</h2>
+<div class="products">
+    <form onsubmit="return send()">
+        <input type="email" name="email" id="email" placeholder="Email" required>
+        <input type="textarea" name="message" id="message" placeholder="Mensaje" />
+        <input type="submit" value="Enviar">
+    </form>
+    <div id="chat"></div>
+</div>
 {{> footer}}
