@@ -2,6 +2,7 @@ const Contenedor = require("./contenedor")
 const express = require('express')
 const { Router } = express
 const { engine } = require('express-handlebars')
+const { response } = require("express")
 
 const container = new Contenedor("productos")
 
@@ -12,7 +13,7 @@ const router = Router()
 const httpServer = require("http").createServer(app)
 const io = require("socket.io")(httpServer)
 
-httpServer.listen(process.env.PORT || 8080, () => console.log("SERVER ON"))
+httpServer.listen(process.env.PORT || 8080, () => console.log('Servidor iniciado...'))
 
 app.use(express.urlencoded({ extended: true }))
 app.use('/api/products', router)
@@ -62,16 +63,28 @@ router.post('/', (req, res) =>{
 
     (async () =>{
         await container.save(product)
-        res.render('products', { message: 'Producto agregado con éxito!' })
+        await container.getAll().then((response) =>{
+                res.render('products', { products: response, exists: true, message: 'Producto agregado con éxito!' })
+        })
     })()
 })
 
-io.on("connection", (socket) =>{
-    chat.push("Se unió al chat" + socket.id)
-    io.sockets.emit("arr-chat", chat)
+io.on('connection', (socket) =>{
+    chat.push('Se unió al chat ' + socket.id)
+    io.sockets.emit('chatList', chat)
 
-    socket.on("generic-data", (data) => {
+    socket.on('chatData', (data) =>{
         chat.push(data)
-        io.sockets.emit("arr-chat", chat)
+        //console.log(chat)
+        io.sockets.emit('chatList', chat)
+    })
+
+    socket.on('productData', (data) =>{
+        (async () =>{
+            await container.save(data)
+            await container.getAll().then((response =>{
+                io.sockets.emit('productList', response)
+            }))
+        })()
     })
 })
