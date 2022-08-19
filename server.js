@@ -2,7 +2,6 @@ const Contenedor = require("./contenedor")
 const express = require('express')
 const { Router } = express
 const { engine } = require('express-handlebars')
-const { response } = require("express")
 
 const container = new Contenedor("productos")
 
@@ -39,52 +38,43 @@ app.engine(
 )
 
 let chat = []
+let products = []
+
+async function getProducts(){
+    await container.getAll().then((response) =>{
+        products = response
+        return products
+    })
+}
+
+getProducts()
 
 router.get('/', (req, res) =>{
-    (async () => {
-        await container.getAll().then((response) =>{
-            JSON.stringify(response) != '[]' ?
-                res.render('products', { products: response, exists: true }) :
-                res.render('products', { exists: false })
-        })
-    })()
-})
-
-router.post('/', (req, res) =>{
-    let title = req.body.title
-    let price = parseFloat(req.body.price)
-    let thumbnail = req.body.thumbnail;
-
-    const product = {
-        title,
-        price,
-        thumbnail
-    };
-
-    (async () =>{
-        await container.save(product)
-        await container.getAll().then((response) =>{
-                res.render('products', { products: response, exists: true, message: 'Producto agregado con éxito!' })
-        })
-    })()
+    JSON.stringify(products) != '[]' ?
+        res.render('products', { products: products, exists: true }) :
+        res.render('products', { exists: false })
 })
 
 io.on('connection', (socket) =>{
+    console.log('connection');
     chat.push('Se unió al chat ' + socket.id)
     io.sockets.emit('chatList', chat)
 
     socket.on('chatData', (data) =>{
         chat.push(data)
-        //console.log(chat)
         io.sockets.emit('chatList', chat)
     })
 
-    socket.on('productData', (data) =>{
-        (async () =>{
-            await container.save(data)
-            await container.getAll().then((response =>{
-                io.sockets.emit('productList', response)
-            }))
-        })()
+    socket.on('productData', (data) =>{        
+        const index = products.map(i => i.id).sort((a, b) =>{
+            return a - b
+        })
+
+        const id = index[index.length - 1] + 1
+        const product = { id, ...data }
+
+        products.push(product)
+        console.log(product)
+        io.sockets.emit('productList', product)
     })
 })

@@ -1,9 +1,5 @@
 const socket = io()
 
-socket.on('generic-data', (data) => {
-    console.log(data)
-})
-
 function sendMessage(){
     const email = document.getElementById('email').value
     const message = document.getElementById('message').value
@@ -23,24 +19,34 @@ function saveProduct(){
         price,
         thumbnail
     }
-
+    
     socket.emit('productData', product)
     
     return false
 }
 
 socket.on('chatList', (data) =>{
-    console.log('aca')
+    console.log('chatList')
     const chatList = data.reduce((chatList, item) => chatList + '<div id="chat-item">' + item + '</div>')
     document.getElementById('chat').innerHTML = chatList
 })
 
 socket.on('productList', (data) =>{
-    const html = data.map(item => {
-        return `<p>${item.title}</p>`
-    })
+    console.log(data)
+    const { id, title, price, thumbnail } = data
+    console.log(id)
 
-    document.getElementById('catalog').innerHTML = html
+    const html = `<div class="product">
+                    <p class="product__id">${{id}}</p>
+                    <p class="product__title">${{title}}</p>
+                    <p class="product__price">$ ${{price}}</p>
+                    <div class="product__image__container">
+                        <img class="product__image" src="${{thumbnail}}" alt="Imagen no disponible">
+                    </div>
+                </div>`
+
+    /* document.getElementById('products__container').innerHTML = html */
+    document.getElementById('products__container').innerHTML += html
 
     /* const chatList = data.reduce((chatList, item) => chatList + '<div>' + item.title + '</div>')
     document.getElementById('chat').innerHTML = chatList */
