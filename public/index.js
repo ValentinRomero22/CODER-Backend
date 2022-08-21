@@ -32,22 +32,16 @@ socket.on('chatList', (data) =>{
 })
 
 socket.on('productList', (data) =>{
-    console.log(data)
     const { id, title, price, thumbnail } = data
-    console.log(id)
 
-    const html = `<div class="product">
-                    <p class="product__id">${{id}}</p>
-                    <p class="product__title">${{title}}</p>
-                    <p class="product__price">$ ${{price}}</p>
-                    <div class="product__image__container">
-                        <img class="product__image" src="${{thumbnail}}" alt="Imagen no disponible">
-                    </div>
-                </div>`
+    const html = '<div class="product">' +
+                    '<p class="product__id">' + id + '</p>' + 
+                    '<p class="product__title">' + title + '</p>' +
+                    '<p class="product__price">$' + price + '</p>' +
+                    '<div class="product__image__container">' + 
+                        '<img class="product__image" src="' + thumbnail + '" alt="Imagen no disponible">' + 
+                    '</div>' + 
+                '</div>'
 
-    /* document.getElementById('products__container').innerHTML = html */
     document.getElementById('products__container').innerHTML += html
-
-    /* const chatList = data.reduce((chatList, item) => chatList + '<div>' + item.title + '</div>')
-    document.getElementById('chat').innerHTML = chatList */
 })

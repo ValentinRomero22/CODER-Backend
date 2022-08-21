@@ -74,7 +74,6 @@ io.on('connection', (socket) =>{
         const product = { id, ...data }
 
         products.push(product)
-        console.log(product)
         io.sockets.emit('productList', product)
     })
 })
