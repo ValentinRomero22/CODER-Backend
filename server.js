@@ -7,7 +7,6 @@ const container = new Contenedor("productos")
 
 const app = express()
 const router = Router()
-//const PORT = process.env.PORT || 8080
 
 const httpServer = require("http").createServer(app)
 const io = require("socket.io")(httpServer)
@@ -17,12 +16,6 @@ httpServer.listen(process.env.PORT || 8080, () => console.log('Servidor iniciado
 app.use(express.urlencoded({ extended: true }))
 app.use('/api/products', router)
 app.use('/public', express.static(__dirname + '/public'))
-
-/* const server = app.listen(PORT, () =>{
-    console.log(`Servidor escuchando en el puerto ${server.address().port}`)
-}) */
-
-//server.on('error', error => console.log(`Error ${error}`))
 
 app.set('view engine', 'hbs')
 app.set('views', './views')
@@ -47,18 +40,20 @@ async function getProducts(){
     })
 }
 
+/* async function saveProduct(product){
+    await container.save(product)
+} */
+
 getProducts()
 
 router.get('/', (req, res) =>{
-    JSON.stringify(products) != '[]' ?
-        res.render('products', { products: products, exists: true }) :
-        res.render('products', { exists: false })
+    res.render('products', { root: __dirname + '/public' })
 })
 
 io.on('connection', (socket) =>{
-    console.log('connection');
     chat.push('Se unió al chat ' + socket.id)
     io.sockets.emit('chatList', chat)
+    io.sockets.emit('productList', products)
 
     socket.on('chatData', (data) =>{
         chat.push(data)
@@ -73,7 +68,8 @@ io.on('connection', (socket) =>{
         const id = index[index.length - 1] + 1
         const product = { id, ...data }
 
+        //saveProduct(product)
         products.push(product)
-        io.sockets.emit('productList', product)
+        io.sockets.emit('productList', products)
     })
 })
