@@ -1,12 +1,18 @@
+import { BrowserRouter } from 'react-router-dom'
 import { Fragment } from "react";
+import { UserProvider } from './context/UserContext';
 import Navbar from "./components/Navbar";
-import Products from "./components/Products";
+import ProductListContainer from "./components/ProductListContainer";
 
 function App() {
     return (       
         <Fragment>
-            <Navbar />
-            <Products />
+            <UserProvider>
+                <BrowserRouter> 
+                    <Navbar />
+                    <ProductListContainer />
+                </BrowserRouter>
+            </UserProvider>
         </Fragment> 
     )
 }
