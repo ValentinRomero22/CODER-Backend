@@ -1,0 +1,17 @@
+.main__cart__container{
+    justify-content: center;
+
+    .cart__container{
+        width: 100%;
+
+        .cart__header{
+            .button--delete{
+                width: 260px;
+            }
+        }
+    
+        .cartList{
+            grid-template-columns: repeat(5, 1fr);
+        }
+    }
+}

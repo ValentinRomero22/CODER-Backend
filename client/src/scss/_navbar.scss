@@ -1,0 +1,47 @@
+header{
+    width: 100%;
+    padding: 10px 5%;
+    background-color: $first-color;
+    box-shadow: 0px 0px 20px 0px $first-color;
+    
+    h1{
+        font-family: $font-title;
+        font-size: 3rem;
+        color: $white;
+    }
+
+    nav{
+        margin: auto 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        a{
+            text-decoration: none;
+        }
+
+        .nav__options__container{
+            display: flex;
+            align-items: center;
+            font-size: 1.3rem;
+            color: $white;
+
+            p{
+                margin-right: 50px;
+            }
+
+            a{
+                padding: 5px 10px;
+                color: $white;
+                text-decoration: none;
+                border: 1px solid transparent;
+                border-radius: 5px;
+
+                &:hover{
+                    background-color: $white;
+                    color: $first-color;
+                }
+            }
+        }
+    }
+}

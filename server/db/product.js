@@ -48,6 +48,9 @@ class Product{
                 object = { id: 1, ...object } : 
                 object = { id: index[index.length -1] + 1, ...object }
 
+            const date = new Date().toLocaleDateString()
+            object.timestamp = date
+
             json.push(object)
             await fs.promises.writeFile(`./db/${this.name}`, JSON.stringify(json))
 

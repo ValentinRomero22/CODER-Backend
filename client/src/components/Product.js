@@ -1,7 +1,17 @@
-const Product = ({ id, timestamp, name, description, code, image, price, stock, user }) =>{
-    /* const handleEliminar = () =>{
+import { useState } from "react"
+import { deleteProduct } from "../services/backConsumer"
+import { useAsync } from "../hooks/useAsync"
 
-    } */
+const Product = ({ id, timestamp, name, description, code, image, price, stock, user }) =>{
+    const [del, setDel] = useState(false)
+
+    const { data, error } = useAsync(() => deleteProduct(id), [del])
+    console.log(data)
+
+    const deleteProductFromList = (e) =>{
+        e.preventDefault()
+        setDel(true)
+    }
 
     return(
         <div className="product">
@@ -12,7 +22,7 @@ const Product = ({ id, timestamp, name, description, code, image, price, stock, 
             <div className="product__price__container">
                 <p>$ {price}</p>
             </div>
-            <button className="button--detail">Ver detalle</button>
+            <button className="button button--detail">Ver detalle</button>
             {/* <p>ID: {id}</p>
             <p>TIMESTAMP {timestamp}</p>
             <p>NAME {name}</p>
@@ -23,8 +33,13 @@ const Product = ({ id, timestamp, name, description, code, image, price, stock, 
             <p>STOCK {stock}</p> */}
             { user && 
                 <div className="admin__controls__container">
-                    <button className="button--edit" /* onClick={handleEliminar} */>Editar</button>
-                    <button className="button--delete" /* onClick={handleEliminar} */>Eliminar</button>
+                    <input 
+                        className="button button--edit"
+                        defaultValue={"Editar"}/>
+                    <input 
+                        className="button button--delete"
+                        defaultValue={"Eliminar"}
+                        onClick={ e => deleteProductFromList(e) }/>
                 </div>
             }
         </div>

@@ -11,13 +11,20 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-app.use('/api/cart', cartRouter)
-app.use('/api/products', productsRouter.productsRouter)
+app.use('/api/carrito', cartRouter)
+app.use('/api/productos', productsRouter.productsRouter)
 
 const isAdmin = require('./routes/productRouter')
 
 app.get('/', (req, res) =>{
     res.json(isAdmin)
+})
+
+app.all('*', (req, res) =>{
+    res.json({
+        error: -2,
+        descripcion: `ruta ${req.url} método ${req.method} no implementada`
+    })
 })
 
 const server = app.listen(PORT, () =>{

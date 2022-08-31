@@ -9,7 +9,7 @@
                 "name": "Juventus Local 2022",
                 "description": "Juventus local temporada 2022. Tecnología Dry Fit. Marca Adidas",
                 "code": "JuvL2022",
-                "image": "http://juve.jpg",
+                "image": "https://drive.google.com/uc?export=view&id=1VEF0Hd1DC4eqJNzDEch80qGVdnXDGHIh",
                 "price": 1500,
                 "stock": 10
             },
@@ -19,9 +19,39 @@
                 "name": "Chelsea Local 2022",
                 "description": "Chelsea Local temporada 2022. Fan edition. Marca Nike",
                 "code": "CheL2022",
-                "image": "http://chelsea.png",
+                "image": "https://drive.google.com/uc?export=view&id=1b1FPHKx15m8WS7nrZfZNaw_mGcCp53ip",
                 "price": 1500,
                 "stock": 5
+            },
+            {
+                "id": 3,
+                "timestamp": "02/08/2022",
+                "name": "Barça Local 2022",
+                "description": "Barcelona local temporada 2022. Player edition. Marca Nike",
+                "code": "BarL2022",
+                "image": "https://drive.google.com/uc?export=view&id=12Q-0Jx4XTiQ1yCJq5_c2ApOTu1tP3JhW",
+                "price": 1500,
+                "stock": 15
+            },
+            {
+                "id": 4,
+                "timestamp": "10/08/2022",
+                "name": "Dortmund Local 2022",
+                "description": "Borussia Dortmund Local temporada 2022. Fan edition. Marca Puma",
+                "code": "DorL2022",
+                "image": "https://drive.google.com/uc?export=view&id=1sHf-wqF6H9Z-PTIzIePUtXolwAXLPBWp",
+                "price": 1550,
+                "stock": 10
+            },
+            {
+                "id": 5,
+                "timestamp": "04/08/2022",
+                "name": "Ayax Local 2022",
+                "description": "Ayax Local temporada 2022. Fan edition. Marca Adidas",
+                "code": "AyaL2022",
+                "image": "https://drive.google.com/uc?export=view&id=11rYkeWOh1_e7mUJpi7EhS2DeqsPf2BTU",
+                "price": 1500,
+                "stock": 3
             }
         ]
     },
@@ -35,7 +65,7 @@
                 "name": "Dortmund Local 2022",
                 "description": "Borussia Dortmund Local temporada 2022. Fan edition. Marca Puma",
                 "code": "DorL2022",
-                "image": "http://dortmund.jpg",
+                "image": "https://drive.google.com/uc?export=view&id=1sHf-wqF6H9Z-PTIzIePUtXolwAXLPBWp",
                 "price": 1550,
                 "stock": 10
             }
@@ -51,7 +81,7 @@
                 "name": "Ayax Local 2022",
                 "description": "Ayax Local temporada 2022. Fan edition. Marca Adidas",
                 "code": "AyaL2022",
-                "image": "http://ayax.png",
+                "image": "https://drive.google.com/uc?export=view&id=11rYkeWOh1_e7mUJpi7EhS2DeqsPf2BTU",
                 "price": 1500,
                 "stock": 3
             }

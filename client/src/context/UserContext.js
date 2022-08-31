@@ -4,7 +4,6 @@ const UserContext = createContext()
 
 export const UserProvider = ({ children }) =>{
     const [user, setUser] = useState(false)
-
     const render = useRef(0)
 
     useEffect(() =>{
@@ -22,7 +21,8 @@ export const UserProvider = ({ children }) =>{
     }
 
     return(
-        <UserContext.Provider value = {{ getUserType }}>
+        <UserContext.Provider 
+            value = {{ getUserType }}>
             { children }
         </UserContext.Provider>
     )

@@ -34,6 +34,11 @@ class Cart{
             index.length == 0 ? 
                 object = { id: 1, ...object } : 
                 object = { id: index[index.length -1] + 1, ...object }
+
+            const date = new Date().toLocaleDateString()
+            object.timestamp = date
+
+            object.products = []
             
             json.push(object)
             await fs.promises.writeFile(`./db/${this.name}`, JSON.stringify(json))
@@ -64,13 +69,16 @@ class Cart{
         const json = await this.getAll()
         const cart = json.find((e) => e.id == id)
 
-        const products = cart.products.map((p) => p)
-
-        if(products){
-            return products
+        if(cart != null){
+            if(cart.products){
+                const products = cart.products.map((p) => p)
+                return products
+            } else{
+                return null
+            }
         } else{
             return null
-        }
+        }        
     }
 
     async addToCart(id, object){

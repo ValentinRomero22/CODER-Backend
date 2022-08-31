@@ -1,0 +1,185 @@
+.main__container{
+    margin: 50px 5%;
+    display: flex;
+    justify-content: space-between;
+    animation: fadeIn 3s;
+
+    .button--detail{
+        color: $light-color;
+        background-color: $white;
+        border: 1px solid $light-color;
+    
+        &:hover{
+            color: $white;
+            background-color: $light-color;
+            border: 1px solid $light-color;
+            cursor: pointer;
+        }
+    }
+
+    h2{
+        font-size: 2.5rem;
+        font-family: $font-title;
+    }
+
+    .button{
+        margin-top: 10px;
+        width: 100%;
+        padding: 5px 15px;
+        font-family: $font-text;
+        font-size: 1rem;
+        border-radius: 5px;
+    }
+
+    .button--edit{
+        color: $ok-color;
+        background-color: $white;
+        border: 1px solid $ok-color;
+
+        &:hover{
+            color: $white;
+            background-color: $ok-color;
+            cursor: pointer;
+        }
+
+    }
+
+    .button--delete{
+        color: $danger-color;
+        background-color: $white;
+        border: 1px solid $danger-color;
+
+        &:hover{
+            color: $white;
+            background-color: $danger-color;
+            cursor: pointer;
+        }
+    }
+
+    .product__form__container{
+        width: 30%;
+
+        form{
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            font-family: $font-text;
+
+            button{
+                width: 100%;
+            }
+
+            input[type=number], [type=text]{
+                margin-bottom: 10px;
+                padding: 0px 5px;
+                width: 100%;
+                height: 30px;
+                font-family: $font-text;
+                font-size: 1rem;
+                border: 1px solid $disable-color;
+                border-radius: 5px;
+            }
+            
+            .form__label{
+                margin-bottom: 3px;
+            }
+        }
+    }
+
+    .catalog__container{
+        width: 60%;
+    
+        .catalog__header{
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+    
+            form{
+                display: flex;
+                align-items: center;
+    
+                input[type=submit]{
+                    margin: 0;
+                }
+    
+                input[type=number]{
+                    margin-right: 10px;
+                    padding: 0px 5px;
+                    width: 100px;
+                    height: 30px;
+                    font-family: $font-text;
+                    font-size: 1rem;
+                    border: 1px solid $disable-color;
+                    border-radius: 5px;
+                }
+            }
+        }
+    
+        .catalog{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: 1fr;
+            justify-items: center;
+            gap: 2%;
+    
+            .product{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 10px;
+                border: 1px solid $disable-color;
+                border-radius: 5px;
+    
+                &:hover{
+                    box-shadow: 0px 0px 20px 0px;
+                }
+    
+                img{
+                    height: 240px;
+                    width: 200px;
+                    object-fit: contain;
+                }
+    
+                .product__name__container{
+                    width: 100%;
+                    margin-bottom: 10px;
+                    min-height: 45px;
+                    font-size: 1.2rem;
+                    text-align: left;
+                }
+    
+                .product__price__container{
+                    width: 100%;
+                    text-align: left;
+                    font-size: 1.2rem;
+                    color: $standout-dark-color;
+                }
+    
+                .admin__controls__container{
+                    width: 100%;
+                    margin-top: 5px;
+                    display: flex;
+                    justify-content: space-between;
+    
+                    .button{
+                        margin-top: 0px;
+                        width: 49%;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    0%{ opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.products__message{
+    font-size: 2.5rem;
+    font-family: $font-title;
+}

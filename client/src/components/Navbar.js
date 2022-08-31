@@ -11,14 +11,14 @@ const Navbar = () => {
         <header>
             <nav>
                 <Link to='/'><h1>TU PILCHA UY</h1></Link>
-                { 
-                    user === true ? 
-                        <Link to='/'><h1>ADMIN</h1></Link> : 
-                        <Link to='/'><h1>USER</h1></Link> 
-                }
-                {/* <div>
-                    <Link to='/'><h1>TU PILCHA UY</h1></Link>
-                </div> */}
+                <div className="nav__options__container">
+                    {
+                        user === true ?
+                            <p>Bienvenido administrador</p> :
+                            <p>Bienvenido usuario</p>
+                    }
+                    <Link to='/cart/'>Ver carrito</Link>
+                </div>
             </nav>
         </header>
     )
