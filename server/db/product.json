@@ -20,16 +20,6 @@
         "stock": 5
     },
     {
-        "id": 3,
-        "timestamp": "02/08/2022",
-        "name": "Barça Local 2022",
-        "description": "Barcelona local temporada 2022. Player edition. Marca Nike",
-        "code": "BarL2022",
-        "image": "https://drive.google.com/uc?export=view&id=12Q-0Jx4XTiQ1yCJq5_c2ApOTu1tP3JhW",
-        "price": 1500,
-        "stock": 15
-    },
-    {
         "id": 4,
         "timestamp": "10/08/2022",
         "name": "Dortmund Local 2022",

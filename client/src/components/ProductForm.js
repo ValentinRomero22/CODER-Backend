@@ -54,7 +54,8 @@ const ProductForm = ({ product, setProduct }) =>{
 
     return(
         <form onSubmit={ e => { 
-            newProduct(e)}}> 
+            newProduct(e)
+            }}> 
             <label htmlFor="name" className="form__label">Nombre</label>
             <input value={name} id="name" name="name" onChange={onChange} type="text"/>
             <label htmlFor="description" className="form__label">Descripción</label>

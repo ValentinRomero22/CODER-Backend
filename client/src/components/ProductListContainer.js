@@ -69,7 +69,13 @@ const ProductListContainer = () => {
                 const data = () => {
                     fetch('http://localhost:8080/api/productos/' + id)
                         .then(res => res.json())
-                        .then(res => setProducts([res]))
+                        .then(res => {
+                            if(res.error){
+                                setProducts(res.error)
+                            } else{
+                                setProducts([res])
+                            }
+                        })
                         .catch(error => setError(error))
                 }
 
@@ -81,6 +87,7 @@ const ProductListContainer = () => {
             }
         }
     }, [id])
+
 
     useEffect(() => {
         setLoading(true)
@@ -131,41 +138,45 @@ const ProductListContainer = () => {
     return (
         !loading &&
             products.length > 0 ?
-            <div className="main__container">
-                <div className="catalog__container">
-                    <div className='catalog__header'>
-                        <h2 className="products__message">Productos</h2>
-                        <form
-                            onSubmit={e => {
-                                e.preventDefault()
-                                getProduct(e)
-                            }}>
-                            <input
-                                type="number"
-                                min={0}
-                                defaultValue={id}
-                                onChange={e => setIdInput(e.target.value)} />
-                            <input
-                                type="submit"
-                                className="button button--detail"
-                                value="Buscar" />
-                        </form>
-                    </div>
-                    <ProductList
-                        product={product}
-                        products={products}
-                        setProduct={setProduct}
-                        setListProductsUpdated={setListProductsUpdated}
-                        cartId={localStorage.getItem('cartId')} />
-                </div> 
-                {
-                    user &&
-                    <div className="product__form__container">
-                        <h2 className="products__message">Formulario de productos</h2>
-                        <ProductForm product={product} setProduct={setProduct}/>
-                    </div>
-                }                
-            </div> :
+            products.includes('No se encontró') ?
+                <div className="main__container">
+                    <h2 className="products__message">No se encontró un producto con id {id}. Recargar la página!</h2>
+                </div> :
+                <div className="main__container">
+                    <div className="catalog__container">
+                        <div className='catalog__header'>
+                            <h2 className="products__message">Productos</h2>
+                            <form
+                                onSubmit={e => {
+                                    e.preventDefault()
+                                    getProduct(e)
+                                }}>
+                                <input
+                                    type="number"
+                                    min={0}
+                                    defaultValue={id}
+                                    onChange={e => setIdInput(e.target.value)} />
+                                <input
+                                    type="submit"
+                                    className="button button--detail"
+                                    value="Buscar" />
+                            </form>
+                        </div>
+                        <ProductList
+                            product={product}
+                            products={products}
+                            setProduct={setProduct}
+                            setListProductsUpdated={setListProductsUpdated}
+                            cartId={localStorage.getItem('cartId')} />
+                    </div> 
+                    {
+                        user &&
+                        <div className="product__form__container">
+                            <h2 className="products__message">Formulario de productos</h2>
+                            <ProductForm product={product} setProduct={setProduct}/>
+                        </div>
+                    }             
+                </div> :
             <div className="main__container">
                 <h2 className="products__message">No hay productos!</h2>
             </div>
