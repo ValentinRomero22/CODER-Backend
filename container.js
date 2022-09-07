@@ -1,58 +1,7 @@
 class Container {
-    constructor(options, table) {
+    constructor(knex, table) {
         this.table = table
-        this.knex = require("knex")(options)
-    }
-
-    async createProductTable(tableName) {
-        /* await this.knex.schema.hasTable(tableName).then((exists) => {
-            if (!exists) { */
-                this.knex.schema
-                    .createTableIfNotExists(tableName, (table) => {
-                        table.increments('id'),
-                        table.string('title'),
-                        table.float('price'),
-                        table.string('image')
-                    })
-                    .then(() => {
-                        console.log(`Se creó la tabla ${tableName}`)
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        //throw new Error(error)
-                    })
-                    .finally(() => {
-                        console.log('finally')
-                        this.knex.destroy()
-                    })
-            /* }
-        }) */
-    }
-
-    async createChatTable(tableName) {
-        /* await this.knex.schema.hasTable(tableName).then((exists) => {
-            if (!exists) { */
-                this.knex.schema
-                    .createTableIfNotExists(tableName, (table) => {
-                        console.log(tableName, '39')
-                        table.increments('id'),
-                        table.string('user'),
-                        table.string('message'),
-                        table.datetime('datetime')
-                    })
-                    .then(() => {
-                        console.log(`Se creó la tabla chat`)
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                        //throw new Error(error)
-                    })
-                    .finally(() => {
-                        console.log('finally')
-                        this.knex.destroy()
-                    })
-           /*  }
-        }) */
+        this.knex = knex
     }
 
     async save(object) {

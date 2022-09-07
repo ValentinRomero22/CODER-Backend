@@ -1,11 +1,13 @@
 const socket = io()
 
 function sendMessage(){
-    const email = document.getElementById('email').value
-    const message = document.getElementById('message').value
-    const date = new Date().toLocaleDateString()
+    const user = document.getElementById('user').value
+    const message = document.getElementById('text').value
+    const dateTime = Date.now()
+
+    const chat = { user, message, dateTime }
     
-    socket.emit('chatData', `${date}: ${email} dice ${message}`)
+    socket.emit('chatData', chat)
     
     return false
 }
@@ -13,13 +15,9 @@ function sendMessage(){
 function saveProduct(){
     const title = document.getElementById('title').value
     const price = document.getElementById('price').value
-    const thumbnail = document.getElementById('thumbnail').value
+    const image = document.getElementById('image').value
     
-    const product = {
-        title, 
-        price,
-        thumbnail
-    }
+    const product = { title, price, image }
     
     socket.emit('productData', product)
     
@@ -35,8 +33,13 @@ const titles = `<h2>Listado de productos</h2>
                 </div>`
 
 socket.on('chatList', (data) =>{
-    const chatList = data.reduce((chatList, item) => chatList + '<div>' + item + '</div>')
-    document.getElementById('chat').innerHTML = chatList
+    if(data.length != 0){
+        const chatList = data.reduce((chatList, item) => chatList + 
+        `<div>
+            <p>${new Date(item.datetime).toLocaleDateString()} | ${item.user}: ${item.message}</p>
+        </div>`)
+        document.getElementById('chat').innerHTML = chatList
+    }
 })
 
 socket.on('productList', (data) =>{ 
@@ -52,7 +55,7 @@ socket.on('productList', (data) =>{
                 <p class="product__title">${current.title}</p>
                 <p class="product__price">$ ${current.price}</p>
                 <div class="product__image__container">
-                    <img class="product__image" src="${current.thumbnail}" alt="Imagen no disponible">
+                    <img class="product__image" src="${current.image}" alt="Imagen no disponible">
                 </div>
             </div>`, ''
         )

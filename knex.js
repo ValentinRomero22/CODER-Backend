@@ -18,8 +18,8 @@ const createTables = async () =>{
     await chatKnex.schema.createTableIfNotExists('chat', (table) =>{
         table.increments('id'),
         table.string('user'),
-        table.string('message')/* ,
-        table.dateTime('datetime') */
+        table.string('message'),
+        table.dateTime('datetime')
     })
 }
 
