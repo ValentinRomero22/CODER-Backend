@@ -1,16 +1,17 @@
 const Container = require("./container")
+const { createTables } = require("./knex")
 
-const { options: SQLite } = require("./options/sqlite")
-const { options: MySql } = require("./options/mdb")
+/* const { options: SQLite } = require("./options/sqlite")
+const { options: MySql } = require("./options/mdb") */
 
 const express = require('express')
 const app = express()
-const router = Router()
 const { Router } = express
+const router = Router()
 
 //const container = new Contenedor("productos")
-const chatContainer = new Container(SQLite, 'chat')
-const productContainer = new Container(MySql, 'product')
+/* const chatContainer = new Container(SQLite, 'chat')
+const productContainer = new Container(MySql, 'product') */
 
 const httpServer = require("http").createServer(app)
 const io = require("socket.io")(httpServer)
@@ -38,12 +39,12 @@ app.engine(
 /* let chat = []
 let products = [] */
 
-async function getProducts(){
+/* async function getProducts(){
     await container.getAll().then((response) =>{
         products = response
         return products
     })
-}
+} */
 
 /* async function saveProduct(product){
     await container.save(product)
@@ -56,8 +57,15 @@ router.get('/', (req, res) =>{
 })
 
 io.on('connection', async(socket) =>{
-    const products = await productContainer.getAll()
-    const chat = await chatContainer.getAll()
+    (async () => {
+        await createTables()
+    })();
+
+    /* productContainer.createProductTable('product')
+    chatContainer.createChatTable('chat') */
+
+    /* const products = await productContainer.getAll()
+    const chat = await chatContainer.getAll() */
     
     //chat.push('Se unió al chat ' + socket.id)
     io.sockets.emit('chatList', chat)
