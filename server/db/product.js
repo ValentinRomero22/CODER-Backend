@@ -10,7 +10,12 @@ class Product{
             const data = await fs.promises.readFile(`./db/${this.name}`, 'utf-8')
             return JSON.parse(data)
         } catch(error){
-            if(error == 'ENOENT'){
+            fs.writeFile(`./db/${this.name}`, '[]', (error) =>{
+                return false
+            })
+            
+            return []
+            /* if(error == 'ENOENT'){
                 fs.writeFile(`./db/${this.name}`, '[]', (error) =>{
                     return false
                 })
@@ -18,41 +23,47 @@ class Product{
                 return JSON.parse('[]')
             } else{
                 return 1
-            }
+            } */
         }
     }
 
     async getById(id){
-        const json = await this.getAll()
+        try{
+            const allProducts = await this.getAll()
 
-        if(json){
-            const object = json.find(e => e.id == id)
+            if(allProducts){
+                const object = allProducts.find(e => e.id == id)
 
-            if(object){
-                return object
-            } else{
-                return null
+                if(object){
+                    return object
+                } else{
+                    return null
+                }
             }
+        } catch(error){
+            return false
         }
     }
 
     async save(object){
         try{
-            const json = await this.getAll()
+            const allProducts = await this.getAll()
 
-            const index = json.map(i => i.id).sort((a, b) =>{
+            const sortedArray = allProducts.sort((a, b) => a.id - b.id)
+
+            /* const index = json.map(i => i.id).sort((a, b) =>{
                 return a - b
-            })
+            }) */
 
-            index.length == 0 ? 
-                object = { id: 1, ...object } : 
-                object = { id: index[index.length -1] + 1, ...object }
+            sortedArray.length == 0 
+            ? object = { id: 1, ...object }
+            : object = { id: sortedArray[sortedArray.length -1].id + 1, ...object }
 
-            const date = new Date().toLocaleDateString()
-            object.timestamp = date
+            //const date = new Date().toLocaleDateString()
+            object.timestamp = new Date()
 
-            json.push(object)
-            await fs.promises.writeFile(`./db/${this.name}`, JSON.stringify(json))
+            allProducts.push(object)
+            await fs.promises.writeFile(`./db/${this.name}`, JSON.stringify(allProducts))
 
             return true
         } catch(error){
@@ -61,7 +72,7 @@ class Product{
     }
 
     async update(object){
-        const json = await this.getAll()
+        const allProducts = await this.getAll()
         const product = json.find((o) => o.id == object.id)
 
         if(product){
@@ -73,7 +84,7 @@ class Product{
                 product.price = object.price
                 product.stock = object.stock
 
-                await fs.promises.writeFile(`./db/${this.name}`, JSON.stringify(json))                
+                await fs.promises.writeFile(`./db/${this.name}`, JSON.stringify(allProducts))                
                 return true
             } catch(error){
                 return false
@@ -84,12 +95,12 @@ class Product{
     }
 
     async delete(id){
-        const json = await this.getAll()
-        const filterJson = json.filter((e) => e.id != id)
+        const allProducts = await this.getAll()
+        const filterProduct = json.filter((e) => e.id != id)
 
         try{
-            if(json.length != filterJson.length){
-                await fs.promises.writeFile(`./db/${this.name}`, JSON.stringify(filterJson))
+            if(allProducts.length != filterProduct.length){
+                await fs.promises.writeFile(`./db/${this.name}`, JSON.stringify(filterProduct))
                 return true
             } else{
                 return false

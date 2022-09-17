@@ -1,6 +1,7 @@
 const Product = require('../db/product')
 
 const express = require('express')
+const { response } = require('express')
 const { Router } = express
 
 const productsRouter = Router()
@@ -8,8 +9,19 @@ const productsRouter = Router()
 const product = new Product('product')
 const isAdmin = true
 
+const checkAdmin = (req, res, next) =>{
+    if(!isAdmin){
+        return res.status(403).send({ error: 'Acceso no autorizado' })
+    } else{
+        return next()
+    }
+}
+
 productsRouter.get('/', (req, res) => {
-    (async () => {
+    product.getAll().then((response) =>{
+        res.json(response)
+    })
+    /* (async () => {
         await product.getAll().then((response) => {
             const data = JSON.stringify(response)
 
@@ -17,13 +29,21 @@ productsRouter.get('/', (req, res) => {
                 res.json({ error: "Aún no se han ingresado productos" }) :
                 res.json(response)
         })
-    })()
+    })() */
 })
 
 productsRouter.get('/:id', (req, res) => {
     const { id } = req.params;
 
-    (async () => {
+    product.getById(id).then((response) =>{
+        response
+        ? res.json(response)
+        : res
+            .status(400)
+            .json({ error: `No se encontró el producto con el id ${id}` })
+    })
+
+    /* (async () => {
         await product.getById(id).then((response) => {
             const found = response
 
@@ -31,15 +51,16 @@ productsRouter.get('/:id', (req, res) => {
                 res.json(found) :
                 res.json({ error: `No se encontró el producto con el id ${id}` })
         })
-    })()
+    })() */
 })
 
-productsRouter.post('/', (req, res) => {
-    if(!isAdmin){
+productsRouter.post('/', checkAdmin, (req, res) => {
+    /* if(!isAdmin){
         return res.send({ error: 'Acceso no autorizado' })        
-    }
+    } */
 
-    let timestamp = req.body.timestamp
+    //let timestamp = req.body.timestamp
+    let timestamp = Date.now()
     let name = req.body.name
     let description = req.body.description
     let code = req.body.code
@@ -47,45 +68,57 @@ productsRouter.post('/', (req, res) => {
     let price = parseFloat(req.body.price)
     let stock = parseInt(req.body.stock)
 
-    const p = { timestamp, name, description, code, image, price, stock };
+    const productToSave = { timestamp, name, description, code, image, price, stock }
 
-    (async () => {
+    product.save(productToSave).then((response) =>{
+        res.json(response)
+    })
+
+    /* (async () => {
         await product.save(p).then((response) => {
             res.json({ result: response })
         })
-    })()
+    })() */
 })
 
-productsRouter.put('/:id', (req, res) => {
-    if(!isAdmin){
+productsRouter.put('/:id', checkAdmin, (req, res) => {
+    /* if(!isAdmin){
         return res.send({ error: 'Acceso no autorizado' })        
-    }
+    } */
 
     const { id } = req.params
     const { body } = req
     const { name, description, code, image, price, stock } = body
 
-    const p = { id, name, description, code, image, price, stock };
+    const productToSave = { id, name, description, code, image, price, stock }
 
-    (async () => {
+    product.update(productToSave).then((response) =>{
+        res.json(response)
+    })
+
+    /* (async () => {
         await product.update(p).then((response) => {
             res.json({ result: response })
         })
-    })()
+    })() */
 })
 
-productsRouter.delete('/:id', (req, res) => {
-    if(!isAdmin){
+productsRouter.delete('/:id', checkAdmin, (req, res) => {
+    /* if(!isAdmin){
         return res.send({ error: 'Acceso no autorizado' })        
-    }
+    } */
 
-    const { id } = req.params;
+    const { id } = req.params
 
-    (async () => {
+    product.delete(id).then((response) =>{
+        res.json(response)
+    })
+
+    /* (async () => {
         await product.delete(id).then((response) => {
             res.json({ result: response })
         })
-    })()
+    })() */
 })
 
 module.exports = ({ productsRouter, isAdmin })

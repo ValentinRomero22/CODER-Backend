@@ -1,6 +1,7 @@
 const Cart = require('../db/cart')
 
 const express = require('express')
+const { response } = require('express')
 const { Router } = express
 
 const cartRouter = Router()
@@ -8,7 +9,10 @@ const cartRouter = Router()
 const cart = new Cart('cart')
 
 cartRouter.post('/', (req, res) =>{
-    let products = req.body.products
+    cart.save().then((response) =>{
+        res.json(response)
+    })
+    /* let products = req.body.products
 
     const c = { products };
 
@@ -16,50 +20,66 @@ cartRouter.post('/', (req, res) =>{
         await cart.save(c).then((response) =>{
             res.json(response)
         })
-    })()
+    })() */
 })
 
 cartRouter.delete('/:id', (req, res) =>{
     const { id } = req.params;
 
-    (async () =>{
+    cart.deleteCart(id).then((response) =>{
+        res.json(response)
+    })
+
+    /* (async () =>{
         await cart.deleteCart(id).then((response) =>{
             res.json(response)
         })
-    })()
+    })() */
 })
 
 cartRouter.get('/:id/productos', (req, res) =>{
     const { id } = req.params;
 
-    (async () =>{
+    cart.getProductsByCart(id).then((response) =>{
+        res.json(response)
+    })
+
+    /* (async () =>{
         await cart.getProductsByCart(id).then((response) =>{
             res.json(response)
         })
-    })()
+    })() */
 })
 
 cartRouter.post('/:id/productos', (req, res) =>{
     const { id } = req.params
     const { name, timestamp, description, code, image, price, stock } = req.body
 
-    const product = { id: req.body.id, timestamp, name, description, code, image, price, stock };
+    const product = { id: req.body.id, timestamp, name, description, code, image, price, stock }
 
-    (async () =>{
+    cart.addToCart(id, product).then((response) =>{
+        res.json(response)
+    })
+
+    /* (async () =>{
         await cart.addToCart(id, product).then((response) =>{
             res.json(response)
         })
-    })()
+    })() */
 })
 
-cartRouter.delete('/:id/productos/:id_prod', (req, res) =>{
-    const { id, id_prod } = req.params;
+cartRouter.delete('/:id/productos/:idProd', (req, res) =>{
+    const { id, idProd } = req.params
 
-    (async () =>{
+    cart.deleteProductOnCart(id, idProd).then((response) =>{
+        res.json(response)
+    })
+
+    /* (async () =>{
         await cart.deleteProductOnCart(id, id_prod).then((response) =>{
             res.json(response)
         })
-    })()
+    })() */
 })
 
 module.exports = cartRouter

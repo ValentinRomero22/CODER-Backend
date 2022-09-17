@@ -21,7 +21,7 @@ app.get('/', (req, res) =>{
 })
 
 app.all('*', (req, res) =>{
-    res.json({
+    res.status(400).json({
         error: -2,
         descripcion: `ruta ${req.url} método ${req.method} no implementada`
     })
