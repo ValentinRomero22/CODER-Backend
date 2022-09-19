@@ -1,12 +1,11 @@
-const Product = require('../db/product')
+const { product: Product } = require('../daos/main')
 
 const express = require('express')
-const { response } = require('express')
 const { Router } = express
 
 const productsRouter = Router()
 
-const product = new Product('product')
+const product = new Product()
 const isAdmin = true
 
 const checkAdmin = (req, res, next) =>{

@@ -1,4 +1,4 @@
-const Cart = require('../db/cart')
+const { cart: Cart } = require('../daos/main')
 
 const express = require('express')
 const { response } = require('express')
@@ -6,7 +6,7 @@ const { Router } = express
 
 const cartRouter = Router()
 
-const cart = new Cart('cart')
+const cart = new Cart()
 
 cartRouter.post('/', (req, res) =>{
     cart.save().then((response) =>{
