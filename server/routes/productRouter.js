@@ -16,108 +16,116 @@ const checkAdmin = (req, res, next) =>{
     }
 }
 
-productsRouter.get('/', (req, res) => {
-    product.getAll().then((response) =>{
-        res.json(response)
-    })
-    /* (async () => {
-        await product.getAll().then((response) => {
-            const data = JSON.stringify(response)
-
-            data == '[]' ?
-                res.json({ error: "Aún no se han ingresado productos" }) :
-                res.json(response)
+productsRouter.get('/', (req, res) => { //OK
+    try{
+        product.getAll().then((response) =>{
+            response 
+            ? res.status(200).send({
+                status: 200,
+                message: 'Productos encontrados',
+                data: response
+            })
+            : res.status(404).send({
+                status: 404,
+                message: 'No se han encontrado productos'
+            })
         })
-    })() */
+    } catch(error){
+        res.status(500).send({
+            status: 500,
+            message: 'Se produjo un error inesperado'
+        })
+    }
 })
 
-productsRouter.get('/:id', (req, res) => {
-    const { id } = req.params;
+productsRouter.get('/:id', (req, res) => { //OK
+    try{
+        const { id } = req.params;
 
-    product.getById(id).then((response) =>{
-        response
-        ? res.json(response)
-        : res
-            .status(400)
-            .json({ error: `No se encontró el producto con el id ${id}` })
-    })
-
-    /* (async () => {
-        await product.getById(id).then((response) => {
-            const found = response
-
-            found ?
-                res.json(found) :
-                res.json({ error: `No se encontró el producto con el id ${id}` })
+        product.getById(id).then((response) =>{
+            response
+            ? res.status(200).send({
+                status: 200,
+                message: 'Producto encontrado',
+                data: response
+            })
+            : res.status(404).send({ 
+                status: 404,
+                message: `No se encontró el producto con el id ${id}`
+            })
         })
-    })() */
+    } catch(error){
+        res.status(500).send({
+            status: 500,
+            message: 'Se produjo un error inesperado'
+        })
+    }
 })
 
-productsRouter.post('/', checkAdmin, (req, res) => {
-    /* if(!isAdmin){
-        return res.send({ error: 'Acceso no autorizado' })        
-    } */
+productsRouter.post('/', checkAdmin, (req, res) => { //OK
+    try{
+        let name = req.body.name
+        let description = req.body.description
+        let code = req.body.code
+        let image = req.body.image
+        let price = parseFloat(req.body.price)
+        let stock = parseInt(req.body.stock)
 
-    //let timestamp = req.body.timestamp
-    let timestamp = Date.now()
-    let name = req.body.name
-    let description = req.body.description
-    let code = req.body.code
-    let image = req.body.image
-    let price = parseFloat(req.body.price)
-    let stock = parseInt(req.body.stock)
+        const productToSave = { name, description, code, image, price, stock }
 
-    const productToSave = { timestamp, name, description, code, image, price, stock }
-
-    product.save(productToSave).then((response) =>{
-        res.json(response)
-    })
-
-    /* (async () => {
-        await product.save(p).then((response) => {
-            res.json({ result: response })
+        product.save(productToSave).then((response) =>{
+            res.status(200).send({
+                status: 200,
+                message: 'Producto agregado con éxito',
+                data: response
+            })
         })
-    })() */
+    } catch(error){
+        res.status(500).send({
+            status: 500,
+            message: 'Se produjo un error inesperado'
+        })
+    }
 })
 
 productsRouter.put('/:id', checkAdmin, (req, res) => {
-    /* if(!isAdmin){
-        return res.send({ error: 'Acceso no autorizado' })        
-    } */
+    try{
+        const { id } = req.params
+        const { body } = req
+        const { name, description, code, image, price, stock } = body
 
-    const { id } = req.params
-    const { body } = req
-    const { name, description, code, image, price, stock } = body
+        const productToSave = { id, name, description, code, image, price, stock }
 
-    const productToSave = { id, name, description, code, image, price, stock }
-
-    product.update(productToSave).then((response) =>{
-        res.json(response)
-    })
-
-    /* (async () => {
-        await product.update(p).then((response) => {
-            res.json({ result: response })
+        product.update(productToSave).then((response) =>{
+            res.status(200).send({
+                status: 200,
+                message: 'Producto actualizado con éxito'
+            })
         })
-    })() */
+    } catch(error){
+        res.status(500).send({
+            status: 500,
+            message: 'Se produjo un error inesperado'
+        })
+    }
 })
 
 productsRouter.delete('/:id', checkAdmin, (req, res) => {
-    /* if(!isAdmin){
-        return res.send({ error: 'Acceso no autorizado' })        
-    } */
+    try{
+        const { id } = req.params
 
-    const { id } = req.params
-
-    product.delete(id).then((response) =>{
-        res.json(response)
-    })
-
-    /* (async () => {
-        await product.delete(id).then((response) => {
-            res.json({ result: response })
+        product.delete(id).then((response) =>{
+            res.status(200).send({
+                status: 200,
+                message: 'Producto eliminado con éxito'
+            })
         })
-    })() */
+    } catch(error){
+        res.status(500).send({
+            status: 500,
+            message: 'Se produjo un error inesperado'
+        })
+    }
 })
 
 module.exports = ({ productsRouter, isAdmin })

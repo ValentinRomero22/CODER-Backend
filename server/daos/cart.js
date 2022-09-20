@@ -14,11 +14,11 @@ class Cart{
     async getAll(){
         try{
             await this.mongoConnect()
+            
             const carts = await cartSchema.find({})
-
             return carts
         } catch(error){
-            return -1
+            throw Error()
         } finally{
             mongoose.disconnect()
         }
@@ -31,7 +31,6 @@ class Cart{
             const allCarts = await this.getAll()
 
             const sortedArray = allCarts.sort((a, b) => a.id - b.id)
-
             sortedArray.length == 0
             ? cart = { id: 1, ...cart }
             : cart = { id: sortedArray[sortedArray.length -1].id + 1, ...cart }
@@ -44,8 +43,7 @@ class Cart{
 
             return cart.id
         } catch(error){
-            //return -1
-            console.log(error)
+            throw Error()
         } finally{
             mongoose.disconnect()
         }
@@ -58,7 +56,7 @@ class Cart{
 
             return deleted
         } catch(error){
-            return -1
+            throw Error()
         } finally{
             mongoose.disconnect()
         }
@@ -67,13 +65,12 @@ class Cart{
     async getProductsByCart(id){
         try{
             await this.mongoConnect()
-            //const products = await cartSchema.products.find({ id: id})
-            const cart = await cartSchema.findById(id)
+            const cart = await cartSchema.findOne({ id: id })
 
-            const products = cart.products.map()
+            const products = cart.products.map((p) => p)
             return products
         } catch(error){
-            return -1
+            throw Error()
         } finally{
             mongoose.disconnect()
         }
@@ -82,16 +79,10 @@ class Cart{
     async addToCart(id, product){
         try{
             await this.mongoConnect()
-            await cartSchema.findByIdAndUpdate(id, 
-                { $push: { 'products': product } },
-                { strict: false },
-                (error, result) =>{
-                    if(error){
-                        return -1
-                    }
-                })
+            await cartSchema.updateOne({ id: id}, 
+                { $push: { 'products' : product } })
         } catch(error){
-            return -1
+            throw Error()
         } finally{
             mongoose.disconnect()
         }
@@ -100,9 +91,13 @@ class Cart{
     async deleteProductOnCart(cartId, productId){
         try{
             await this.mongoConnect()
-            await cartSchema.updateOne(({ id: id }), { $pull: { 'products': { 'id': productId } } })
+            const cart = await cartSchema.findOne({ id: cartId })
+            console.log(cart.products)
+            await cartSchema.updateOne(
+                { id: cartId }, 
+                { $pull: { products: { id: productId } } })
         } catch(error){
-            return -1
+            throw Error()
         } finally{
             mongoose.disconnect()
         }
