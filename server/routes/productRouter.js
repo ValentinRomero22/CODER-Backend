@@ -16,7 +16,7 @@ const checkAdmin = (req, res, next) =>{
     }
 }
 
-productsRouter.get('/', (req, res) => { //OK
+productsRouter.get('/', (req, res) => {
     try{
         product.getAll().then((response) =>{
             response 
@@ -38,7 +38,7 @@ productsRouter.get('/', (req, res) => { //OK
     }
 })
 
-productsRouter.get('/:id', (req, res) => { //OK
+productsRouter.get('/:id', (req, res) => {
     try{
         const { id } = req.params;
 
@@ -62,7 +62,7 @@ productsRouter.get('/:id', (req, res) => { //OK
     }
 })
 
-productsRouter.post('/', checkAdmin, (req, res) => { //OK
+productsRouter.post('/', checkAdmin, (req, res) => {
     try{
         let name = req.body.name
         let description = req.body.description
@@ -76,8 +76,7 @@ productsRouter.post('/', checkAdmin, (req, res) => { //OK
         product.save(productToSave).then((response) =>{
             res.status(200).send({
                 status: 200,
-                message: 'Producto agregado con éxito',
-                data: response
+                message: 'Producto agregado con éxito'
             })
         })
     } catch(error){

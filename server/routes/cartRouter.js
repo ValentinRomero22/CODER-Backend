@@ -1,4 +1,4 @@
-const { cart: Cart } = require('../daos/main')
+const { cart: Cart, product: Product } = require('../daos/main')
 
 const express = require('express')
 const { Router } = express
@@ -6,8 +6,9 @@ const { Router } = express
 const cartRouter = Router()
 
 const cart = new Cart()
+const product = new Product()
 
-cartRouter.post('/', (req, res) =>{ //OK
+cartRouter.post('/', (req, res) =>{
     try{
         cart.save().then((response) =>{
             res.status(200).send({
@@ -24,7 +25,7 @@ cartRouter.post('/', (req, res) =>{ //OK
     }
 })
 
-cartRouter.delete('/:id', (req, res) =>{ //OK
+cartRouter.delete('/:id', (req, res) =>{
     try{
         const { id } = req.params;
 
@@ -43,7 +44,7 @@ cartRouter.delete('/:id', (req, res) =>{ //OK
     }
 })
 
-cartRouter.get('/:id/productos', (req, res) =>{ //OK
+cartRouter.get('/:id/productos', (req, res) =>{
     try{
         const { id } = req.params;
 
@@ -62,18 +63,16 @@ cartRouter.get('/:id/productos', (req, res) =>{ //OK
     }
 })
 
-cartRouter.post('/:id/productos', (req, res) =>{ //OK
+cartRouter.post('/:id/productos/:idProd', async(req, res) =>{
     try{
-        const { id } = req.params
-        const { name, timestamp, description, code, image, price, stock } = req.body
+        const { id, idProd } = req.params
 
-        const product = { id: req.body.id, timestamp, name, description, code, image, price, stock }
+        const productToAdd = await product.getById(idProd)
 
-        cart.addToCart(id, product).then((response) =>{
+        cart.addToCart(id, productToAdd).then((response) =>{
             res.status(200).send({
                 status: 200,
-                message: 'Producto agregado con éxito',
-                data: response
+                message: 'Producto agregado con éxito'
             })
         })
     } catch(error){
@@ -84,11 +83,12 @@ cartRouter.post('/:id/productos', (req, res) =>{ //OK
     }
 })
 
-cartRouter.delete('/:id/productos/:idProd', (req, res) =>{ //REVISAR FILTRO DE PRODUCTS.ID
+cartRouter.delete('/:id/productos/:idProd', async(req, res) =>{
     try{
         const { id, idProd } = req.params
+        const productToDelete = await product.getById(idProd)
 
-        cart.deleteProductOnCart(id, idProd).then((response) =>{
+        cart.deleteProductOnCart(id, productToDelete).then((response) =>{
             res.status(200).send({
                 status: 200,
                 message: 'Producto eliminado con éxito',

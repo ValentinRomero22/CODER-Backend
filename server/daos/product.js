@@ -3,10 +3,12 @@ const config = require('./db/tu-pilcha-uy-firebase-adminsdk-imquh-371094f117.jso
 
 class Product{
     constructor(){
-        admin.initializeApp({
-            credential: admin.credential.cert(config),
-            databaseURL: 'https://tu-pilcha-uy.firebaseio.com'
-        })
+        if(!admin.apps.length){
+            admin.initializeApp({
+                credential: admin.credential.cert(config),
+                databaseURL: 'https://tu-pilcha-uy.firebaseio.com'
+            })
+        }
     }
 
     async getAll(){
@@ -43,9 +45,21 @@ class Product{
             const db = admin.firestore()
             const collection = db.collection('products')
             const document = collection.doc(String(id))
-            const product = await document.get()
+            const dataProduct = await document.get()
+            const data = dataProduct.data()
 
-            return product.data()
+            const product = { 
+                id: dataProduct.id,
+                timestamp: data.timestamp,
+                name: data.name,
+                description: data.description,
+                code: data.code,
+                image: data.image,
+                price: data.price,
+                stock: data.stock
+            } 
+
+            return product
         } catch(error){
             throw Error()
         }
@@ -65,8 +79,6 @@ class Product{
                 price: product.price,
                 stock: product.stock
             })
-
-            return product.id
         } catch(error){
             throw Error()
         }

@@ -14,7 +14,7 @@ class Cart{
     async getAll(){
         try{
             await this.mongoConnect()
-            
+
             const carts = await cartSchema.find({})
             return carts
         } catch(error){
@@ -28,20 +28,13 @@ class Cart{
         let cart = {}
 
         try{
-            const allCarts = await this.getAll()
-
-            const sortedArray = allCarts.sort((a, b) => a.id - b.id)
-            sortedArray.length == 0
-            ? cart = { id: 1, ...cart }
-            : cart = { id: sortedArray[sortedArray.length -1].id + 1, ...cart }
-
             cart.timestamp = new Date()
             cart.products = []
 
             await this.mongoConnect()
-            await cartSchema.create(cart)
+            const result = await cartSchema.create(cart)
 
-            return cart.id
+            return result._id
         } catch(error){
             throw Error()
         } finally{
@@ -52,7 +45,7 @@ class Cart{
     async deleteCart(id){
         try{
             await this.mongoConnect()
-            const deleted = await cartSchema.deleteOne({ id: id })
+            const deleted = await cartSchema.deleteOne({ '_id': String(id) })
 
             return deleted
         } catch(error){
@@ -65,7 +58,7 @@ class Cart{
     async getProductsByCart(id){
         try{
             await this.mongoConnect()
-            const cart = await cartSchema.findOne({ id: id })
+            const cart = await cartSchema.findById(id)
 
             const products = cart.products.map((p) => p)
             return products
@@ -79,7 +72,7 @@ class Cart{
     async addToCart(id, product){
         try{
             await this.mongoConnect()
-            await cartSchema.updateOne({ id: id}, 
+            await cartSchema.updateOne({ _id: String(id)}, 
                 { $push: { 'products' : product } })
         } catch(error){
             throw Error()
@@ -88,14 +81,24 @@ class Cart{
         }
     }
 
-    async deleteProductOnCart(cartId, productId){
+    async deleteProductOnCart(cartId, product){
         try{
+            const { id, timestamp, name, description, code, image, price, stock} = product
+
             await this.mongoConnect()
-            const cart = await cartSchema.findOne({ id: cartId })
-            console.log(cart.products)
             await cartSchema.updateOne(
-                { id: cartId }, 
-                { $pull: { products: { id: productId } } })
+                { _id: String(cartId) }, 
+                { $pull: { products:
+                     { 
+                        'id': id,
+                        "timestamp": timestamp,
+                        "name": name,
+                        "description": description,
+                        "code": code,
+                        "image": image,
+                        "price": price,
+                        "stock": stock
+                    } }})
         } catch(error){
             throw Error()
         } finally{
