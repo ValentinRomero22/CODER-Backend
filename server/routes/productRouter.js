@@ -19,16 +19,23 @@ const checkAdmin = (req, res, next) =>{
 productsRouter.get('/', (req, res) => {
     try{
         product.getAll().then((response) =>{
-            response 
-            ? res.status(200).send({
-                status: 200,
-                message: 'Productos encontrados',
-                data: response
-            })
-            : res.status(404).send({
-                status: 404,
-                message: 'No se han encontrado productos'
-            })
+            if(response.length == 0){
+                res.status(404).send({
+                    status: 404,
+                    message: 'No se han encontrado productos'
+                })
+            } else if(response.error){
+                res.status(500).send({
+                    status: 500,
+                    message: 'Se produjo un error inesperado'
+                })
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Productos encontrados',
+                    data: response
+                })
+            }            
         })
     } catch(error){
         res.status(500).send({
@@ -40,19 +47,26 @@ productsRouter.get('/', (req, res) => {
 
 productsRouter.get('/:id', (req, res) => {
     try{
-        const { id } = req.params;
+        const { id } = req.params
 
         product.getById(id).then((response) =>{
-            response
-            ? res.status(200).send({
-                status: 200,
-                message: 'Producto encontrado',
-                data: response
-            })
-            : res.status(404).send({ 
-                status: 404,
-                message: `No se encontró el producto con el id ${id}`
-            })
+            if(response.length == 0){
+                res.status(404).send({ 
+                    status: 404,
+                    message: `No se encontró el producto con el id ${id}`
+                })
+            } else if(response.error){
+                res.status(500).send({
+                    status: 500,
+                    message: 'Se produjo un error inesperado'
+                })
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Producto encontrado',
+                    data: response
+                })
+            }
         })
     } catch(error){
         res.status(500).send({
@@ -64,20 +78,43 @@ productsRouter.get('/:id', (req, res) => {
 
 productsRouter.post('/', checkAdmin, (req, res) => {
     try{
-        let name = req.body.name
-        let description = req.body.description
-        let code = req.body.code
-        let image = req.body.image
-        let price = parseFloat(req.body.price)
-        let stock = parseInt(req.body.stock)
+        const { name, description, code, image } = req.body
+        if(name.trim() == '' || description.trim() == '' || code.trim() == '' || image.trim() == ''){
+            res.status(400).send({
+                status: 400,
+                message: 'Los datos ingresados no son válidos'
+            })
+
+            return
+        }
+
+        const price = parseFloat(req.body.price)
+        const stock = parseInt(req.body.stock)
+        if(isNaN(price) || isNaN(stock)){
+            res.status(400).send({
+                status: 400,
+                message: 'Los datos ingresados no son válidos'
+            })
+
+            return
+        }
 
         const productToSave = { name, description, code, image, price, stock }
 
         product.save(productToSave).then((response) =>{
-            res.status(200).send({
-                status: 200,
-                message: 'Producto agregado con éxito'
-            })
+            if(response){
+                if(response.error){
+                    res.status(500).send({
+                        status: 500,
+                        message: 'Se produjo un error inesperado'
+                    })
+                }
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Producto agregado con éxito'
+                })
+            }
         })
     } catch(error){
         res.status(500).send({
@@ -90,16 +127,43 @@ productsRouter.post('/', checkAdmin, (req, res) => {
 productsRouter.put('/:id', checkAdmin, (req, res) => {
     try{
         const { id } = req.params
-        const { body } = req
-        const { name, description, code, image, price, stock } = body
+        const { name, description, code, image } = req.body
+        if(name.trim() == '' || description.trim() == '' || code.trim() == '' || image.trim() == ''){
+            res.status(400).send({
+                status: 400,
+                message: 'Los datos ingresados no son válidos'
+            })
+
+            return
+        }
+
+        const price = parseFloat(req.body.price)
+        const stock = parseInt(req.body.stock)
+        if(isNaN(price) || isNaN(stock)){
+            res.status(400).send({
+                status: 400,
+                message: 'Los datos ingresados no son válidos'
+            })
+
+            return
+        }
 
         const productToSave = { id, name, description, code, image, price, stock }
 
         product.update(productToSave).then((response) =>{
-            res.status(200).send({
-                status: 200,
-                message: 'Producto actualizado con éxito'
-            })
+            if(response){
+                if(response.error){
+                    res.status(500).send({
+                        status: 500,
+                        message: 'Se produjo un error inesperado'
+                    })
+                }
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Producto actualizado con éxito'
+                })
+            }            
         })
     } catch(error){
         res.status(500).send({
@@ -114,10 +178,19 @@ productsRouter.delete('/:id', checkAdmin, (req, res) => {
         const { id } = req.params
 
         product.delete(id).then((response) =>{
-            res.status(200).send({
-                status: 200,
-                message: 'Producto eliminado con éxito'
-            })
+            if(response){
+                if(response.error){
+                    res.status(500).send({
+                        status: 500,
+                        message: 'Se produjo un error inesperado'
+                    })
+                }
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Producto eliminado con éxito'
+                })
+            }            
         })
     } catch(error){
         res.status(500).send({

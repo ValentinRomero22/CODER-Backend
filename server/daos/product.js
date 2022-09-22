@@ -15,10 +15,9 @@ class Product{
         try{
             const db = admin.firestore()
             const collection = db.collection('products')
-
             const products = await collection.get()
+            let dataProducts = []
             
-            const dataProducts = []
             products.forEach(doc =>{
                 const data = doc.data()
                 const dataProduct = { 
@@ -33,10 +32,11 @@ class Product{
                 }
                 dataProducts.push(dataProduct)
             })
-
+            
             return dataProducts
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         }
     }
 
@@ -47,21 +47,25 @@ class Product{
             const document = collection.doc(String(id))
             const dataProduct = await document.get()
             const data = dataProduct.data()
+            let product = {}
 
-            const product = { 
-                id: dataProduct.id,
-                timestamp: data.timestamp,
-                name: data.name,
-                description: data.description,
-                code: data.code,
-                image: data.image,
-                price: data.price,
-                stock: data.stock
+            if(data !== undefined){
+                product = { 
+                    id: dataProduct.id,
+                    timestamp: data.timestamp,
+                    name: data.name,
+                    description: data.description,
+                    code: data.code,
+                    image: data.image,
+                    price: data.price,
+                    stock: data.stock
+                }
             } 
-
+            
             return product
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         }
     }
 
@@ -80,7 +84,8 @@ class Product{
                 stock: product.stock
             })
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         }
     }
 
@@ -99,7 +104,8 @@ class Product{
                 stock: product.stock
             })
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         }
     }
 
@@ -111,7 +117,8 @@ class Product{
 
             await document.delete()
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         }
     }
 }

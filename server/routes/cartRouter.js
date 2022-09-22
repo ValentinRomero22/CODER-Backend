@@ -11,11 +11,18 @@ const product = new Product()
 cartRouter.post('/', (req, res) =>{
     try{
         cart.save().then((response) =>{
-            res.status(200).send({
-                status: 200,
-                message: 'Carrito agregado con éxito',
-                data: response
-            })
+            if (response.error){
+                res.status(500).send({
+                    status: 500,
+                    message: 'Se produjo un error inesperado'
+                })
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Carrito agregado con éxito',
+                    data: response
+                })
+            }            
         })
     } catch(error){
         res.status(500).send({
@@ -30,11 +37,18 @@ cartRouter.delete('/:id', (req, res) =>{
         const { id } = req.params;
 
         cart.deleteCart(id).then((response) =>{
-            res.status(200).send({
-                status: 200,
-                message: 'Carrito eliminado con éxito',
-                data: response
-            })
+            if(response){
+                if (response.error){
+                    res.status(500).send({
+                        status: 500,
+                        message: 'Se produjo un error inesperado'
+                    })}
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Carrito eliminado con éxito'
+                })
+            }            
         })
     } catch(error){
         res.status(500).send({
@@ -49,11 +63,23 @@ cartRouter.get('/:id/productos', (req, res) =>{
         const { id } = req.params;
 
         cart.getProductsByCart(id).then((response) =>{
-            res.status(200).send({
-                status: 200,
-                message: 'Productos encontrados',
-                data: response
-            })
+            if(response.length == 0){
+                res.status(400).send({
+                    status: 400,
+                    message: 'No se han encontrado productos'
+                })
+            } else if(response.error){
+                res.status(500).send({
+                    status: 500,
+                    message: 'Se produjo un error inesperado'
+                })
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Productos encontrados',
+                    data: response
+                })
+            }            
         })
     } catch(error){
         res.status(500).send({
@@ -70,10 +96,18 @@ cartRouter.post('/:id/productos/:idProd', async(req, res) =>{
         const productToAdd = await product.getById(idProd)
 
         cart.addToCart(id, productToAdd).then((response) =>{
-            res.status(200).send({
-                status: 200,
-                message: 'Producto agregado con éxito'
-            })
+            if(response){
+                if (response.error){
+                    res.status(500).send({
+                        status: 500,
+                        message: 'Se produjo un error inesperado'
+                    })}
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Producto agregado con éxito'
+                })
+            }            
         })
     } catch(error){
         res.status(500).send({
@@ -89,11 +123,19 @@ cartRouter.delete('/:id/productos/:idProd', async(req, res) =>{
         const productToDelete = await product.getById(idProd)
 
         cart.deleteProductOnCart(id, productToDelete).then((response) =>{
-            res.status(200).send({
-                status: 200,
-                message: 'Producto eliminado con éxito',
-                data: response
-            })
+            if(response){
+                if (response.error){
+                    res.status(500).send({
+                        status: 500,
+                        message: 'Se produjo un error inesperado'
+                    })
+            }
+            } else{
+                res.status(200).send({
+                    status: 200,
+                    message: 'Producto eliminado con éxito'
+                })
+            }            
         })
     } catch(error){
         res.status(500).send({

@@ -7,7 +7,8 @@ class Cart{
             const url = "mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority"
             let connect = await mongoose.connect(url, { useNewUrlParser: true, useUniFiedTopology: true })
         } catch(error){
-            console.log(error)
+            //throw Error()
+            return { error: 'error'}
         }
     }
 
@@ -18,7 +19,8 @@ class Cart{
             const carts = await cartSchema.find({})
             return carts
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         } finally{
             mongoose.disconnect()
         }
@@ -36,7 +38,8 @@ class Cart{
 
             return result._id
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         } finally{
             mongoose.disconnect()
         }
@@ -45,11 +48,10 @@ class Cart{
     async deleteCart(id){
         try{
             await this.mongoConnect()
-            const deleted = await cartSchema.deleteOne({ '_id': String(id) })
-
-            return deleted
+            await cartSchema.deleteOne({ '_id': String(id) })
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         } finally{
             mongoose.disconnect()
         }
@@ -63,7 +65,8 @@ class Cart{
             const products = cart.products.map((p) => p)
             return products
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         } finally{
             mongoose.disconnect()
         }
@@ -75,7 +78,8 @@ class Cart{
             await cartSchema.updateOne({ _id: String(id)}, 
                 { $push: { 'products' : product } })
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         } finally{
             mongoose.disconnect()
         }
@@ -86,7 +90,7 @@ class Cart{
             const { id, timestamp, name, description, code, image, price, stock} = product
 
             await this.mongoConnect()
-            await cartSchema.updateOne(
+            const result = await cartSchema.updateOne(
                 { _id: String(cartId) }, 
                 { $pull: { products:
                      { 
@@ -99,8 +103,13 @@ class Cart{
                         "price": price,
                         "stock": stock
                     } }})
+                    
+                if(result.modifiedCount == 0){
+                    return { error: 'error' }
+                }
         } catch(error){
-            throw Error()
+            //throw Error()
+            return { error: 'error'}
         } finally{
             mongoose.disconnect()
         }
