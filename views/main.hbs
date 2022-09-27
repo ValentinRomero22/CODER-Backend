@@ -1,0 +1,29 @@
+{{> header}}
+<div class="main__container">
+    <div class="container form--container">
+        <h2>Nuevo producto</h2>
+        <form onsubmit="return saveProduct()">
+            <input type="text" name="title" id="title" placeholder="Title" required>
+            <input type="number" step="any" name="price" id="price" placeholder="Price" required>
+            <input type="text" name="image" id="image" placeholder="Image" required>
+            <input type="submit" value="Guardar">
+        </form>
+    </div>
+    <div class="container chat--container">
+        <h2>Chat</h2>
+        <form onsubmit="return sendMessage()">
+            <input type="email" name="user" id="user" placeholder="Email" value="valentin@coder.com" required>
+            <div class="chat__box" id="chat"></div>
+            <div class="chat__message__box">
+                <input class="chat__message" type="text" name="text" id="text" placeholder="Mensaje">
+                <input type="submit" value="Enviar">
+            </div>
+        </form>
+    </div>
+</div>
+<div id="products__container" class="products__container">
+</div>
+<div>
+    <table id="tablaProductos"></table>
+</div>
+{{> footer}}
