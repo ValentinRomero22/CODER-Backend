@@ -36,42 +36,20 @@ app.get('/', (req, res) =>{
     res.render('main', { root: __dirname + '/public' })
 })
 
+socketModel(io)
+
 app.use('/api/productos-test', router)
 
 io.on('connection', async(socket) =>{
-    /* await createTables()
+    let messages = await messagesController.getAll()
+    io.sockets.emit('messages', normalizedMessages(messages))
 
-    const products = await productContainer.getAll()
-    const chat = await chatContainer.getAll()
-    
-    const text = {
-        user: socket.id, 
-        message: 'Se unió al chat',
-        dateTime: Date.now()
-    }
+    socket.on('newMessage', async(clientMessage) =>{
+        console.log('aca')
+        let message = JSON.parse(clientMessage)
+        await messagesController.save(message)
 
-    await chatContainer.save(text)
-    
-    io.sockets.emit('chatList', chat)
-    io.sockets.emit('productList', products) */
-
-    socket.on('chatData', async(data) =>{
-        /* const added = await chatContainer.save(data)
-        const chat = await chatContainer.getAll()
-
-        added 
-        ? io.sockets.emit('chatList', chat)
-        : console.log('Error al agregar el chat')
-
-        chat.push(data) */
-    })
-
-    socket.on('productData', async(data) =>{
-        /* const added = await productContainer.save(data)
-        const products = await productContainer.getAll()
-
-        added 
-        ? io.sockets.emit('productList', products) 
-        : console.log('Error al agregar el producto') */
+        let allMessages = await messagesController.getAll({ sort: true })
+        io.sockets.emit('messages', normalizedMessages(allMessages))
     })
 })
