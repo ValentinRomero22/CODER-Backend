@@ -1,13 +1,8 @@
 import { Router } from 'express'
 import { createProducts } from '../controllers/fakerProduct.js';
 
-export const router = Router();
+const productsRouter = Router();
 
-router.get('/', (req, res) =>{
-    try{
-        const resultado = createProducts()
-        res.json(resultado)
-    } catch(error){
-        console.log(error)
-    }
-})
+productsRouter.get('/', createProducts.getProducts)
+
+export default productsRouter

@@ -1,0 +1,25 @@
+{{> header}}
+<div id="products__container" class="products__container">
+    <h2>Productos</h2>
+    {{#if productsExist}}
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+            </tr>
+            {{#each products}}
+                <tr>
+                    <td>{{this.id}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.price}}</td>
+                    <td><img src="{{this.image}}" class="product-img"/></td>                    
+                </tr>
+            {{/each}}
+        </table>
+    {{else}}
+        <p>No hay productos!</p>
+    {{/if}}
+</div>
+{{> footer}}

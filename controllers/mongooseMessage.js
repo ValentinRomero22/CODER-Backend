@@ -1,62 +1,41 @@
-import mongoose, { connect, connect } from 'mongoose'
-import { Message } from '../schema/messageSchema.js'
+import mongoose from 'mongoose'
+import Messages from '../schema/messageSchema.js'
 
-export class MongooseMessege{
-    async mongoConnect(){
+class MongooseMessege{
+    constructor() {
         try{
-            const url = 'mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority'
-            let connect = await connect(url, {
-                useNewUrlParser: true,
-                useUniFiedTopology: true
-            })
+            mongoose.connect('mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority'),
+                { useNewUrlParser: true, useUniFiedTopology: true }
         } catch(error){
-            return { error: 'error' }
+            return { error: 'Error de conexión' }
         }
     }
 
     async getAll(options){
         try{
-            await this.mongoConnect()
-
             let messages
             if(options?.sort == true){
-                messages = await Message.find({}).sort({ date: -1 })
+                messages = await Messages.find({}).sort({ date: -1 })
             } else{
-                messages = await Message.find({})
+                messages = await Messages.find({})
             }
 
             return messages
         } catch(error){
             return { error: 'error' }
-        } finally{
-            mongoose.disconnect()
         }
     }
 
     async save(message){
         try{
-            const { author, text } = message
-            const { id, name, surname, alias, age, avatar } = author
+            message.date = new Date()
 
-            const newMessage = new Message({
-                author: {
-                    id: id,
-                    name: name,
-                    surname: surname,
-                    alias: alias,
-                    age: age,
-                    avatar: avatar,
-                },
-                date: new Date(),
-                text: text
-            })
-
-            const result = await newMessage.save()
-            if(!result) return { error: 'error' }
+            const result = await Messages.create(message)
+            if(!result) return { error: 'errorSave' }
         } catch(error){
             return { error: 'error' }
-        } finally{
-            mongoose.disconnect()
         }
     }
 }
+
+export default MongooseMessege

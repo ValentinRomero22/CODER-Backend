@@ -1,25 +1,7 @@
 const socket = io()
 
-fetch("http://localhost:8080/api/productos-test")
-    .then((res) => {
-        return res.json();
-    })
-    .then((res) => {
-        const products = res.map((product) => {
-            return `<tr>
-                        <td>${product.id}</td>
-                        <td>${product.name}</td>
-                        <td>${product.price}</td>
-                        <td><img src=${product.image} alt=${product.name}></td>
-                    </tr>`
-        })
-
-        document.getElementById('products__container').innerHTML = products
-    })
-
-function sendMessage() {
-    //debugger
-    //e.preventDefault()
+function sendMessage(e) {
+    e.preventDefault()
     const message = {
         author: {
             id: document.getElementById('user').value ,
@@ -31,33 +13,40 @@ function sendMessage() {
         },
         text: document.getElementById('text').value,
     }
-
-    console.log(message)
-
+    
     socket.emit('newMessage', JSON.stringify(message))
-    console.log('aca')
     document.getElementById('text').value = ''
+
+    return false
 }
 
 const titles = `<h2>Listado de productos</h2>
-                    <div class="products__container__titles">
-                        <p class="product__id">ID</p>
-                        <p class="product__title">NOMBRE</p>
-                        <p class="product__price">PRECIO</p>
-                        <p class="product__image__container">IMAGEN</p>
-                    </div>`
+                <div class="products__container__titles">
+                    <p class="product__id">ID</p>
+                    <p class="product__title">NOMBRE</p>
+                    <p class="product__price">PRECIO</p>
+                    <p class="product__image__container">IMAGEN</p>
+                </div>`
 
 socket.on('messages', (data) => {
     let denormalizedChat = denormalize(data)
     let compression = (JSON.stringify(denormalizedChat).length / JSON.stringify(data).length) * 100
 
-    document.getElementById('compression_status').value = `El porcentaje de compresion es de %${compression.toString().slice(0, 5)}`
+    document.getElementById('compression_status').innerText = `El porcentaje de compresion es de %${compression.toString().slice(0, 5)}`
+    
+    if (denormalizedChat.length != 0) {
+        const chatList = denormalizedChat.chats.map((chat) =>{
+            const date = new Date(chat.date)
+            const formatedDate = date.toISOString().replace(/([^T]+)T([^\.]+).*/g, "$1 $2")
 
-    if (data.length != 0) {
-        const chatList = data.reduce((chatList, item) => chatList +
-            `<div>
-                <p>${new Date(item.datetime).toLocaleDateString()} | ${item.user}: ${item.message}</p>
-            </div>`)
+            return `<div class='item_chat_container'>
+                        <span class='item_chat_id'>${chat.author.id}</span>
+                        <span class='item_chat_date'>[${formatedDate}]:</span>
+                        <span class='item_chat_text'>${chat.text}</span>
+                        <img class='image_avatar' src='${chat.author.avatar}' alt='${chat.author.id}'></img>
+                    </div>`
+        }).join(' ')
+
         document.getElementById('chat').innerHTML = chatList
     }
 })

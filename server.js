@@ -1,7 +1,10 @@
 import express from 'express'
-import http from 'http'
+import { createServer } from 'http'
 import { Server } from 'socket.io'
-import { router } from "./routes/products.routes.js"
+import productsRouter from './routes/products.routes.js'
+import MongooseMessege from './controllers/mongooseMessage.js'
+import { normalizedMessages } from './utils/messageNormalize.js'
+import { engine } from 'express-handlebars'
 
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -9,12 +12,11 @@ const __filename = fileURLToPath(import.meta.url)
 export const __dirname = dirname(__filename)
 
 const app = express()
-const httpServer = http.createServer(app)
-const io = new Server(httpServer)
+const httpServer = createServer(app)
+const io = new Server(httpServer, {})
 
 httpServer.listen(process.env.PORT || 8080, () => console.log('Servidor iniciado...'))
 
-import { engine } from 'express-handlebars'
 app.set('view engine', 'hbs')
 app.set('views', './views')
 
@@ -32,20 +34,21 @@ app.engine(
     })
 )
 
+const messagesController = new MongooseMessege()
+
 app.get('/', (req, res) =>{
     res.render('main', { root: __dirname + '/public' })
 })
 
-socketModel(io)
-
-app.use('/api/productos-test', router)
+app.use('/api/productos-test', productsRouter)
 
 io.on('connection', async(socket) =>{
-    let messages = await messagesController.getAll()
-    io.sockets.emit('messages', normalizedMessages(messages))
+    const messages = await messagesController.getAll()
+    const normalized = normalizedMessages(messages)
+
+    io.sockets.emit('messages', normalized)
 
     socket.on('newMessage', async(clientMessage) =>{
-        console.log('aca')
         let message = JSON.parse(clientMessage)
         await messagesController.save(message)
 
