@@ -65,3 +65,14 @@ const denormalize = (data) =>{
 
     return denormalizedMessages
 }
+
+function login(e){
+    e.preventDefault()
+
+    const username = document.getElementById('user').value
+    const password = document.getElementById('password').value
+
+    const user = { username, password }
+
+    socket.emit('login', JSON.stringify(user))
+}

@@ -5,6 +5,7 @@ import productsRouter from './routes/products.routes.js'
 import MongooseMessege from './controllers/mongooseMessage.js'
 import { normalizedMessages } from './utils/messageNormalize.js'
 import { engine } from 'express-handlebars'
+import { session } from 'express-session'
 
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -54,5 +55,31 @@ io.on('connection', async(socket) =>{
 
         let allMessages = await messagesController.getAll({ sort: true })
         io.sockets.emit('messages', normalizedMessages(allMessages))
+    })
+})
+
+app.use(
+    session({
+        secret: 'top secret',
+        cookie: { maxAge: 600000 },
+        resave: true, 
+        saveUnintialized: true
+    })
+)
+
+app.use((req, res, next) =>{
+    req.session.touch()
+    next()
+})
+
+app.get('/logout', (req, res) =>{
+    const user = req.session.user
+
+    req.session.destroy((error) =>{
+        if(error){
+            return res.status(500).render('logout', { error: true })
+        }
+
+        res.status(200).render('logout', { name: user })
     })
 })
