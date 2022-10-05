@@ -66,13 +66,21 @@ const denormalize = (data) =>{
     return denormalizedMessages
 }
 
-function login(e){
+/* function login(e){
     e.preventDefault()
 
     const username = document.getElementById('user').value
     const password = document.getElementById('password').value
 
-    const user = { username, password }
+    //const user = { username, password }
 
-    socket.emit('login', JSON.stringify(user))
-}
+    //socket.emit('login', JSON.stringify(user))
+
+    fetch('http://localhost:8080/login', {
+        method: "POST",
+        body: JSON.stringify({ username: username, password: password }),
+    }) 
+    .then((response) => response.json())
+    .then((json) => console.log(json))
+    .catch((error) => console.log(error))        
+} */

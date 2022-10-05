@@ -1,7 +1,10 @@
 {{> header}}
 <div class="main__container">
     <div class="container">
-        <h2>Chat</h2>
+        <div class="login_header">
+            <h2>Chat</h2>
+            <button class="logout_button">Salir</button>
+        </div>
         <div class="chat_container">
             <form onsubmit="return sendMessage(event)">
                 <input type="email" name="user" id="user" placeholder="Email" value="valentin@coder.com" required>

@@ -278,3 +278,32 @@ footer{
     width: 100%;
     text-align: center;
 }
+
+.login_header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.logout_button{
+    width: max-content;
+    padding: 5px 30px;
+    font-family: var(--open-sans);
+    font-weight: bold;
+    font-size: 16px;
+    color: #2044a5;
+    background-color: #fff;
+    border: 3px solid #2044a5;
+    border-radius: 50px;
+}
+
+.logout_button:hover{
+    color: #fff;
+    background-color: #2044a5;
+    cursor: pointer;
+}
+
+.redirect_label{
+    margin-top: 25px;
+    font-size: 14px;
+    font-style: italic;
+}

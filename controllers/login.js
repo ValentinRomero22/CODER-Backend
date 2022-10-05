@@ -1,37 +1,28 @@
-const login = {
+export const login = {
     auth: (req, res, next) =>{
-        if(req.session?.user === 'valentin' && req.session?.admin){
-            return next()
-        }
+        if(req.session.username != undefined) return next()
         
-        return res.status(401).render('login', { error: true })
+        return res.status(401).render('errorLogin')
     },
     get: (req, res) =>{
         try{
-            res.status(200).render('login')
+            if(req.session.username != undefined){
+                res.render('main', { name: req.session.username })
+            } else{
+                res.render('login')
+            }
         } catch(error){
             return res.status(500).render('login', { error: true })
         }
     },
     post: (req, res) =>{
         try{
-            const { user, password } = req.body
+            const user = req.body
+            req.session.username = user
 
-            if(user != 'valentin' || password != 'vale123'){
-                return res.status(401).render('login', { error: true })
-            }
-
-            req.session.user = user
-            req.session.admin = true
-            const time = 600000
-
-            req.session.cookie.maxAge = new Date(Date.now() + time)
-
-            res.status(200).redirect('main', { root: __dirname + '/public' })
+            res.render('main')
         } catch(error){
-            return res.status(500).render('login', { error: true })
+            return res.status(500).send({ status: 'log in error', body: error })
         }
     }
 }
-
-export default login

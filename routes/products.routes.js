@@ -3,6 +3,6 @@ import { createProducts } from '../controllers/fakerProduct.js';
 
 const productsRouter = Router();
 
-productsRouter.get('/', createProducts.getProducts)
+productsRouter.get('/api/productos-test', createProducts.getProducts)
 
 export default productsRouter

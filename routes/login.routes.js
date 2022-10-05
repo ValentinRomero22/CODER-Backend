@@ -3,7 +3,7 @@ import { login } from '../controllers/login.js'
 
 const loginRouter = Router()
 
-loginRouter.get('/', login.get)
-loginRouter.post('/', login.post)
+loginRouter.get('/login', login.get)
+loginRouter.post('/login', login.post)
 
 export default loginRouter
