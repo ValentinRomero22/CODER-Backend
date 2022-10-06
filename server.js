@@ -1,7 +1,7 @@
 import express from 'express'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
-import { loginRouter, productsRouter, homeRouter } from './routes/main.routes.js'
+import { loginRouter, productsRouter, homeRouter, logoutRouter } from './routes/main.routes.js'
 import MongooseMessege from './controllers/mongooseMessage.js'
 import { normalizedMessages } from './utils/messageNormalize.js'
 import { engine } from 'express-handlebars'
@@ -41,23 +41,26 @@ app.use(
     session({
         store: MongoStore.create({
             mongoUrl: 'mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority',
-            mongoOptions: { useNewUrlParser: true, useUniFiedTopology: true }
+            mongoOptions: { 
+                useNewUrlParser: true, 
+                useUniFiedTopology: true 
+            }
         }),
-        secret: 'top secret',
-        cookie: { maxAge: 600000 },
+        cookie: { 
+            secure: false,
+            httpOnly: false,
+            maxAge: 60000
+        },
         resave: false,
         saveUninitialized: false,
+        secret: 'top secret',
     })
 )
-
-app.use((req, res, next) =>{
-    req.session.touch()
-    next()
-})
 
 app.use('/', productsRouter)
 app.use('/', loginRouter)
 app.use('/', homeRouter)
+app.use('/', logoutRouter)
 
 const messagesController = new MongooseMessege()
 
@@ -73,18 +76,5 @@ io.on('connection', async(socket) =>{
 
         let allMessages = await messagesController.getAll({ sort: true })
         io.sockets.emit('messages', normalizedMessages(allMessages))
-    })
-})
-
-
-app.get('/logout', (req, res) =>{
-    const user = req.session.user
-
-    req.session.destroy((error) =>{
-        if(error){
-            return res.status(500).render('logout', { error: true })
-        }
-
-        res.status(200).render('logout', { name: user })
     })
 })

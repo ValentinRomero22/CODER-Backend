@@ -1,8 +1,15 @@
 {{> header}}
-<div id="products__container" class="products__container">
+<div class="products__container welcome_box">
+    <div class="login_header">
+        <h2>Bienvenido {{user}}!</h2>
+    </div>
+    <form method="get" action="/logout" class="form_logout">
+        <input type="submit" value="Salir"/> 
+    </form>
+</div>
+<div id="products__container" class="products__container welcome_message">
     <div class="login_header">
         <h2>Productos</h2>
-        <button class="logout_button">Salir</button>
     </div>
     {{#if productsExist}}
         <table class="table">

@@ -1,10 +1,10 @@
 import { Router } from "express"
-import { login } from "../controllers/login.js"
+import { updateSessions, isLogged } from "../middlewares/functions.js"
 
 const homeRouter = Router()
 
-homeRouter.get('/', login.auth, (req, res, next) =>{
-    res.render('main', { name: req.session.user })
+homeRouter.get('/', [isLogged, updateSessions], (req, res, next) =>{
+    res.render('main', { user: req.session['logged'].user })
 })
 
 export default homeRouter

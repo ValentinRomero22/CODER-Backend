@@ -282,6 +282,7 @@ footer{
 .login_header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .logout_button{
@@ -306,4 +307,30 @@ footer{
     margin-top: 25px;
     font-size: 14px;
     font-style: italic;
+}
+
+.form_logout{
+    height: auto;
+}
+
+.login{
+    width: 30%;
+}
+
+.login input[type=submit]{
+    margin-top: 20px;
+}
+
+.login p{
+    color: #94231f;
+    font-weight: bold;
+}
+
+.welcome_message{
+    margin-top: 20px;
+}
+
+.welcome_box{
+    display: flex;
+    justify-content: space-between;
 }

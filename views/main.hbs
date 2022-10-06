@@ -1,26 +1,31 @@
 {{> header}}
-<div class="main__container">
-    <div class="container">
-        <div class="login_header">
-            <h2>Chat</h2>
-            <button class="logout_button">Salir</button>
-        </div>
-        <div class="chat_container">
-            <form onsubmit="return sendMessage(event)">
-                <input type="email" name="user" id="user" placeholder="Email" value="valentin@coder.com" required>
-                <input type="text" name="name" id="name" placeholder="Nombre" value="valentin" required>
-                <input type="text" name="surname" id="surname" placeholder="Apellido" value="romero" required>
-                <input type="text" name="alias" id="alias" placeholder="Alias" value="vale" required>
-                <input type="text" name="age" id="age" placeholder="Edad" value="27" required>
-                <input type="text" name="avatar" id="avatar" placeholder="Avatar" value="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png" required>
-                <div class="chat__message__box">
-                    <input class="chat__message" type="text" name="text" id="text" value="Hola!" placeholder="Mensaje">
-                    <input type="submit" value="Enviar">
-                </div>
-            </form>
-            <div class="chat__box" id="chat"></div>
-        </div>
-        <p id="compression_status" class="compression_status">Compression</p>
+<div class="products__container welcome_box">
+    <div class="login_header">
+        <h2>Bienvenido {{user}}!</h2>
     </div>
+    <form method="get" action="/logout" class="form_logout">
+        <input type="submit" value="Salir"/> 
+    </form>
+</div>
+<div class="products__container welcome_message">
+    <div class="login_header">
+        <h2>Chat</h2>
+    </div>
+    <div class="chat_container">
+        <form onsubmit="return sendMessage(event)">
+            <input type="email" name="user" id="user" placeholder="Email" value="valentin@coder.com" required>
+            <input type="text" name="name" id="name" placeholder="Nombre" value="valentin" required>
+            <input type="text" name="surname" id="surname" placeholder="Apellido" value="romero" required>
+            <input type="text" name="alias" id="alias" placeholder="Alias" value="vale" required>
+            <input type="text" name="age" id="age" placeholder="Edad" value="27" required>
+            <input type="text" name="avatar" id="avatar" placeholder="Avatar" value="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png" required>
+            <div class="chat__message__box">
+                <input class="chat__message" type="text" name="text" id="text" value="Hola!" placeholder="Mensaje">
+                <input type="submit" value="Enviar">
+            </div>
+        </form>
+        <div class="chat__box" id="chat"></div>
+    </div>
+    <p id="compression_status" class="compression_status">Compression</p>
 </div>
 {{> footer}}
