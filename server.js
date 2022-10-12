@@ -1,20 +1,28 @@
 import express from 'express'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
-import { loginRouter, productsRouter, homeRouter, logoutRouter } from './routes/main.routes.js'
+import { productsRouter, indexRouter, loginRouter, logoutRouter, signupRouter } from './routes/main.routes.js'
 import MongooseMessege from './controllers/mongooseMessage.js'
 import { normalizedMessages } from './utils/messageNormalize.js'
 import { engine } from 'express-handlebars'
 import session from 'express-session'
+import passport from 'passport'
+import { Strategy as LocalStrategy} from 'passport-local'
+import User from './models/user.js'
+import { createHash, isValidPassword } from './utils/bcryptPassword.js'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+import mongoose from 'mongoose'
+import redis from 'redis'
+import connectRedis from 'connect-redis'
+
+const __filename = fileURLToPath(import.meta.url)
 
 const app = express()
 const PORT = process.env.port || 8080
 const httpServer = createServer(app)
 const io = new Server(httpServer, {})
 
-import { fileURLToPath } from 'url'
-import { dirname, format } from 'path'
-const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 app.use('/public', express.static(__dirname + '/public'))
 
@@ -36,8 +44,101 @@ app.engine(
     })
 )
 
-import MongoStore from 'connect-mongo'
+mongoose.connect(
+    'mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority',
+    { useNewUrlParser: true }
+).then(() => console.log('Conectado a Atlas...'))
+
+passport.use('login', 
+    new LocalStrategy((username, password, done) =>{
+        User.findOne({ username }, (error, user) =>{
+            if(error) {
+                console.log(`Error login ${error}`)
+                return done(error)
+            }
+
+            if(!user) {
+                console.log(`Error usuario '${error}' no encontrado`)
+                return done(null, false)
+            }
+
+            if(!isValidPassword(user, password)) {
+                console.log(`Password '${password}' incorrecta`)
+                return done(null, false)
+            }
+
+            return done(null, user)
+        })
+    })
+)
+
+passport.use('signup',
+    new LocalStrategy(
+        { passReqToCallback: true },
+        (req, username, password, done) =>{
+            User.findOne({ username: username }, function (error, user) {
+                if(error) {
+                    console.log(`Error login ${error}`)
+                    return done(error)
+                }
+
+                if(user) {
+                    console.log(`Usuario '${user}' encontrado`)
+                    return done(null, false)
+                } 
+
+                const newUser = { username, password: createHash(password) }
+
+                User.create(newUser, (error, userCreated) =>{
+                    if(error) {
+                        console.log(`Error al guardar el usuario, error: ${error}`)
+                        return done(error)
+                    }
+
+                    console.log('Usuario registrado correctamente')
+                    return done(null, userCreated)
+                })
+            })
+        }
+    )
+)
+
+passport.serializeUser((user, done) =>{
+    done(null, user._id)
+})
+
+passport.deserializeUser((id, done) =>{
+    User.findById(id, done)
+})
+
+const client = redis.createClient({ legacyMode: true })
+client.connect()
+const RedisStore = connectRedis(session)
+
 app.use(
+    session({
+        store: new RedisStore({ host: 'localhost', port: 6379, client, ttl: 300 }),
+        secret: 'top-secret',
+        cookie: {
+            httpOnly: false,
+            secure: false,
+            maxAge: 86400000
+        },
+        rolling: true,
+        resave: true,
+        saveUninitialized: false
+    })
+)
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use((req, res, next) =>{
+    req.session.touch()
+    next()
+})
+
+/* app.use(
     session({
         store: MongoStore.create({
             mongoUrl: 'mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority',
@@ -55,12 +156,17 @@ app.use(
         saveUninitialized: false,
         secret: 'top secret',
     })
-)
+) */
+
+app.get('/', (req, res) =>{
+    res.redirect('/login')
+})
 
 app.use('/', productsRouter)
 app.use('/', loginRouter)
-app.use('/', homeRouter)
+app.use('/', indexRouter)
 app.use('/', logoutRouter)
+app.use('/', signupRouter)
 
 const messagesController = new MongooseMessege()
 

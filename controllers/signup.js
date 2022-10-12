@@ -1,10 +1,10 @@
-export const login = {
+export const signup = {
     get: (req, res) =>{
         try{
             if(req.isAuthenticated()){
-                return res.redirect('/')
+                res.redirect('/')
             } else{
-                res.render('login')
+                res.render('signup')
             }
         } catch(error){
             return res.status(500).send({ error: true })
@@ -12,15 +12,18 @@ export const login = {
     },
     post: (req, res) =>{
         try{
+            console.log(req)
+            console.log(req.user)
             req.session.username = req.user
-            return res.redirect('/')
+            res.redirect('/')
         } catch(error){
-            return res.status(500).send({ error: true })
+            //return res.status(500).send({ error: true })
+            console.log(error)
         }
     },
     error: (req, res) =>{
         try{
-            res.render('errorLogin')
+            res.render('/errorLogin')
         } catch(error){
             return res.status(500).send({ error: true })
         }

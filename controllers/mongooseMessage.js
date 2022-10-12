@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import Messages from '../schema/messageSchema.js'
+import Messages from '../models/message.js'
 
 class MongooseMessege{
     constructor() {
