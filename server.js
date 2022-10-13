@@ -7,8 +7,8 @@ import { normalizedMessages } from './utils/messageNormalize.js'
 import { engine } from 'express-handlebars'
 import session from 'express-session'
 import passport from 'passport'
-import { Strategy as LocalStrategy} from 'passport-local'
-import User from './models/user.js'
+import { Strategy as LocalStrategy } from 'passport-local'
+import Users from './models/user.js'
 import { createHash, isValidPassword } from './utils/bcryptPassword.js'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
@@ -34,10 +34,10 @@ app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'hbs')
 app.set('views', './views')
 
-app.engine( 
+app.engine(
     'hbs',
     engine({
-        extname: 'hbs', 
+        extname: 'hbs',
         defaultLayout: 'index.hbs',
         layoutsDir: __dirname + '/views/layouts',
         partialsDir: __dirname + '/views/partials',
@@ -49,20 +49,24 @@ mongoose.connect(
     { useNewUrlParser: true }
 ).then(() => console.log('Conectado a Atlas...'))
 
-passport.use('login', 
-    new LocalStrategy((username, password, done) =>{
-        User.findOne({ username }, (error, user) =>{
-            if(error) {
+const client = redis.createClient({ legacyMode: true })
+client.connect()
+const RedisStore = connectRedis(session)
+
+passport.use("login",
+    new LocalStrategy((username, password, done) => {
+        Users.findOne({ username: username }, (error, user) => {
+            if (error) {
                 console.log(`Error login ${error}`)
                 return done(error)
             }
 
-            if(!user) {
+            if (!user) {
                 console.log(`Error usuario '${error}' no encontrado`)
                 return done(null, false)
             }
 
-            if(!isValidPassword(user, password)) {
+            if (!isValidPassword(user, password)) {
                 console.log(`Password '${password}' incorrecta`)
                 return done(null, false)
             }
@@ -72,24 +76,25 @@ passport.use('login',
     })
 )
 
-passport.use('signup',
+passport.use("signup",
     new LocalStrategy(
         { passReqToCallback: true },
         (req, username, password, done) =>{
-            User.findOne({ username: username }, function (error, user) {
+            //console.log('server 83') no llego a esta línea...
+            Users.findOne({ username: username }, function (error, user) {
                 if(error) {
                     console.log(`Error login ${error}`)
                     return done(error)
                 }
 
                 if(user) {
-                    console.log(`Usuario '${user}' encontrado`)
+                    console.log(`Usuario '${user}' ya existe`)
                     return done(null, false)
                 } 
 
-                const newUser = { username, password: createHash(password) }
+                const newUser = { username: username, password: createHash(password) }
 
-                User.create(newUser, (error, userCreated) =>{
+                Users.create(newUser, (error, userCreated) =>{
                     if(error) {
                         console.log(`Error al guardar el usuario, error: ${error}`)
                         return done(error)
@@ -103,17 +108,13 @@ passport.use('signup',
     )
 )
 
-passport.serializeUser((user, done) =>{
+passport.serializeUser((user, done) => {
     done(null, user._id)
 })
 
-passport.deserializeUser((id, done) =>{
-    User.findById(id, done)
+passport.deserializeUser((id, done) => {
+    Users.findById(id, done)
 })
-
-const client = redis.createClient({ legacyMode: true })
-client.connect()
-const RedisStore = connectRedis(session)
 
 app.use(
     session({
@@ -133,7 +134,7 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use((req, res, next) =>{
+app.use((req, res, next) => {
     req.session.touch()
     next()
 })
@@ -158,7 +159,7 @@ app.use((req, res, next) =>{
     })
 ) */
 
-app.get('/', (req, res) =>{
+app.get('/', (req, res) => {
     res.redirect('/login')
 })
 
@@ -170,13 +171,13 @@ app.use('/', signupRouter)
 
 const messagesController = new MongooseMessege()
 
-io.on('connection', async(socket) =>{
+io.on('connection', async (socket) => {
     const messages = await messagesController.getAll()
     const normalized = normalizedMessages(messages)
 
     io.sockets.emit('messages', normalized)
 
-    socket.on('newMessage', async(clientMessage) =>{
+    socket.on('newMessage', async (clientMessage) => {
         let message = JSON.parse(clientMessage)
         await messagesController.save(message)
 

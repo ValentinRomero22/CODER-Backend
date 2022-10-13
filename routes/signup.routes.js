@@ -9,9 +9,9 @@ signupRouter.get('/signup', signup.get)
 signupRouter.get('/errorSignup', signup.error)
 
 signupRouter.post(
-    '/signup', 
-    passport.authenticate('signup', { failureRedirect: '/errorSignup' },
+    '/signup',
+    passport.authenticate("singup", { failureRedirect: '/errorSignup' }),
     signup.post
-))
+)
 
 export default signupRouter

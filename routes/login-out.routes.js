@@ -26,7 +26,7 @@ loginRouter.get('/errorLogin', login.error)
 
 loginRouter.post(
     '/login', 
-    passport.authenticate('login', { failureRedirect: '/errorLogin' }), 
+    passport.authenticate("login", { failureRedirect: '/errorLogin' }), 
     login.post
 )
 
@@ -36,7 +36,7 @@ logoutRouter.get('/logout', (req, res) =>{
         req.logout((error) =>{
             if(error) res.json(error)
 
-            res.status(200).render('/logout', { user })
+            res.status(200).render('logout', { name })
         })
     } else{
         res.redirect('/login')
