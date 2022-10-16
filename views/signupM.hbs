@@ -1,0 +1,14 @@
+{{> header}}
+    <div class="products__container login">
+        <h2>Registrarse</h2>
+        <button onclick="location.href='/login'">Ir a Login</button>
+        <form class="form_logout" method="post" action="/signup">
+            <input type="text" id="user" name="user" placeholder="Usuario"/>
+            <input type="password" id="password" name="password" placeholder="Contraseña" autocomplete="off"/>
+            <input type="submit" value="Registrarse"/>
+        </form>
+        {{#if message}}
+            <p>{{message}}</p>
+        {{/if}}
+    </div>
+{{> footer}}

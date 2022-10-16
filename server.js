@@ -53,24 +53,26 @@ const client = redis.createClient({ legacyMode: true })
 client.connect()
 const RedisStore = connectRedis(session)
 
-passport.use("login",
+passport.use(
+    "login",
     new LocalStrategy((username, password, done) => {
-        Users.findOne({ username: username }, (error, user) => {
+        Users.findOne({ username }, (error, user) => {
             if (error) {
                 console.log(`Error login ${error}`)
                 return done(error)
             }
 
             if (!user) {
-                console.log(`Error usuario '${error}' no encontrado`)
+                console.log(`Error usuario '${user}' no encontrado`)
                 return done(null, false)
             }
 
-            if (!isValidPassword(user, password)) {
-                console.log(`Password '${password}' incorrecta`)
+            if (!isValidPassword(password, user)) {
+                console.log(`Password '${password}' incorrecta`);
                 return done(null, false)
             }
 
+            console.log(user)
             return done(null, user)
         })
     })
@@ -79,23 +81,22 @@ passport.use("login",
 passport.use("signup",
     new LocalStrategy(
         { passReqToCallback: true },
-        (req, username, password, done) =>{
-            //console.log('server 83') no llego a esta línea...
+        (req, username, password, done) => {
             Users.findOne({ username: username }, function (error, user) {
-                if(error) {
+                if (error) {
                     console.log(`Error login ${error}`)
                     return done(error)
                 }
 
-                if(user) {
+                if (user) {
                     console.log(`Usuario '${user}' ya existe`)
                     return done(null, false)
-                } 
+                }
 
                 const newUser = { username: username, password: createHash(password) }
 
-                Users.create(newUser, (error, userCreated) =>{
-                    if(error) {
+                Users.create(newUser, (error, userCreated) => {
+                    if (error) {
                         console.log(`Error al guardar el usuario, error: ${error}`)
                         return done(error)
                     }
@@ -108,62 +109,42 @@ passport.use("signup",
     )
 )
 
-passport.serializeUser((user, done) => {
-    done(null, user._id)
-})
-
-passport.deserializeUser((id, done) => {
-    Users.findById(id, done)
-})
-
 app.use(
     session({
-        store: new RedisStore({ host: 'localhost', port: 6379, client, ttl: 300 }),
-        secret: 'top-secret',
+        store: new RedisStore({ host: "localhost", port: 6379, client, ttl: 300 }),
+        secret: "keyboard cat",
         cookie: {
             httpOnly: false,
             secure: false,
-            maxAge: 86400000
+            maxAge: 86400000, // 1 dia
         },
         rolling: true,
         resave: true,
-        saveUninitialized: false
+        saveUninitialized: false,
     })
-)
+);
 
 app.use(passport.initialize())
 app.use(passport.session())
 
+passport.serializeUser((user, done) => {
+    done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+    Users.findById(id, done);
+});
+
 app.use((req, res, next) => {
-    req.session.touch()
-    next()
-})
+    req.session.touch();
+    next();
+});
 
-/* app.use(
-    session({
-        store: MongoStore.create({
-            mongoUrl: 'mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority',
-            mongoOptions: { 
-                useNewUrlParser: true, 
-                useUniFiedTopology: true 
-            }
-        }),
-        cookie: { 
-            secure: false,
-            httpOnly: false,
-            maxAge: 60000
-        },
-        resave: false,
-        saveUninitialized: false,
-        secret: 'top secret',
-    })
-) */
-
-app.get('/', (req, res) => {
+/* app.get('/', (req, res) => {
     res.redirect('/login')
-})
+}) */
 
-app.use('/', productsRouter)
+app.use('/api/productos-test', productsRouter)
 app.use('/', loginRouter)
 app.use('/', indexRouter)
 app.use('/', logoutRouter)

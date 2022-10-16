@@ -8,9 +8,12 @@ const indexRouter = Router()
 }) */
 
 indexRouter.get('/', (req, res, next) =>{
+    console.log(req.isAuthenticated())
     if(req.isAuthenticated()){
+        console.log('isAuthenticated')
         res.render('main', { user: req.session.username })
     } else{
+        console.log('error de login?')
         res.redirect('/errorLogin')
     }
 })
