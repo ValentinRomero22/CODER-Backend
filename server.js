@@ -72,7 +72,6 @@ passport.use(
                 return done(null, false)
             }
 
-            console.log(user)
             return done(null, user)
         })
     })
@@ -116,7 +115,8 @@ app.use(
         cookie: {
             httpOnly: false,
             secure: false,
-            maxAge: 86400000, // 1 dia
+            //maxAge: 86400000,
+            maxAge: 600000,
         },
         rolling: true,
         resave: true,
@@ -144,7 +144,7 @@ app.use((req, res, next) => {
     res.redirect('/login')
 }) */
 
-app.use('/api/productos-test', productsRouter)
+app.use('/', productsRouter)
 app.use('/', loginRouter)
 app.use('/', indexRouter)
 app.use('/', logoutRouter)

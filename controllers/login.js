@@ -1,6 +1,5 @@
 export const login = {
     get: (req, res) =>{
-        console.log('login get')
         try{
             if(req.isAuthenticated()){
                 res.redirect('/')
@@ -12,7 +11,6 @@ export const login = {
         }
     },
     post: (req, res) =>{
-        console.log('login post')
         try{
             const { username } = req.user
             req.session.username = username
@@ -22,7 +20,6 @@ export const login = {
         }
     },
     error: (req, res) => {
-        console.log('login error')
         try {
             res.render('errorLogin')
         } catch (error) {

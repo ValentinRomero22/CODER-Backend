@@ -17,14 +17,14 @@ loginRouter.post(
 
 logoutRouter.get('/logout', (req, res) =>{
     if(req.isAuthenticated()){
-        const name = req.session.username
+        const user = req.session.username
         
         req.logout((error) =>{
             if(error) res.json(error)
 
         })
         
-        res.render('logout', { name: name })
+        res.render('logout', { user: user })
     } else{
         res.redirect('/login')
     }

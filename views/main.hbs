@@ -3,10 +3,10 @@
     <div class="login_header">
         <h2>Bienvenido {{user}}!</h2>
     </div>
-    <a href="/logout" id="logout">Salir</a>
-    {{!-- <form method="get" action="/logout" class="form_logout">
-        <input type="submit" value="Salir"/> 
-    </form> --}}
+    <div>
+        <a class="boton boton_main" href="/api/productos-test" id="a-products">Ver productos</a>
+        <a class="boton boton_salir" href="/logout" id="logout">Salir</a>
+    </div>
 </div>
 <div class="products__container welcome_message">
     <div class="login_header">
@@ -19,10 +19,11 @@
             <input type="text" name="surname" id="surname" placeholder="Apellido" value="romero" required>
             <input type="text" name="alias" id="alias" placeholder="Alias" value="vale" required>
             <input type="text" name="age" id="age" placeholder="Edad" value="27" required>
-            <input type="text" name="avatar" id="avatar" placeholder="Avatar" value="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png" required>
+            <input type="text" name="avatar" id="avatar" placeholder="Avatar"
+                value="https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-256.png" required>
             <div class="chat__message__box">
                 <input class="chat__message" type="text" name="text" id="text" value="Hola!" placeholder="Mensaje">
-                <input type="submit" value="Enviar">
+                <input class="boton boton_main" type="submit" value="Enviar">
             </div>
         </form>
         <div class="chat__box" id="chat"></div>

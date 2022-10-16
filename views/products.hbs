@@ -3,33 +3,34 @@
     <div class="login_header">
         <h2>Bienvenido {{user}}!</h2>
     </div>
-    <form method="get" action="/logout" class="form_logout">
-        <input type="submit" value="Salir"/> 
-    </form>
+    <div>
+        <a class="boton boton_main" href="/" id="a-main">Ver chat</a>
+        <a class="boton boton_salir" href="/logout" id="logout">Salir</a>
+    </div>
 </div>
 <div id="products__container" class="products__container welcome_message">
     <div class="login_header">
         <h2>Productos</h2>
     </div>
     {{#if productsExist}}
-        <table class="table">
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Imagen</th>
-            </tr>
-            {{#each products}}
-                <tr>
-                    <td>{{this.id}}</td>
-                    <td>{{this.name}}</td>
-                    <td>{{this.price}}</td>
-                    <td><img src="{{this.image}}" class="product-img"/></td>                    
-                </tr>
-            {{/each}}
-        </table>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Imagen</th>
+        </tr>
+        {{#each products}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.price}}</td>
+            <td><img src="{{this.image}}" class="product-img" /></td>
+        </tr>
+        {{/each}}
+    </table>
     {{else}}
-        <p>No hay productos!</p>
+    <p>No hay productos!</p>
     {{/if}}
 </div>
 {{> footer}}

@@ -45,7 +45,7 @@ h2{
 }
 
 form{
-    height: 250px;
+    height: 300px;
     margin: 10px 0;
     padding: 10px;
     display: flex;
@@ -61,11 +61,58 @@ form input{
     border-bottom: 1px solid #808080;
 }
 
-form input[type=text]{
+form input[type=text], [type=email]{
     margin: 10px 0;
 }
 
-form input[type=submit]{
+.boton{
+    width: max-content;
+    padding: 5px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    text-decoration: none;
+}
+
+.boton_main{
+    color: #2044a5;
+    background-color: #fff;
+    border: 3px solid #2044a5;
+}
+
+.boton:hover{
+    color: #fff;
+    background-color: #2044a5;
+    cursor: pointer;
+}
+
+.boton_salir{
+    color: #be1f34;
+    background-color: #fff;
+    border: 3px solid #be1f34;
+    margin-left: 10px;
+}
+
+.boton_salir:hover{
+    color: #fff;
+    background-color: #be1f34;
+    cursor: pointer;
+}
+
+.boton_change{
+    color: #0b6d29;
+    background-color: #fff;
+    border: 3px solid #0b6d29;
+    margin-left: 10px;
+}
+
+.boton_change:hover{
+    color: #fff;
+    background-color: #0b6d29;
+    cursor: pointer;
+}
+
+/* form input[type=submit]{
     width: max-content;
     padding: 5px 30px;
     font-weight: bold;
@@ -79,7 +126,7 @@ form input[type=submit]:hover{
     color: #fff;
     background-color: #2044a5;
     cursor: pointer;
-}
+} */
 
 .brand{
     font-family: var(--raleway);
@@ -322,8 +369,8 @@ footer{
 }
 
 .login p{
-    color: #94231f;
-    font-weight: bold;
+    padding: 10px;
+    font-size: 16px;
 }
 
 .welcome_message{
@@ -333,4 +380,5 @@ footer{
 .welcome_box{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }

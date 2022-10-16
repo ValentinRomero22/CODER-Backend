@@ -1,6 +1,5 @@
 export const signup = {
     get: (req, res) => {
-        console.log('signup get')
         try{
             if(req.isAuthenticated()){
                 res.redirect('/')
@@ -12,7 +11,6 @@ export const signup = {
         }
     },
     post: (req, res) => {
-        console.log('signup post')
         try {
             const { username } = req.user
             req.session.username = username
@@ -22,7 +20,6 @@ export const signup = {
         }
     },
     error: (req, res) => {
-        console.log('signup error')
         try {
             res.render('errorSignup')
         } catch (error) {

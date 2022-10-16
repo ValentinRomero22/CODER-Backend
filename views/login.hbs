@@ -3,11 +3,12 @@
 <div class="products__container login">
     <h1>Login</h1>
     <form class="form_logout" method="post" action="/login">
-        <input placeholder="Usuario" name="username" />
-        <input placeholder="Contraseña" name="password" />
-        <input type="submit" value="Ingresar" />
+        <input type="email" placeholder="Email" name="username" required />
+        <input type="text" placeholder="Contraseña" name="password" required/>
+        <input class="boton boton_main" type="submit" value="Ingresar" />
     </form>
-    <a href="/signup">Ir a signup</a>
+    <p>No tienes cuenta? Registrate!</p>
+    <a class="boton boton_change" href="/signup">Ir a signup</a>
 </div>
 
 {{> footer}}
