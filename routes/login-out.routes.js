@@ -24,7 +24,7 @@ logoutRouter.get('/logout', (req, res) =>{
 
         })
         
-        res.render('logout', { user: user })
+        res.render('pages/logout', { user: user })
     } else{
         res.redirect('/login')
     }

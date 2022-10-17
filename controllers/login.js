@@ -4,7 +4,7 @@ export const login = {
             if(req.isAuthenticated()){
                 res.redirect('/')
             } else{
-                res.render('login')
+                res.render('pages/login')
             }
         } catch(error){
             return res.status(500).send({ error: true })
@@ -21,7 +21,7 @@ export const login = {
     },
     error: (req, res) => {
         try {
-            res.render('errorLogin')
+            res.render('pages/errorLogin')
         } catch (error) {
             return res.status(500).send({ error: true })
         }

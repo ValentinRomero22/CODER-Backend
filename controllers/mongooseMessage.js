@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
 import Messages from '../models/message.js'
+import { MONGOPAS } from '../config.js'
 
 class MongooseMessege{
     constructor() {
         try{
-            mongoose.connect('mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority'),
+            mongoose.connect(`mongodb+srv://valentin:${MONGOPAS}@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority`),
                 { useNewUrlParser: true, useUniFiedTopology: true }
         } catch(error){
             return { error: 'Error de conexión' }

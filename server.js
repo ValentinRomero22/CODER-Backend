@@ -1,7 +1,15 @@
 import express from 'express'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
-import { productsRouter, indexRouter, loginRouter, logoutRouter, signupRouter } from './routes/main.routes.js'
+import { 
+    productsRouter,
+    indexRouter, 
+    loginRouter, 
+    logoutRouter, 
+    signupRouter, 
+    randomRouter,
+    infoRouter
+} from './routes/main.routes.js'
 import MongooseMessege from './controllers/mongooseMessage.js'
 import { normalizedMessages } from './utils/messageNormalize.js'
 import { engine } from 'express-handlebars'
@@ -15,11 +23,12 @@ import { dirname } from 'path'
 import mongoose from 'mongoose'
 import redis from 'redis'
 import connectRedis from 'connect-redis'
+import { PORT, MONGOPAS } from './config.js'
 
 const __filename = fileURLToPath(import.meta.url)
 
 const app = express()
-const PORT = process.env.port || 8080
+//const PORT = process.env.port || 8080
 const httpServer = createServer(app)
 const io = new Server(httpServer, {})
 
@@ -45,7 +54,8 @@ app.engine(
 )
 
 mongoose.connect(
-    'mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority',
+    //'mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority',
+    `mongodb+srv://valentin:${MONGOPAS}@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority`,
     { useNewUrlParser: true }
 ).then(() => console.log('Conectado a Atlas...'))
 
@@ -149,6 +159,12 @@ app.use('/', loginRouter)
 app.use('/', indexRouter)
 app.use('/', logoutRouter)
 app.use('/', signupRouter)
+app.use('/', randomRouter)
+app.use('/', infoRouter)
+
+app.all('*', (req, res) =>{
+    res.status(404).send('Ruta no encontrada')
+})
 
 const messagesController = new MongooseMessege()
 
