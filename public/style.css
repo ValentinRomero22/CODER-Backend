@@ -112,22 +112,6 @@ form input[type=text], [type=email]{
     cursor: pointer;
 }
 
-/* form input[type=submit]{
-    width: max-content;
-    padding: 5px 30px;
-    font-weight: bold;
-    color: #2044a5;
-    background-color: #fff;
-    border: 3px solid #2044a5;
-    border-radius: 50px;
-}
-
-form input[type=submit]:hover{
-    color: #fff;
-    background-color: #2044a5;
-    cursor: pointer;
-} */
-
 .brand{
     font-family: var(--raleway);
     font-size: 3rem;
@@ -381,4 +365,13 @@ footer{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.form_fork{
+    height: 100px;
+    width: 250px;
+}
+
+.fork_number{
+    width: 100px;
 }

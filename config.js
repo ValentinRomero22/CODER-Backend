@@ -1,12 +1,13 @@
 import parseArgs from 'minimist'
 import * as dotenv from 'dotenv'
 
+const options = { default: { PORT: 8080 }, alias: { p: 'PORT' } }
+const args = parseArgs(process.argv.slice(2), options)
+const PORT = args.PORT
+
 dotenv.config()
 
-const args = parseArgs(process.argv.slice(2))
+const MONGO_CONNECTION = process.env.MONGO_CONNECTION
+const SECRET_SESSION = process.env.SECRET_SESSION
 
-//const SECRET = process.env.secret
-const PORT = args.PORT || process.env.port || 8000 // NO TIENE QUE TOMARLO DESDE EL .ENV
-const MONGOPAS = process.env.MONGOPAS
-
-export { PORT, MONGOPAS }
+export { SECRET_SESSION, MONGO_CONNECTION, PORT }

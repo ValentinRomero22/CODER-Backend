@@ -23,12 +23,11 @@ import { dirname } from 'path'
 import mongoose from 'mongoose'
 import redis from 'redis'
 import connectRedis from 'connect-redis'
-import { PORT, MONGOPAS } from './config.js'
+import { SECRET_SESSION, MONGO_CONNECTION, PORT } from './config.js'
 
 const __filename = fileURLToPath(import.meta.url)
 
 const app = express()
-//const PORT = process.env.port || 8080
 const httpServer = createServer(app)
 const io = new Server(httpServer, {})
 
@@ -54,8 +53,8 @@ app.engine(
 )
 
 mongoose.connect(
-    //'mongodb+srv://valentin:valentin.1234@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority',
-    `mongodb+srv://valentin:${MONGOPAS}@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority`,
+    MONGO_CONNECTION,
+    //`mongodb+srv://valentin:${MONGOPAS}@cluster0.kuinqws.mongodb.net/?retryWrites=true&w=majority`,
     { useNewUrlParser: true }
 ).then(() => console.log('Conectado a Atlas...'))
 
@@ -121,7 +120,7 @@ passport.use("signup",
 app.use(
     session({
         store: new RedisStore({ host: "localhost", port: 6379, client, ttl: 300 }),
-        secret: "keyboard cat",
+        secret: SECRET_SESSION,
         cookie: {
             httpOnly: false,
             secure: false,
