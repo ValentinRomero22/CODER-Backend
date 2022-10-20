@@ -375,3 +375,32 @@ footer{
 .fork_number{
     width: 100px;
 }
+
+.div_info{
+    display: flex;
+    flex-direction: column;
+}
+
+.table_info{
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.bold_info{
+    font-weight: bold;
+}
+
+.boton_nav{
+    padding: 5px 15px;
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    background-color: transparent;
+    text-decoration: none;
+    color: #000;
+}
+
+.boton_nav:hover{
+    color: #2044a5;
+}

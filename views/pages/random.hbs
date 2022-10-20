@@ -1,10 +1,13 @@
 {{> header}}
+<script src="../../public/random.js" defer></script>
 <div class="products__container welcome_box">
     <div class="login_header">
         <h2>Bienvenido {{user}}!</h2>
     </div>
     <div>
-        <a class="boton boton_main" href="/api/productos-test" id="a-products">Ver productos</a>
+        <a class="boton_nav" href="/" id="logout">Ver chat</a>
+        <a class="boton_nav" href="/info" id="logout">Ver info</a>
+        <a class="boton_nav" href="/api/productos-test" id="a-products">Ver productos</a>
         <a class="boton boton_salir" href="/logout" id="logout">Salir</a>
     </div>
 </div>
@@ -13,7 +16,7 @@
         <h2>Generar números random - Fork</h2>
     </div>
     <div>
-        <form class="form_fork" method="post" action="/api/randoms">
+        <form class="form_fork" method="post" action="/api/random">
             <div class="chat__message__box">
                 <input class="fork_number" type="number" name="quantity" id="quantity" placeholder="Cantidad" max="500000000" required>
                 <input class="boton boton_main" type="submit" value="Enviar">

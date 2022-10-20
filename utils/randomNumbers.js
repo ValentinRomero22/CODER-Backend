@@ -1,17 +1,17 @@
-process.on('message', (params) =>{
-    const { message, quantity } = params
+process.on('message', (data) => {
+    const { message, quantity } = data
 
-    const object = {}
+    if (message == 'start') {
+        const object = {}
 
-    if(message == 'start'){
-        for (let i = 0; i < quantity; i++){
+        for (let i = 0; i < quantity; i++) {
             let aux = Math.floor(Math.random() * 1000 + 1)
-            
-            object[aux] 
-            ? object[aux] = object[aux] +1
-            : object[aux] = 1
+
+            object[aux]
+                ? object[aux] = object[aux] + 1
+                : object[aux] = 1
         }
 
-        process.send(object)
+        process.send({object})
     }
 })

@@ -1,4 +1,4 @@
-export const updateSessions = (req, res, next) =>{
+/* export const updateSessions = (req, res, next) =>{
     req.session._garbage = Date()
     req.session.touch()
     
@@ -22,4 +22,10 @@ export const returnLogin = (req, res, next) =>{
     if(req.session['logged']) return res.redirect('/')
         
     return next()
+} */
+
+export const isAuthenticated = (req, res, next) =>{
+    req.isAuthenticated()
+    ? next()
+    : res.redirect('/login')
 }
