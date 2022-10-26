@@ -1,0 +1,11 @@
+{{> header}}
+    <div class="products__container">
+        <div class="login_header">
+            <h2>Hasta luego {{user}}</h2>
+        </div>
+        <p class="redirect_label">Redireccionando a login...</p>
+    </div>
+    <script>
+        setTimeout(() => window.location.href = '/login', 2000)
+    </script>
+{{> footer}}

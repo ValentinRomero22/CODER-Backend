@@ -1,0 +1,406 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --raleway: 'Raleway', sans-serif;
+    --open-sans: 'Open Sans', sans-serif;
+}
+
+body{
+    background-color: #fff;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header{
+    width: 100%;
+    min-height: 70px;
+    padding: 0 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2044a5;
+}
+
+h1{
+    margin: 15px;
+    text-align: center;
+    font-size: 2.5rem;
+    font-family: var(--raleway);
+    color: #2044a5;
+}
+
+h2{
+    font-size: 2rem;
+    font-family: var(--raleway);
+    color: #2044a5;
+}
+
+form{
+    height: 300px;
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: var(--open-sans);
+}
+
+form input{
+    font-family: var(--open-sans);
+    font-size: 1rem;
+    border: transparent;
+    border-bottom: 1px solid #808080;
+}
+
+form input[type=text], [type=email]{
+    margin: 10px 0;
+}
+
+.boton{
+    width: max-content;
+    padding: 5px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    text-decoration: none;
+}
+
+.boton_main{
+    color: #2044a5;
+    background-color: #fff;
+    border: 3px solid #2044a5;
+}
+
+.boton:hover{
+    color: #fff;
+    background-color: #2044a5;
+    cursor: pointer;
+}
+
+.boton_salir{
+    color: #be1f34;
+    background-color: #fff;
+    border: 3px solid #be1f34;
+    margin-left: 10px;
+}
+
+.boton_salir:hover{
+    color: #fff;
+    background-color: #be1f34;
+    cursor: pointer;
+}
+
+.boton_change{
+    color: #0b6d29;
+    background-color: #fff;
+    border: 3px solid #0b6d29;
+    margin-left: 10px;
+}
+
+.boton_change:hover{
+    color: #fff;
+    background-color: #0b6d29;
+    cursor: pointer;
+}
+
+.brand{
+    font-family: var(--raleway);
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+.header__nav{
+    padding-bottom: 5px;
+    font-family: var(--raleway);
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+}
+
+.header__nav:hover{
+    border-bottom: 3px solid #fff;
+}
+
+.main__container{
+    width: 80%;
+    margin: 50 auto;
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px;
+}
+
+.container{
+    width: 100%;
+    padding: 20px;
+    font-family: var(--open-sans);
+}
+
+.form--container{
+    width: 40%;
+}
+
+.chat_container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat_container form{
+    width: 48%;
+}
+
+.chat_container .chat__box{
+    width: 48%;
+}
+
+.products__container{
+    width: 80%;
+    margin: 50 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px;
+    font-family: var(--open-sans);
+    font-size: 20px;
+}
+
+.products__container__titles{
+    width: 100%;
+    margin: 20px 0 20px;
+    padding: 0 10px;
+    display: flex;
+    font-weight: bold;
+    color: #000;
+}
+
+.products__container__message{
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.product{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+
+.product:hover{
+    box-shadow: 0px 0px 10px 0px;
+}
+
+.product__id{
+    width: 10%;
+    color: #808080;
+}
+
+.product__title{
+    width: 50%;
+    text-align: center;
+}
+
+.product__price{
+    width: 20%;
+    text-align: center;
+}
+
+.product__image__container{
+    width: 20%;
+    text-align: center;
+}
+
+.product__image{
+    display: block;
+    margin: 0 auto;
+    width: 80px;
+    height: 80px;
+    font-size: 14px;
+}
+
+footer{
+    height: max-content;
+    margin-top: auto;
+    padding: 25px 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: var(--open-sans);
+    color: #fff;
+    background-color: #2044a5;
+}
+
+.footer__brand{
+    font-family: var(--raleway);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.success__text{
+    font-family: var(--open-sans);
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.chat__box{
+    border-radius: 5px;
+    background-color: rgb(240, 240, 240);
+    overflow-y: scroll;
+}
+
+.chat__message__box{
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat__message{
+    width: 100%;
+    margin-right: 20px;
+}
+
+.compression_status{
+    margin-top: 10px;
+    font-size: 14px;
+    font-style: italic;
+    color: #6c8dfa;
+}
+
+.item_chat_container{
+    display: flex;
+    align-items: center;
+    margin: 10px 5px;
+}
+
+.image_avatar{
+    width: 40px;
+}
+
+.item_chat_id{
+    font-weight: bold;
+    color: #2044a5;
+    margin-right: 5px;
+}
+
+.item_chat_date{
+    color: #94231f;
+    margin-right: 5px;
+}
+
+.item_chat_text{
+    color: #004b00;
+    margin-right: 5px;
+}
+
+.table{
+    width: 100%;
+    text-align: center;
+}
+
+.login_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout_button{
+    width: max-content;
+    padding: 5px 30px;
+    font-family: var(--open-sans);
+    font-weight: bold;
+    font-size: 16px;
+    color: #2044a5;
+    background-color: #fff;
+    border: 3px solid #2044a5;
+    border-radius: 50px;
+}
+
+.logout_button:hover{
+    color: #fff;
+    background-color: #2044a5;
+    cursor: pointer;
+}
+
+.redirect_label{
+    margin-top: 25px;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.form_logout{
+    height: auto;
+}
+
+.login{
+    width: 30%;
+}
+
+.login input[type=submit]{
+    margin-top: 20px;
+}
+
+.login p{
+    padding: 10px;
+    font-size: 16px;
+}
+
+.welcome_message{
+    margin-top: 20px;
+}
+
+.welcome_box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form_fork{
+    height: 100px;
+    width: 250px;
+}
+
+.fork_number{
+    width: 100px;
+}
+
+.div_info{
+    display: flex;
+    flex-direction: column;
+}
+
+.table_info{
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.bold_info{
+    font-weight: bold;
+}
+
+.boton_nav{
+    padding: 5px 15px;
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    background-color: transparent;
+    text-decoration: none;
+    color: #000;
+}
+
+.boton_nav:hover{
+    color: #2044a5;
+}
