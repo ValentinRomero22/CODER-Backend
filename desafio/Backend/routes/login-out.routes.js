@@ -2,6 +2,7 @@ const { Router } = require('express')
 const { login } = require('../controllers/login')
 const passport = require('passport')
 const { isAuthenticated } = require('../middlewares/functions')
+const { errorLogger } = require('../utils/winstonLogger')
 
 const loginRouter = Router()
 const logoutRouter = Router()
@@ -20,6 +21,7 @@ logoutRouter.get('/logout', isAuthenticated, (req, res) => {
     const user = req.session.username
 
     req.logout((error) => {
+        errorLogger.error(`login-out.routes: ${error}`)
         if (error) res.json(error)
     })
 

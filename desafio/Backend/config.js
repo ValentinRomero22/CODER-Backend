@@ -1,6 +1,4 @@
-//import parseArgs from 'minimist'
 const parseArgs = require('minimist')
-//import * as dotenv from 'dotenv'
 const dotenv = require('dotenv')
 
 const options = { default: { PORT: 8080, MODE: 'FORK' }, alias: { p: 'PORT', m: 'MODE' } }

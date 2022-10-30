@@ -1,5 +1,6 @@
 const Messages = require('../models/message')
 const { MONGO_CONNECTION } = require('../config')
+const { errorLogger } = require('../utils/winstonLogger')
 
 class MongooseMessege{
     constructor() {
@@ -7,6 +8,7 @@ class MongooseMessege{
             MONGO_CONNECTION,
                 { useNewUrlParser: true, useUniFiedTopology: true }
         } catch(error){
+            errorLogger.error(`mongooseMessage: ${error.message}`)
             return { error: 'Error de conexión' }
         }
     }
@@ -22,6 +24,7 @@ class MongooseMessege{
 
             return messages
         } catch(error){
+            errorLogger.error(`mongooseMessage: ${error.message}`)
             return { error: 'error' }
         }
     }
@@ -33,6 +36,7 @@ class MongooseMessege{
             const result = await Messages.create(message)
             if(!result) return { error: 'errorSave' }
         } catch(error){
+            errorLogger.error(`mongooseMessage: ${error.message}`)
             return { error: 'error' }
         }
     }

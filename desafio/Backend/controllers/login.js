@@ -1,3 +1,5 @@
+const { errorLogger } = require('../utils/winstonLogger')
+
 const login = {
     get: (req, res) =>{
         try{
@@ -7,6 +9,7 @@ const login = {
                 res.render('pages/login')
             }
         } catch(error){
+            errorLogger.error(`login: ${error.message}`)
             return res.status(500).send({ error: true })
         }
     },
@@ -16,6 +19,7 @@ const login = {
             req.session.username = username
             res.redirect('/')
         } catch(error){
+            errorLogger.error(`login: ${error.message}`)
             return res.status(500).send({ error: true })
         }
     },
@@ -23,6 +27,7 @@ const login = {
         try {
             res.render('pages/errorLogin')
         } catch (error) {
+            errorLogger.error(`login: ${error.message}`)
             return res.status(500).send({ error: true })
         }
     }

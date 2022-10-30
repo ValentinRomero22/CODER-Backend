@@ -25,20 +25,22 @@ const { SECRET_SESSION, MONGO_CONNECTION, PORT, MODE } = require('./config')
 const cluster = require('cluster')
 const cpus = require('os')
 const compression = require('compression')
-const logger = require('./utils/winstonLogger')
+const { infoLogger, warnlogger, errorLogger } = require('./utils/winstonLogger')
 
 const app = express()
 const httpServer = http.createServer(app)
 const io = new Server(httpServer, {})
-console.log('Modo: ', MODE.toUpperCase())
+//console.log('Modo: ', MODE.toUpperCase())
+infoLogger.info(`MODO: ${MODE.toUpperCase()}`)
 
 app.use(compression())
 
 app.use('/public', express.static(__dirname + '/public'))
 
 //BLOQUE FOREVER
-/* if(cluster.isPrimary && MODE.toUpperCase() == "CLUSTER"){
-    console.log(`Master ${process.pid} is running`)
+if(cluster.isPrimary && MODE.toUpperCase() == "CLUSTER"){
+    //console.log(`Master ${process.pid} is running`)
+    infoLogger.info(`Master ${process.pid} is running`)
     
     for(let i = 0; i < cpus.cpus().length; i++){
         cluster.fork()
@@ -46,22 +48,32 @@ app.use('/public', express.static(__dirname + '/public'))
     
     cluster.on('exit', (worker, code, signal) =>{
         cluster.fork()
-        console.log(`Worker ${worker.process.pid} died`)
+        //console.log(`Worker ${worker.process.pid} died`)
+        errorLogger.error(`Worker ${worker.process.pid} died`)
     })
 } else{
-    httpServer.listen(PORT, () => console.log(`Server started on port ${PORT}`))
-    console.log(`Worker ${process.pid} started`)
-    httpServer.on('error', () => console.log('Server error'))
-} */
+    //httpServer.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+    httpServer.listen(PORT, () => infoLogger.info(`Server started on port ${PORT}`))
+    //console.log(`Worker ${process.pid} started`)
+    infoLogger.info(`Worker ${process.pid} started`)
+    //httpServer.on('error', () => console.log('Server error'))
+    httpServer.on('error', () => errorLogger.error('Server error'))
+}
 
 //BLOQUE PM2
-//httpServer.listen(PORT, () => console.log(`Server started on port ${PORT}`))
-httpServer.listen(PORT, () => logger.info(`Server started on port ${PORT}`))
-console.log(`Worker ${process.pid} started`)
-httpServer.on('error', () => console.log('Server error'))
+/* httpServer.listen(PORT, () => infoLogger.info(`Server started on port ${PORT}`))
+//console.log(`Worker ${process.pid} started`)
+infoLogger.info(`Worker ${process.pid} started`)
+//httpServer.on('error', () => console.log('Server error'))
+httpServer.on('error', () => errorLogger.error('Server error')) */
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+app.use((req, res, next) =>{
+    infoLogger.info(`URL: ${req.originalUrl} - METHOD: ${req.method}`)
+    next()
+})
 
 app.set('view engine', 'hbs')
 app.set('views', './views')
@@ -79,7 +91,8 @@ app.engine(
 mongoose.connect(
     MONGO_CONNECTION,
     { useNewUrlParser: true }
-).then(() => console.log('Conectado a Atlas...'))
+)/* .then(() => console.log('Conectado a Atlas...')) */
+.then(() => infoLogger.info('Conectado a Atlas'))
 
 const client = redis.createClient({ legacyMode: true })
 client.connect()
@@ -90,17 +103,20 @@ passport.use(
     new LocalStrategy((username, password, done) => {
         Users.findOne({ username }, (error, user) => {
             if (error) {
-                console.log(`Error login ${error}`)
+                errorLogger.error(`Error login ${error}`)
+                //console.log(`Error login ${error}`)
                 return done(error)
             }
 
             if (!user) {
-                console.log(`Error usuario '${user}' no encontrado`)
+                errorLogger.error(`Error usuario ${user} no encontrado`)
+                //console.log(`Error usuario '${user}' no encontrado`)
                 return done(null, false)
             }
 
             if (!isValidPassword(password, user)) {
-                console.log(`Password '${password}' incorrecta`);
+                errorLogger.error(`Password ${password} incorrecta`)
+                //console.log(`Password '${password}' incorrecta`);
                 return done(null, false)
             }
 
@@ -115,12 +131,14 @@ passport.use("signup",
         (req, username, password, done) => {
             Users.findOne({ username: username }, function (error, user) {
                 if (error) {
-                    console.log(`Error login ${error}`)
+                    errorLogger.error(`Error login ${error}`)
+                    //console.log(`Error login ${error}`)
                     return done(error)
                 }
 
                 if (user) {
-                    console.log(`Usuario '${user}' ya existe`)
+                    errorLogger.error(`El usuario ${user} ya existe`)
+                    //console.log(`Usuario '${user}' ya existe`)
                     return done(null, false)
                 }
 
@@ -128,11 +146,13 @@ passport.use("signup",
 
                 Users.create(newUser, (error, userCreated) => {
                     if (error) {
-                        console.log(`Error al guardar el usuario, error: ${error}`)
+                        errorLogger.error(`Error al guardar el usuario, error: ${error}`)
+                        //console.log(`Error al guardar el usuario, error: ${error}`)
                         return done(error)
                     }
 
-                    console.log('Usuario registrado correctamente')
+                    infoLogger.info('Usuario registrado correctamente')
+                    //console.log('Usuario registrado correctamente')
                     return done(null, userCreated)
                 })
             })
@@ -180,7 +200,8 @@ app.use('/', randomRouter)
 app.use('/', infoRouter)
 
 app.all('*', (req, res) => {
-    res.status(404).send('Ruta no encontrada')
+    warnlogger.warn(`Ruta ${req.originalUrl} no encontrada`)
+    res.status(404).send('Ruta no encontrada...')
 })
 
 const messagesController = new MongooseMessege()

@@ -1,6 +1,7 @@
 const parseArgs = require('minimist')
 const cpus = require('os')
 const { PORT } = require('../config')
+const { errorLogger } = require('../utils/winstonLogger')
 
 const info = {
     get: (req, res) => {
@@ -19,8 +20,12 @@ const info = {
                 port: PORT,
             }
 
+            //console.log para visualizar diferncias de perfilamiento de servidor
+            console.log(info)
+
             res.render('pages/info', { info })
         } catch(error){
+            errorLogger.error(`infoController: ${error.message}`)
             return res.status(400).send({ error: true })
         }
     }

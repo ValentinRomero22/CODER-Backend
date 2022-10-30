@@ -1,10 +1,14 @@
 const { fork } = require('child_process')
+const parseArgs = require('minimist')
+const { errorLogger } = require('../utils/winstonLogger')
 
 const random = {
     get: (req, res) => {
         try {
-            res.status(200).render('pages/random')
+            const args = parseArgs(process.argv.slice(2))
+            res.status(200).render('pages/random', { port: args !== undefined ? args.PORT : '' })
         } catch (error) {
+            errorLogger.error(`randomController: ${error.message}`)
             res.status(500).send({ error: true })
         }
     },
@@ -20,6 +24,7 @@ const random = {
             })
 
         } catch(error){
+            errorLogger.error(`randomController: ${error.message}`)
             res.status(500).send({ error: true })
         }
     }
