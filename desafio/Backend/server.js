@@ -24,11 +24,15 @@ const connectRedis = require('connect-redis')
 const { SECRET_SESSION, MONGO_CONNECTION, PORT, MODE } = require('./config')
 const cluster = require('cluster')
 const cpus = require('os')
+const compression = require('compression')
+const logger = require('./utils/winstonLogger')
 
 const app = express()
 const httpServer = http.createServer(app)
 const io = new Server(httpServer, {})
 console.log('Modo: ', MODE.toUpperCase())
+
+app.use(compression())
 
 app.use('/public', express.static(__dirname + '/public'))
 
@@ -51,7 +55,8 @@ app.use('/public', express.static(__dirname + '/public'))
 } */
 
 //BLOQUE PM2
-httpServer.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+//httpServer.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+httpServer.listen(PORT, () => logger.info(`Server started on port ${PORT}`))
 console.log(`Worker ${process.pid} started`)
 httpServer.on('error', () => console.log('Server error'))
 
