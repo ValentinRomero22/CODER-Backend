@@ -21,7 +21,7 @@ const info = {
             }
 
             //console.log para visualizar diferncias de perfilamiento de servidor
-            console.log(info)
+            //console.log(info)
 
             res.render('pages/info', { info })
         } catch(error){
