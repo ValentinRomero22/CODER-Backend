@@ -33,7 +33,7 @@ const io = new Server(httpServer, {})
 //console.log('Modo: ', MODE.toUpperCase())
 infoLogger.info(`MODO: ${MODE.toUpperCase()}`)
 
-app.use(compression())
+//app.use(compression())
 
 app.use('/public', express.static(__dirname + '/public'))
 
