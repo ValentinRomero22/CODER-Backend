@@ -1,0 +1,14 @@
+{{> header}}
+
+<div class="products__container login">
+    <h1>Registro</h1>
+    <form class="form_logout" method="post" action="/signup">
+        <input type="email" placeholder="Email" name="username" required/>
+        <input type="text" placeholder="Contraseña" name="password" required/>
+        <input class="boton boton_main" type="submit" value="Registrarse" />
+    </form>
+    <p>Ya tienes una cuenta? Logueate!</p>
+    <a class="boton boton_change" href="/login">Ir a login</a>
+</div>
+
+{{> footer}}

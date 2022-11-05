@@ -1,0 +1,179 @@
+Statistical profiling result from v8_con_clg.log, (6720 ticks, 1 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+   5818   86.6%          C:\Windows\SYSTEM32\ntdll.dll
+    838   12.5%          D:\Program Files\nodejs\node.exe
+      2    0.0%          C:\Windows\System32\KERNELBASE.dll
+      2    0.0%          C:\Windows\System32\KERNEL32.DLL
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+      8    0.1%   13.3%  LazyCompile: *wrap D:\nginx-1.23.2\desafio\Backend\node_modules\handlebars\dist\cjs\handlebars\compiler\code-gen.js:101:22
+      7    0.1%   11.7%  LazyCompile: *resolve node:path:158:10
+      6    0.1%   10.0%  LazyCompile: *parse D:\nginx-1.23.2\desafio\Backend\node_modules\handlebars\dist\cjs\handlebars\compiler\parser.js:269:30
+      4    0.1%    6.7%  LazyCompile: *next D:\nginx-1.23.2\desafio\Backend\node_modules\handlebars\dist\cjs\handlebars\compiler\parser.js:478:32
+      4    0.1%    6.7%  LazyCompile: *SourceNode_walk D:\nginx-1.23.2\desafio\Backend\node_modules\source-map\lib\source-node.js:221:53
+      2    0.0%    3.3%  LazyCompile: *next D:\nginx-1.23.2\desafio\Backend\node_modules\express\lib\router\index.js:177:16
+      2    0.0%    3.3%  LazyCompile: *compile D:\nginx-1.23.2\desafio\Backend\node_modules\handlebars\dist\cjs\handlebars\compiler\javascript-compiler.js:73:28
+      1    0.0%    1.7%  RegExp: ^(?:\{\{(~)?\s*else\s*(~)?\}\})
+      1    0.0%    1.7%  RegExp: ^(?:[^\x00]*?(?=(\{\{)))
+      1    0.0%    1.7%  RegExp: (?:\r\n?|\n).*
+      1    0.0%    1.7%  LazyCompile: *toNamespacedPath node:path:618:19
+      1    0.0%    1.7%  LazyCompile: *stylizeWithColor node:internal/util/inspect:521:26
+      1    0.0%    1.7%  LazyCompile: *normalize node:path:304:12
+      1    0.0%    1.7%  LazyCompile: *getEncodingOps node:buffer:678:24
+      1    0.0%    1.7%  LazyCompile: *fulfilled D:\nginx-1.23.2\desafio\Backend\node_modules\express-handlebars\dist\express-handlebars.js:21:27
+      1    0.0%    1.7%  LazyCompile: *extend D:\nginx-1.23.2\desafio\Backend\node_modules\handlebars\dist\cjs\handlebars\utils.js:28:16
+      1    0.0%    1.7%  LazyCompile: *accept D:\nginx-1.23.2\desafio\Backend\node_modules\handlebars\dist\cjs\handlebars\compiler\visitor.js:57:26
+      1    0.0%    1.7%  LazyCompile: *__awaiter D:\nginx-1.23.2\desafio\Backend\node_modules\express-handlebars\dist\express-handlebars.js:18:54
+      1    0.0%    1.7%  LazyCompile: *WhitespaceControl.Program D:\nginx-1.23.2\desafio\Backend\node_modules\handlebars\dist\cjs\handlebars\compiler\whitespace-control.js:19:48
+      1    0.0%    1.7%  LazyCompile: *<anonymous> D:\nginx-1.23.2\desafio\Backend\node_modules\source-map\lib\source-node.js:174:29
+      1    0.0%    1.7%  LazyCompile: *<anonymous> D:\nginx-1.23.2\desafio\Backend\node_modules\handlebars\dist\cjs\handlebars\compiler\code-gen.js:130:39
+      1    0.0%    1.7%  LazyCompile: *<anonymous> D:\nginx-1.23.2\desafio\Backend\node_modules\express-handlebars\dist\express-handlebars.js:227:47
+      1    0.0%    1.7%  Function: ^syncExports node:internal/bootstrap/loaders:287:14
+      1    0.0%    1.7%  Function: ^stringToFlags node:internal/fs/utils:555:23
+      1    0.0%    1.7%  Function: ^prepareMustache D:\nginx-1.23.2\desafio\Backend\node_modules\handlebars\dist\cjs\handlebars\compiler\helpers.js:99:25
+      1    0.0%    1.7%  Function: ^peek node:internal/priority_queue:45:7
+      1    0.0%    1.7%  Function: ^parserOnIncoming node:_http_server:852:26
+      1    0.0%    1.7%  Function: ^parse D:\nginx-1.23.2\desafio\Backend\node_modules\minimatch\minimatch.js:413:9
+      1    0.0%    1.7%  Function: ^fn node:internal/util:345:14
+      1    0.0%    1.7%  Function: ^emitBeforeScript node:internal/async_hooks:499:26
+      1    0.0%    1.7%  Function: ^Writable.write node:internal/streams/writable:333:36
+      1    0.0%    1.7%  Function: ^Readable.removeListener node:internal/streams/readable:905:45
+      1    0.0%    1.7%  Function: ^Readable.on node:internal/streams/readable:875:33
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+     59    0.9%   98.3%  JavaScript
+      0    0.0%    0.0%  C++
+     66    1.0%  110.0%  GC
+   6660   99.1%          Shared libraries
+      1    0.0%          Unaccounted
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+   5818   86.6%  C:\Windows\SYSTEM32\ntdll.dll
+
+    838   12.5%  D:\Program Files\nodejs\node.exe
+    584   69.7%    D:\Program Files\nodejs\node.exe
+    133   22.8%      Function: ^handleWriteReq node:internal/stream_base_commons:45:24
+    133  100.0%        Function: ^writeGeneric node:internal/stream_base_commons:151:22
+    133  100.0%          Function: ^Socket._writeGeneric node:net:769:42
+    133  100.0%            Function: ^Socket._write node:net:806:35
+    121   20.7%      Function: ^compileFunction node:vm:308:25
+    121  100.0%        Function: ^wrapSafe node:internal/modules/cjs/loader:1017:18
+     71   58.7%          Function: ^Module._compile node:internal/modules/cjs/loader:1055:37
+     70   98.6%            Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      1    1.4%            LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1110:37
+     50   41.3%          LazyCompile: *Module._compile node:internal/modules/cjs/loader:1055:37
+     50  100.0%            Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+     41    7.0%      Function: ^realpathSync node:fs:2408:22
+     41  100.0%        Function: ^toRealPath node:internal/modules/cjs/loader:393:20
+     39   95.1%          Function: ^tryFile node:internal/modules/cjs/loader:384:17
+     24   61.5%            Function: ^tryExtensions node:internal/modules/cjs/loader:400:23
+     12   30.8%            LazyCompile: *Module._findPath node:internal/modules/cjs/loader:494:28
+      2    5.1%            LazyCompile: ~finalizeEsmResolution node:internal/modules/cjs/loader:939:31
+      1    2.6%            Function: ^tryPackage node:internal/modules/cjs/loader:338:20
+      2    4.9%          Function: ^Module._findPath node:internal/modules/cjs/loader:494:28
+      2  100.0%            Function: ^Module._resolveFilename node:internal/modules/cjs/loader:848:35
+     23    3.9%      Function: ^stat node:internal/modules/cjs/loader:151:14
+     14   60.9%        Function: ^tryFile node:internal/modules/cjs/loader:384:17
+     13   92.9%          Function: ^tryExtensions node:internal/modules/cjs/loader:400:23
+     10   76.9%            Function: ^Module._findPath node:internal/modules/cjs/loader:494:28
+      3   23.1%            Function: ^tryPackage node:internal/modules/cjs/loader:338:20
+      1    7.1%          LazyCompile: *Module._findPath node:internal/modules/cjs/loader:494:28
+      1  100.0%            Function: ^Module._resolveFilename node:internal/modules/cjs/loader:848:35
+      9   39.1%        Function: ^Module._findPath node:internal/modules/cjs/loader:494:28
+      9  100.0%          Function: ^Module._resolveFilename node:internal/modules/cjs/loader:848:35
+      9  100.0%            Function: ^Module._load node:internal/modules/cjs/loader:757:24
+     14    2.4%      D:\Program Files\nodejs\node.exe
+      2   14.3%        Function: ^compileFunction node:vm:308:25
+      2  100.0%          Function: ^wrapSafe node:internal/modules/cjs/loader:1017:18
+      1   50.0%            LazyCompile: *Module._compile node:internal/modules/cjs/loader:1055:37
+      1   50.0%            Function: ^Module._compile node:internal/modules/cjs/loader:1055:37
+      1    7.1%        LazyCompile: ~color D:\nginx-1.23.2\desafio\Backend\node_modules\console-control-strings\index.js:115:32
+      1  100.0%          Function: ~<anonymous> D:\nginx-1.23.2\desafio\Backend\node_modules\gauge\themes.js:1:1
+      1  100.0%            LazyCompile: *Module._compile node:internal/modules/cjs/loader:1055:37
+      1    7.1%        LazyCompile: ~checkServerIdentity node:tls:230:59
+      1  100.0%          LazyCompile: ~onConnectSecure node:_tls_wrap:1516:25
+      1  100.0%            Function: ^emit node:events:340:44
+      1    7.1%        LazyCompile: ~Mime.lookup D:\nginx-1.23.2\desafio\Backend\node_modules\mime\mime.js:69:33
+      1  100.0%          Function: ~<anonymous> D:\nginx-1.23.2\desafio\Backend\node_modules\mime\mime.js:1:1
+      1  100.0%            Function: ^Module._compile node:internal/modules/cjs/loader:1055:37
+      1    7.1%        Function: ~<anonymous> D:\nginx-1.23.2\desafio\Backend\node_modules\mquery\node_modules\debug\src\node.js:1:1
+      1  100.0%          LazyCompile: *Module._compile node:internal/modules/cjs/loader:1055:37
+      1  100.0%            Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      1    7.1%        Function: ^stat node:internal/modules/cjs/loader:151:14
+      1  100.0%          Function: ^tryFile node:internal/modules/cjs/loader:384:17
+      1  100.0%            LazyCompile: *Module._findPath node:internal/modules/cjs/loader:494:28
+      1    7.1%        Function: ^readPackage node:internal/modules/cjs/loader:290:21
+      1  100.0%          Function: ^readPackageScope node:internal/modules/cjs/loader:321:26
+      1  100.0%            Function: ^trySelf node:internal/modules/cjs/loader:441:17
+      1    7.1%        Function: ^fromString D:\nginx-1.23.2\desafio\Backend\node_modules\mongodb\lib\utils.js:316:22
+      1  100.0%          Function: ^ns D:\nginx-1.23.2\desafio\Backend\node_modules\mongodb\lib\utils.js:294:12
+      1  100.0%            Function: ^measureRoundTripTime D:\nginx-1.23.2\desafio\Backend\node_modules\mongodb\lib\sdam\monitor.js:288:30
+      1    7.1%        Function: ^format D:\nginx-1.23.2\desafio\Backend\node_modules\fecha\lib\fecha.umd.js:246:25
+      1  100.0%          Function: ^<anonymous> D:\nginx-1.23.2\desafio\Backend\node_modules\logform\timestamp.js:14:25
+      1  100.0%            Function: ^<anonymous> D:\nginx-1.23.2\desafio\Backend\node_modules\logform\combine.js:17:10
+      1    7.1%        Function: ^expressInit D:\nginx-1.23.2\desafio\Backend\node_modules\express\lib\middleware\init.js:29:30
+      1  100.0%          LazyCompile: *trim_prefix D:\nginx-1.23.2\desafio\Backend\node_modules\express\lib\router\index.js:293:23
+      1  100.0%            LazyCompile: *next D:\nginx-1.23.2\desafio\Backend\node_modules\express\lib\router\index.js:177:16
+      1    7.1%        Function: ^Module node:internal/modules/cjs/loader:172:16
+      1  100.0%          Function: ^Module._load node:internal/modules/cjs/loader:757:24
+      1  100.0%            Function: ^Module.require node:internal/modules/cjs/loader:997:36
+      1    7.1%        Function: ^ExpressHandlebars._renderTemplate D:\nginx-1.23.2\desafio\Backend\node_modules\express-handlebars\dist\express-handlebars.js:321:60
+      1  100.0%          Function: ^<anonymous> D:\nginx-1.23.2\desafio\Backend\node_modules\express-handlebars\dist\express-handlebars.js:227:47
+      1  100.0%            LazyCompile: *step D:\nginx-1.23.2\desafio\Backend\node_modules\express-handlebars\dist\express-handlebars.js:31:18
+      1    7.1%        Function: ^EntitySchema.processStrategy D:\nginx-1.23.2\desafio\Backend\node_modules\normalizr\dist\normalizr.js:113:71
+      1  100.0%          Function: ^normalize D:\nginx-1.23.2\desafio\Backend\node_modules\normalizr\dist\normalizr.js:152:40
+      1  100.0%            Function: ^visit D:\nginx-1.23.2\desafio\Backend\node_modules\normalizr\dist\normalizr.js:472:27
+      9    1.5%      Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      7   77.8%        Function: ^nativeModuleRequire node:internal/bootstrap/loaders:332:29
+      1   14.3%          LazyCompile: ~lazyRequire node:internal/crypto/util:67:21
+      1  100.0%            LazyCompile: ~get node:crypto:287:8
+      1   14.3%          LazyCompile: ~get BlockList node:net:1779:16
+      1  100.0%            D:\Program Files\nodejs\node.exe
+      1   14.3%          Function: ~<anonymous> node:tls:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   14.3%          Function: ~<anonymous> node:internal/modules/esm/module_map:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   14.3%          Function: ~<anonymous> node:http:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   14.3%          Function: ~<anonymous> node:crypto:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      1   14.3%          Function: ~<anonymous> node:_http_server:1:1
+      1  100.0%            Function: ^compileForInternalLoader node:internal/bootstrap/loaders:299:27
+      2   22.2%        Function: ^compileForPublicLoader node:internal/bootstrap/loaders:246:25
+      2  100.0%          Function: ^loadNativeModule node:internal/modules/cjs/helpers:44:26
+      2  100.0%            Function: ^Module._load node:internal/modules/cjs/loader:757:24
+      8    1.4%      Function: ^openSync node:fs:576:18
+      8  100.0%        Function: ^readFileSync node:fs:450:22
+      8  100.0%          Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      6   75.0%            Function: ^Module.load node:internal/modules/cjs/loader:969:33
+      1   12.5%            LazyCompile: *Module.load node:internal/modules/cjs/loader:969:33
+      1   12.5%            LazyCompile: *Module._load node:internal/modules/cjs/loader:757:24
+      7    1.2%      Function: ^closeSync node:fs:526:19
+      4   57.1%        Function: ^readFileSync node:fs:450:22
+      3   75.0%          Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      3  100.0%            Function: ^Module.load node:internal/modules/cjs/loader:969:33
+      1   25.0%          LazyCompile: ~Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      1  100.0%            Function: ^Module.load node:internal/modules/cjs/loader:969:33
+      3   42.9%        Function: ^closeSync D:\nginx-1.23.2\desafio\Backend\node_modules\graceful-fs\graceful-fs.js:72:24
+      3  100.0%          Function: ^readFileSync node:fs:450:22
+      3  100.0%            Function: ^Module._extensions..js node:internal/modules/cjs/loader:1110:37
+      6    1.0%      Function: ^writevGeneric node:internal/stream_base_commons:126:23
+      6  100.0%        Function: ^Socket._writeGeneric node:net:769:42
+      6  100.0%          Function: ^Socket._writev node:net:801:36
+      6  100.0%            Function: ^doWrite node:internal/streams/writable:398:17
+
