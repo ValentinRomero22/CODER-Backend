@@ -225,7 +225,8 @@ app.use('/', infoRouter)
 
 app.all('*', (req, res) => {
     warnlogger.warn(`Ruta ${req.originalUrl} no encontrada`)
-    res.status(404).send('Ruta no encontrada...')
+    //res.status(404).send('Ruta no encontrada...')
+    res.render('pages/notFound', { ruta: req.originalUrl })
 })
 
 const messagesController = new MongooseMessege()

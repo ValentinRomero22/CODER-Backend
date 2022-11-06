@@ -404,3 +404,7 @@ footer{
 .boton_nav:hover{
     color: #2044a5;
 }
+
+.notFound{
+    color: #94231f;
+}

@@ -1,0 +1,18 @@
+{{> header}}
+<div class="products__container welcome_box">
+    <div class="login_header">
+        <h2>Bienvenido {{user}}!</h2>
+    </div>
+    <div>
+        <a class="boton_nav" href="/" id="logout">Ver chat</a>
+        <a class="boton_nav" href="/info" id="logout">Ver info</a>
+        <a class="boton_nav" href="/api/productos-test" id="a-products">Ver productos</a>
+        <a class="boton boton_salir" href="/logout" id="logout">Salir</a>
+    </div>
+</div>
+<div class="products__container welcome_message">
+    <h2 class="notFound">Ruta "{{ruta}}" no encontrada!</h2>
+    {{!-- <div class="login_header">
+    </div> --}}
+</div>
+{{> footer}}
