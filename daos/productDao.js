@@ -12,7 +12,7 @@ class ProductDao{
 
     async getById(productId){
         try{
-            const product = productModel.findById({productId})
+            const product = await productModel.findById(productId)
             return product
         } catch(error){
             return { error: error }

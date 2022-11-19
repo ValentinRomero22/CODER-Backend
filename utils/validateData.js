@@ -1,7 +1,15 @@
+const idValidator = (id) =>{
+    let isValid = true
+    
+    if(id?.length != 24) isValid = false
+
+    return isValid
+}
+
 const productValidator = (productToValidate) =>{
     let isValid = true
     
-    let { name, description, code, image, price, isAlternative, isTeam } = productToValidate
+    let { id, name, description, code, image, price, isAlternative, isTeam } = productToValidate
 
     if(name.trim() == '' || description.trim() == '' || code.trim() == '' || image.trim() == '') isValid = false
 
@@ -20,4 +28,4 @@ const userValidator = (userToValidate) =>{
 
 }
 
-module.exports = { productValidator, cartValidator, userValidator }
+module.exports = { idValidator, productValidator, cartValidator, userValidator }
