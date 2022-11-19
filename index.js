@@ -1,11 +1,24 @@
-const express = require('express');
-const path = require('path');
-const generatePassword = require('password-generator');
+const express = require('express')
+const path = require('path')
+const generatePassword = require('password-generator')
+const { viewEngine } = require('./middlewares/middlewareFunctions')
 
-const app = express();
+const mongoConnect = require('./utils/mongoConnect')
+const routes = require('./routes/routes')
+
+const app = express()
+mongoConnect()
+
+viewEngine(app, express)
+
+routes(app)
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
+
+/* app.get('/ruta/de/prueba', (req, res) =>{
+
+}) */
 
 // Put all API endpoints under '/api'
 app.get('/api/passwords', (req, res) => {
