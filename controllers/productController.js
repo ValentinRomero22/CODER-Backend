@@ -5,14 +5,14 @@ const productController = {
     getAllProducts: (req, res) =>{
         productService.getAllProducts()
             .then((response) =>{
-                res.status(response.status).send({
+                res.status(response.status).json({
                     message: response.message,
                     data: response.data
                 })
             })
             .catch((error) =>{
                 errorLogger.error(`productController.js: getAllProducts(): ${error}`)
-                res.status(500).send({
+                res.status(500).json({
                     message: 'Error: Se produjo un error inesperado'
                 })
             })
@@ -20,7 +20,7 @@ const productController = {
     getProductById: (req, res) =>{
         productService.getProductById(req)
             .then((response) =>{
-                res.status(response.status).send({
+                res.status(response.status).json({
                     message: response.message,
                     data: response.data
                 })
@@ -35,7 +35,7 @@ const productController = {
     saveNewProduct: (req, res) =>{
         productService.saveNewProduct(req)
             .then((response) =>{
-                res.status(response.status).send({
+                res.status(response.status).json({
                     message: response.message
                 })
             })
@@ -49,7 +49,7 @@ const productController = {
     updateProduct: (req, res) =>{
         productService.updateProduct(req)
             .then((response) =>{
-                res.status(response.status).send({
+                res.status(response.status).json({
                     message: response.message
                 })
             })
@@ -63,7 +63,7 @@ const productController = {
     deleteProduct: (req, res) =>{
         productService.deleteProduct(req)
             .then((response) =>{
-                res.status(response.status).send({
+                res.status(response.status).json({
                     message: response.message
                 })
             })

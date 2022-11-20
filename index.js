@@ -14,7 +14,7 @@ viewEngine(app, express)
 routes(app)
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
+//app.use(express.static(path.join(__dirname, 'client/build')))
 
 /* app.get('/ruta/de/prueba', (req, res) =>{
 
@@ -37,9 +37,9 @@ app.get('/api/passwords', (req, res) => {
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
-app.get('*', (req, res) => {
+/* app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
+}); */
 
 const port = process.env.PORT || 8080;
 app.listen(port);

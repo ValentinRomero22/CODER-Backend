@@ -4,14 +4,14 @@ const { isAuthenticated } = require('../middlewares/middlewareFunctions')
 
 const productsRouter = Router()
 
-productsRouter.get('/', isAuthenticated, productController.getAllProducts)
+productsRouter.get('/api', isAuthenticated, productController.getAllProducts)
 
-productsRouter.get('/:id', isAuthenticated, productController.getProductById)
+productsRouter.get('/api/:id', isAuthenticated, productController.getProductById)
 
-productsRouter.post('/', isAuthenticated, productController.saveNewProduct)
+productsRouter.post('/api', isAuthenticated, productController.saveNewProduct)
 
-productsRouter.put('/:id', isAuthenticated, productController.updateProduct)
+productsRouter.put('/api/:id', isAuthenticated, productController.updateProduct)
 
-productsRouter.delete('/:id', isAuthenticated, productController.deleteProduct)
+productsRouter.delete('/api/:id', isAuthenticated, productController.deleteProduct)
 
 module.exports = productsRouter
