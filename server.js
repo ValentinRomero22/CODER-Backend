@@ -10,7 +10,7 @@ const {
     randomRouter,
     infoRouter
 } = require('./routes/main.routes')
-const MongooseMessege = require('./controllers/mongooseMessage')
+const messageController = require('./controllers/messageController')
 const { normalizedMessages } = require('./utils/messageNormalize')
 const { engine } = require('express-handlebars')
 const session = require('express-session')
@@ -18,7 +18,8 @@ const passport = require('passport')
 const { Strategy: LocalStrategy } = require('passport-local')
 const Users = require('./models/user')
 const { createHash, isValidPassword } = require('./utils/bcryptPassword')
-const mongoose = require('mongoose')
+//const mongoose = require('mongoose')
+const mongoConnect = require('./utils/mongoConnection')
 const redis = require('redis')
 //const connectRedis = require('connect-redis')
 const MongoStore = require('connect-mongo')
@@ -39,20 +40,20 @@ infoLogger.info(`MODO: ${MODE.toUpperCase()}`)
 app.use('/public', express.static(__dirname + '/public'))
 
 //BLOQUE FOREVER
-if(cluster.isPrimary && MODE.toUpperCase() == "CLUSTER"){
+if (cluster.isPrimary && MODE.toUpperCase() == "CLUSTER") {
     //console.log(`Master ${process.pid} is running`)
     infoLogger.info(`Master ${process.pid} is running`)
-    
-    for(let i = 0; i < cpus.cpus().length; i++){
+
+    for (let i = 0; i < cpus.cpus().length; i++) {
         cluster.fork()
     }
-    
-    cluster.on('exit', (worker, code, signal) =>{
+
+    cluster.on('exit', (worker, code, signal) => {
         cluster.fork()
         //console.log(`Worker ${worker.process.pid} died`)
         errorLogger.error(`Worker ${worker.process.pid} died`)
     })
-} else{
+} else {
     //httpServer.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     httpServer.listen(PORT, () => infoLogger.info(`Server started on port ${PORT}`))
     //console.log(`Worker ${process.pid} started`)
@@ -71,7 +72,7 @@ httpServer.on('error', () => errorLogger.error('Server error')) */
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use((req, res, next) =>{
+app.use((req, res, next) => {
     infoLogger.info(`URL: ${req.originalUrl} - METHOD: ${req.method}`)
     next()
 })
@@ -89,11 +90,11 @@ app.engine(
     })
 )
 
-mongoose.connect(
+mongoConnect()
+/* mongoose.connect(
     MONGO_CONNECTION,
     { useNewUrlParser: true }
-)/* .then(() => console.log('Conectado a Atlas...')) */
-.then(() => infoLogger.info('Conectado a Atlas'))
+).then(() => infoLogger.info('Conectado a Atlas')) */
 
 passport.use(
     "login",
@@ -182,9 +183,9 @@ app.use(
     session({
         store: MongoStore.create({
             mongoUrl: MONGO_CONNECTION,
-            mongoOptions:{
+            mongoOptions: {
                 useNewUrlParser: true,
-                useUnifiedTopology:true,
+                useUnifiedTopology: true,
             },
         }),
         secret: SECRET_SESSION,
@@ -229,19 +230,21 @@ app.all('*', (req, res) => {
     res.render('pages/notFound', { ruta: req.originalUrl })
 })
 
-const messagesController = new MongooseMessege()
-
 io.on('connection', async (socket) => {
-    const messages = await messagesController.getAll()
+    //const messages = await messagesController.getAll()
+    const messages = messageController.getAllMessages
+    console.log('messages', messages)
     const normalized = normalizedMessages(messages)
 
     io.sockets.emit('messages', normalized)
 
     socket.on('newMessage', async (clientMessage) => {
         let message = JSON.parse(clientMessage)
-        await messagesController.save(message)
+        //await messagesController.save(message)
+        messageController.saveNewMessage(message)
 
-        let allMessages = await messagesController.getAll({ sort: true })
+        //let allMessages = await messagesController.getAll({ sort: true })
+        let allMessages = getAll({ sort: true })
         io.sockets.emit('messages', normalizedMessages(allMessages))
     })
 })

@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { login } = require('../controllers/login')
+const { login } = require('../controllers/loginController')
 const passport = require('passport')
 const { isAuthenticated } = require('../middlewares/functions')
 const { errorLogger } = require('../utils/winstonLogger')
@@ -20,12 +20,19 @@ loginRouter.post(
 logoutRouter.get('/logout', isAuthenticated, (req, res) => {
     const user = req.session.username
 
-    req.logout((error) => {
+    req.session.destroy((error) =>{
+        errorLogger.error(`login-out.routes: ${error}`)
+        if(error) return res.status(500).render('pages/logout', { error: true })
+
+        res.status(200).render('pages/logout', { user: user })
+    })
+
+   /*  req.logout((error) => {
         errorLogger.error(`login-out.routes: ${error}`)
         if (error) res.json(error)
     })
 
-    res.render('pages/logout', { user: user })
+    res.render('pages/logout', { user: user }) */
 })
 
 module.exports = { loginRouter, logoutRouter }

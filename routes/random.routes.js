@@ -6,6 +6,6 @@ const randomRouter = Router()
 
 randomRouter.get('/api/random', isAuthenticated, random.get)
 
-randomRouter.post('/api/random', random.post)
+randomRouter.post('/api/random', isAuthenticated, random.post)
 
 module.exports = randomRouter
