@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { MONGO_CONNECTION } = require('../config')
+const { MONGO_CONNECTION } = require('../config/config')
 const { errorLogger, infoLogger } = require('../utils/winstonLogger')
 
 const mongoConnect = () => {

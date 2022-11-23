@@ -1,28 +1,24 @@
-const messageService = require('../services/messageService')
-const { errorLogger } = require('../utils/winstonLogger')
+const { getAll, saveMessage } = require('../services/messageService')
 
-const messageController = {
-    getAllMessages: (req, res) => {
-        messageService.getAllMessages()
-            .then((response) => {
-                console.log(response)
-                return response
-            })
-            .catch((error) => {
-                errorLogger.error(`messageController.js | getAll(): ${error}`)
-                return { error: error }
-            })
-    },
-    saveNewMessage: (req, res) => {
-        messageService.saveNewMessage(message)
-            .then((response) => {
-                return response
-            })
-            .catch((error) => {
-                errorLogger.error(`messageController.js | saveMessage(): ${error}`)
-                return { error: error }
-            })
+const getAllMessages = async () => {
+    try {
+        const messages = await getAll()
+        return messages
+    } catch (error) {
+        return error
     }
 }
 
-module.exports = messageController
+const saveNewMessage = async (message) => {
+    try{
+        const result = await saveMessage(message)
+        return result
+    } catch(error){
+        return error
+    }
+}
+
+module.exports = {
+    getAllMessages,
+    saveNewMessage
+}

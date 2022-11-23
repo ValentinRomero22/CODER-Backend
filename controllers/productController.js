@@ -1,21 +1,26 @@
 const { getProducts } = require('../services/productService')
 const { errorLogger } = require('../utils/winstonLogger')
 
-const createProducts = {
-    getProducts: async (req, res) => {
-        getProducts(req, res)
-            .then((response) => {
+const createProducts = (req, res) => {
+    getProducts()
+        .then((response) => {
+            if (response.length > 0) {
                 res.status(200).render('pages/products', {
-                    products: response.products,
-                    productsExist: response.productsExist,
-                    user: response.user
+                    products: response,
+                    productsExist: true,
+                    user: req.session.username
                 })
-            })
-            .catch((error) => {
-                errorLogger.error(`fakerProduct || createProducts(): ${error.message}`)
-                res.status(500).send({ error: 'error' })
-            })
-    }
+            } else {
+                res.status(200).render('pages/products', {
+                    productsExist: false,
+                    user: req.session.username
+                })
+            }
+        })
+        .catch((error) => {
+            errorLogger.error(`productController.js || createProducts(): ${error.message}`)
+            res.status(500).send({ error: error })
+        })
 }
 
 module.exports = { createProducts }

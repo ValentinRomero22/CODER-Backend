@@ -1,36 +1,37 @@
-const MessageDao = require('../daos/messageDao')
-const { errorLogger } = require('../utils/winstonLogger')
+const { getAllMessages, saveNewMessage } = require('../daos/messageDao')
+//const { errorLogger } = require('../utils/winstonLogger')
 
-const messageDao = new MessageDao()
-
-const getAllMessages = async (options) => {
+const getAll = async () => {
     try {
-        let messages
+        const messages = await getAllMessages()
 
-        options?.sort == true
+        
+        /* options?.sort == true
         ? messages = await messageDao.getAll({}).sort({ date: -1 })
-        : messages = await messageDao.getAll({})
+        : messages = await messageDao.getAll({}) */
         
         return messages
     } catch (error) {
-        errorLogger.error(`mongooseService.js | getAllMessages(): ${error}`)
-        return { error: error }
+        /* errorLogger.error(`mongooseService.js | getAllMessages(): ${error}`)
+        return { error: error } */
+        throw Error(error)
     }
 }
 
-const saveNewMessage = async (message) => {
+const saveMessage = async (message) => {
     try {
         message.date= new Date()
 
-        const result = await messageDao.save(message)
-        return !result && { error: 'error' }
+        const result = await saveNewMessage(message)
+        return result
     } catch (error) {
-        errorLogger.error(`mongooseService.js | saveMessage(): ${error}`)
-        return { error: error }
+        /* errorLogger.error(`mongooseService.js | saveMessage(): ${error}`)
+        return { error: error } */
+        throw Error(error)
     }
 }
 
 module.exports = {
-    getAllMessages, 
-    saveNewMessage
+    getAll, 
+    saveMessage
 }

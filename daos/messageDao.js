@@ -1,6 +1,29 @@
 const messageModel = require('../models/message')
 
-class MessageDao{
+const getAllMessages = async () => {
+    try {
+        const allMessages = await messageModel.find({})
+        return allMessages
+    } catch(error){
+        return { error: error }
+    }
+}
+
+const saveNewMessage = async(newMessage) =>{
+    try{
+        const result = await messageModel.create(newMessage)
+        return result
+    } catch(error){
+        return { error: error }
+    }
+}
+
+module.exports = {
+    getAllMessages,
+    saveNewMessage
+}
+
+/* class MessageDao{
     async getAll(){
         try{
             const messages = await messageModel.find({})
@@ -20,4 +43,4 @@ class MessageDao{
     }
 }
 
-module.exports = MessageDao
+module.exports = MessageDao */

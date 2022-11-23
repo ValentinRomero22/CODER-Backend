@@ -2,13 +2,13 @@ const { errorLogger } = require('../utils/winstonLogger')
 
 const signup = {
     get: (req, res) => {
-        try{
-            if(req.isAuthenticated()){
+        try {
+            if (req.isAuthenticated()) {
                 res.redirect('/')
-            } else{
+            } else {
                 res.render('pages/signup')
             }
-        } catch(error){
+        } catch (error) {
             errorLogger.error(`signup: ${error.message}`)
             return res.status(500).send({ error: true })
         }

@@ -1,6 +1,6 @@
 const parseArgs = require('minimist')
 const cpus = require('os')
-const { PORT } = require('../config')
+const { PORT } = require('../config/config')
 const { getInfo } = require('../services/infoService')
 const { errorLogger } = require('../utils/winstonLogger')
 
