@@ -25,7 +25,25 @@ const cartValidator = (cartToValidate) =>{
 }
 
 const userValidator = (userToValidate) =>{
+    let isValid = true
 
+    if(userToValidate) isValid = false
+
+    return isValid
 }
 
-module.exports = { idValidator, productValidator, cartValidator, userValidator }
+const messageValidator = (messageToValidate) =>{
+    let isValid = true
+
+    if(messageToValidate.text.trim().length == 0) isValid = false
+
+    return isValid
+}
+
+module.exports = { 
+    idValidator, 
+    productValidator, 
+    cartValidator, 
+    userValidator,
+    messageValidator
+}

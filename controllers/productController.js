@@ -1,73 +1,98 @@
-const productService = require('../services/productService')
+const {
+    getAllProductsService,
+    getProductByIdService,
+    saveNewProductService,
+    updateProductService,
+    deleteProductService
+} = require('../services/productService')
 const { errorLogger } = require('../utils/winstonLogger')
 
+const getAllProducts = async (req, res) => {
+    try {
+        const products = await getAllProductsService()
+
+        res.status(200).render('pages/error', {
+            products: products,
+            user: req.user
+        })
+    } catch (error) {
+        errorLogger.error(`${req.user.username}: productController.js | getAllProducts(): ${error}`)
+        res.status(500).render('pages/error', {
+            error: 'Se produjo un error al intentar mostrar los productos',
+            user: req.user
+        })
+    }
+}
+
+//HASTA ACÁ.......................
+
 const productController = {
-    getAllProducts: (req, res) =>{
+    getAllProducts: (req, res) => {
         productService.getAllProducts()
-            .then((response) =>{
+            .then((response) => {
                 res.status(response.status).json({
                     message: response.message,
                     data: response.data
                 })
             })
-            .catch((error) =>{
+            .catch((error) => {
                 errorLogger.error(`productController.js: getAllProducts(): ${error}`)
                 res.status(500).json({
                     message: 'Error: Se produjo un error inesperado'
                 })
             })
     },
-    getProductById: (req, res) =>{
+    getProductById: (req, res) => {
         productService.getProductById(req)
-            .then((response) =>{
+            .then((response) => {
                 res.status(response.status).json({
                     message: response.message,
                     data: response.data
                 })
             })
-            .catch((error) =>{
+            .catch((error) => {
                 errorLogger.error(`productController.js: getProductById(): ${error}`)
                 res.status(500).send({
                     message: 'Error: Se produjo un error inesperado'
                 })
             })
     },
-    saveNewProduct: (req, res) =>{
+    saveNewProduct: (req, res) => {
         productService.saveNewProduct(req)
-            .then((response) =>{
+            .then((response) => {
                 res.status(response.status).json({
                     message: response.message
                 })
             })
-            .catch((error) =>{
+            .catch((error) => {
                 errorLogger.error(`productController.js: saveNewProduct(): ${error}`)
                 res.status(500).send({
                     message: 'Error: Se produjo un error inesperado'
                 })
             })
     },
-    updateProduct: (req, res) =>{
+    updateProduct: (req, res) => {
         productService.updateProduct(req)
-            .then((response) =>{
+            .then((response) => {
                 res.status(response.status).json({
                     message: response.message
                 })
             })
-            .catch((error) =>{
+            .catch((error) => {
                 errorLogger.error(`productController.js: updateProduct(): ${error}`)
                 res.status(500).send({
                     message: 'Error: Se produjo un error inesperado'
                 })
             })
     },
-    deleteProduct: (req, res) =>{
+    deleteProduct: (req, res) => {
         productService.deleteProduct(req)
-            .then((response) =>{
+            .then((response) => {
                 res.status(response.status).json({
                     message: response.message
                 })
             })
-            .catch((error) =>{
+            .catch((error) => {
                 errorLogger.error(`productController.js: deleteProduct(): ${error}`)
                 res.status(500).send({
                     message: 'Error: Se produjo un error inesperado'
