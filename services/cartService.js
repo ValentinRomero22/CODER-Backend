@@ -1,90 +1,161 @@
-const { isValidObjectId } = require('mongoose')
-const CartDao = require('../daos/cartDao')
-const { idValidator, productValidator, userValidator } = require('../utils/validateData')
-const { errorLogger } = require('../utils/winstonLogger')
+const {
+    getCartDao,
+    getCartByUserIdDao,
+    saveNewCartDao,
+    addToCartDao,
+    deleteToCartDao,
+    deleteToAllCartsDao,
+    cleanCartDao
+} = require('../daos/cartDao')
+const { 
+    getProductByIdService,
+    deleteProductService
+} = require('../services/productService')
+const { idValidator } = require('../utils/validateData')
 
-const cartDao = new CartDao()
-
-const getCartById = async (req) => {
+const getCartService = async (cartId) => {
     try {
-        const { id } = req.params
+        const isValidId = idValidator(cartId)
+        if (isValidId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
 
-        const isValidId = idValidator(id)
-        if (isValidId == false) return { status: 400, message: 'Ingrese los datos necesarios correctamente' }
+        const cart = await getCartDao(cartId)
+        return cart
+    } catch (error) {
+        throw new Error(error)
+    }
+}
 
-        const cartFound = await cartDao.getById()
+const getCartByUserIdService = async (userId) => {
+    try {
+        const isValidId = idValidator(userId.valueOf())
+        if (isValidId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
 
-        if (cartFound) {
-            if (cartFound.error) {
-                errorLogger.error(`productService.js: getCartById(): ${cartFound.error}`)
-                return { status: 500, message: 'Error: Se produjo un error al buscar el carrito' }
-            } else {
-                return { status: 200, message: 'Carrito encontrado', data: cartFound }
+        const cart = await getCartByUserIdDao(userId)
+
+        if (cart.products) {
+            const cartProducts = []
+
+            for (let i = 0; i < cart.products.length; i++) {
+                const product = await getProductByIdService(cart.products[i])
+                /* product &&  */cartProducts.push(product)
             }
-        } else {
-            return { status: 404, message: 'No se encontró el carrito buscado' }
-        }
-    } catch (error) {
-        errorLogger.error(`productService.js: getCartById(): ${error}`)
-        return { status: 500, message: 'Error: Se produjo un error al buscar el carrito' }
-    }
-}
 
-const saveNewCart = async (req) => {
-    try {
-        const newCart = {
-            timestamp: new Date(),
-            user: req.body.user,
-            items: [],
-            total: 0
-        }
-
-        const isValidUser = userValidator(newCart.user)
-        if (isValidUser == false) return { status: 400, message: 'Ingrese los datos necesarios correctamente' }
-
-        const result = await cartDao.save(newCart)
-
-        if (result.error) {
-            errorLogger.error(`productService.js: saveNewCart(): ${result.error}`)
-            return { status: 500, message: 'Error: Se produjo un error al guardar el carrito' }
-        } else {
-            return { status: 201, message: 'Carrito agregado con éxito' }
-        }
-    } catch (error) {
-        errorLogger.error(`productService.js: saveNewCart(): ${error}`)
-        return { status: 500, message: 'Error: Se produjo un error al guardar el carrito' }
-    }
-}
-
-const addToCart = async (req) => {
-    try {
-        const { item } = req.body
-        const { id } = req.params
-
-        const isValidId = idValidator(id)
-        const isValidProduct = productValidator(item.product)
-        if (isValidProduct == false || isValidId == false) {
-            return { status: 400, message: 'Ingrese los datos necesarios correctamente' }
-        }
-
-        const result = await cartDao.addToCart(id, item)
-
-        if (result.error) {
-            errorLogger.error(`productService.js: addToCart(): ${error}`)
-            return { status: 500, message: 'Error: Se produjo un error al guardar el carrito' }
-        } else{
-            if(result.modifiedCount == 1){
-                return { status: 200, message: 'Producto agregado con éxito' }
-            } else{
-                return { status: 404, message: 'No se encontró el carrito correspondiente' }
+            const newCart = {
+                _id: cart._id,
+                timestamp: cart.timestamp,
+                userId: cart.userId,
+                products: cartProducts
             }
+
+            return newCart
+        } else {
+            return cart
         }
     } catch (error) {
-        errorLogger.error(`productService.js: addToCart(): ${error}`)
-        return { status: 500, message: 'Error: Se produjo un error al guardar el carrito' }
+        throw new Error(error)
     }
 }
 
-// RESTAN:
-// deleteToCart
-// cleanCart
+const saveNewCartService = async (newCart) => {
+    try {
+        const isValidId = idValidator(newCart.userId.valueOf())
+        if (isValidId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
+
+        newCart.timestamp = new Date()
+        newCart.products = []
+
+        const result = await saveNewCartDao(newCart)
+        return result
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const addToCartService = async (userId, productId) => {
+    try {
+        const isValidUserId = idValidator(userId.valueOf())
+        if (isValidUserId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
+
+        const isValidProductId = idValidator(productId)
+        if (isValidProductId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
+
+        const result = await addToCartDao(userId, productId)
+        return result
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const deleteToCartService = async (userId, productId) => {
+    try {
+        const isValidCartId = idValidator(userId.valueOf())
+        if (isValidCartId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
+
+        const isValidProductId = idValidator(productId)
+        if (isValidProductId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
+
+        const result = await deleteToCartDao(userId, productId)
+        return result
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const deleteToCartsAndProductService = async (cartId, productId) => {
+    try {
+        const isValidCartId = idValidator(cartId.valueOf())
+        if (isValidCartId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
+
+        const isValidProductId = idValidator(productId)
+        if (isValidProductId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
+
+        await deleteToAllCartsDao(productId)
+        const result = await deleteProductService(productId)
+
+        return result
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const cleanCartService = async (userId) => {
+    try {
+        const isValidId = idValidator(userId.valueOf())
+        if (isValidId == false) {
+            throw new Error('Error en los datos a utilizar')
+        }
+
+        const result = await cleanCartDao(userId)
+        return result
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+module.exports = {
+    getCartService,
+    getCartByUserIdService,
+    saveNewCartService,
+    addToCartService,
+    deleteToCartService,
+    deleteToCartsAndProductService,
+    cleanCartService
+}

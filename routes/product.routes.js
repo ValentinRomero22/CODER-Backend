@@ -1,17 +1,29 @@
 const { Router } = require('express')
-const productController = require('../controllers/productController')
-const { isAuthenticated } = require('../middlewares/middlewareFunctions')
+const { 
+    getAllProducts,
+    getProductById,
+    getFormProduct,
+    getProductByIdForm,
+    saveNewProduct,
+    updateProduct,
+    deleteProduct
+} = require('../controllers/productController')
+const { isAuthenticated } = require('../middlewares/functions')
 
 const productsRouter = Router()
 
-productsRouter.get('/api', isAuthenticated, productController.getAllProducts)
+productsRouter.get('/', isAuthenticated , getAllProducts)
 
-productsRouter.get('/api/:id', isAuthenticated, productController.getProductById)
+productsRouter.get('/product/:productId', isAuthenticated, getProductById)
 
-productsRouter.post('/api', isAuthenticated, productController.saveNewProduct)
+productsRouter.get('/product', isAuthenticated, getFormProduct)
 
-productsRouter.put('/api/:id', isAuthenticated, productController.updateProduct)
+productsRouter.get('/product/form/:productId', isAuthenticated, getProductByIdForm)
 
-productsRouter.delete('/api/:id', isAuthenticated, productController.deleteProduct)
+productsRouter.post('/product', isAuthenticated, saveNewProduct)
+
+productsRouter.put('/product/:productId', isAuthenticated, updateProduct)
+
+productsRouter.delete('/product/:productId', isAuthenticated, deleteProduct )
 
 module.exports = productsRouter

@@ -1,0 +1,29 @@
+<header>
+    <div class="brand__container">
+        <img src="../../public/favicon.ico" alt="Logo">
+        <a class="brand__title" href="/">TU PILCHA UY</a>
+    </div>
+    {{#if user}}
+    <div class="data__user__container">
+        <p>Bienvenido {{user.username}}!</p>
+        <img src="../../public/usersImages/{{user.image}}" alt="{{user.username}}" />
+    </div>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Productos</a>
+            </li>
+            <li>
+                <a href="/cart/{{user._id}}">Mi carrito</a>
+            </li>
+            {{!-- <li>
+                <img src="../../public/favicon.ico" alt="Datos">
+                <a href="#">Mis datos</a>
+            </li> --}}
+            <li>
+                <a class="nav_salir" href="/logout" id="logout">Salir</a>
+            </li>
+        </ul>
+    </nav>
+    {{/if}}
+</header>

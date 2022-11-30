@@ -59,8 +59,4 @@ const errorLogger = createLogger({
     ]
 })
 
-module.exports = { 
-    infoLogger, 
-    warnlogger, 
-    errorLogger 
-}
+module.exports = { infoLogger, warnlogger, errorLogger }

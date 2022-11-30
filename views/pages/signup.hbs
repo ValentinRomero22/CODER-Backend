@@ -1,0 +1,36 @@
+{{> header}}
+
+<div class="login__container">
+  <h2>Registro</h2>
+  <form enctype="multipart/form-data" class="form_logout" method="post" action="/signup">
+    <label title="email">Email</label>
+    <input type="email" placeholder="Email" name="username" required value="otro@otro.com" />
+    <label title="password">Contraseña</label>
+    <input type="text" placeholder="Contraseña" name="password" required value="999" />
+    <label title="name">Nombre</label>
+    <input type="text" placeholder="Nombre" name="name" required/>
+    <label title="address">Dirección</label>
+    <input type="text" placeholder="Dirección" name="address" required/>
+    <label title="phone">Teléfono</label>
+    <input type="text" placeholder="Teléfono" name="phone" required/>
+    <label title="age">Edad</label>
+    <input type="number" placeholder="Edad" name="age" required/>
+    <label title="image">Imágen de perfil</label>
+    <input type="file" placeholder="Seleccione una imagen" name="image" required/>
+    <input class="button--detail" type="submit" value="Registrarse" />
+  </form>
+  <p>Ya tienes una cuenta? Logueate!</p>
+  <a class="anchor__login__button button--change" href="/login">Ir a login</a>
+</div>
+</body>
+{{#if message}}
+<p>{{message}}</p>
+{{/if}}
+
+{{!-- <script>
+  const process = (event) =>{
+    event.preventDefault()
+  }
+</script> --}}
+
+{{> footer}}

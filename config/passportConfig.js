@@ -1,24 +1,24 @@
 const passport = require('passport')
 const { Strategy: LocalStrategy } = require('passport-local')
-const Users = require('../models/user')
+const Users = require('../models/userModel')
 const { createHash, isValidPassword } = require('../utils/bcryptPassword')
 const { infoLogger, errorLogger } = require('../utils/winstonLogger')
 
 const passportLogin = {
-    localStrategy: new LocalStrategy((username, password, done) => {
-        Users.findOne({ username }, (error, user) => {
+    localStrategy: new LocalStrategy((email, password, done) => {
+        Users.findOne({ email }, (error, user) => {
             if (error) {
                 errorLogger.error(`Error login ${error}`)
                 return done(error)
             }
 
             if (!user) {
-                errorLogger.error(`Error usuario ${user} no encontrado`)
+                errorLogger.error(`No se encontró el usuario ${email}`)
                 return done(null, false)
             }
 
             if (!isValidPassword(password, user)) {
-                errorLogger.error(`Password ${password} incorrecta`)
+                errorLogger.error(`Contraseña ${password} incorrecta`)
                 return done(null, false)
             }
 
@@ -30,19 +30,34 @@ const passportLogin = {
 const passportSignup = {
     localStrategy: new LocalStrategy(
         { passReqToCallback: true },
-        (req, username, password, done) => {
-            Users.findOne({ username: username }, function (error, user) {
+        (req, email, password, done) => {
+            Users.findOne({ email: email }, function (error, user) {
                 if (error) {
-                    errorLogger.error(`Error login ${error}`)
+                    errorLogger.error(`Error de signup ${error}`)
                     return done(error)
                 }
 
                 if (user) {
-                    errorLogger.error(`El usuario ${user} ya existe`)
+                    errorLogger.error(`El usuario ${user.email} ya existe`)
                     return done(null, false)
                 }
 
-                const newUser = { username: username, password: createHash(password) }
+                const newUser = {
+                    username: req.body.name,
+                    password: createHash(password),
+                    /* email: email,
+                    address: 'direccion',
+                    age: 27,
+                    phone: '099099099',
+                    avatar: 'http://imagendemail.com',
+                    isAdmin: false, */
+                    email: email,
+                    address: req.body.address,
+                    age: req.body.age,
+                    phone: req.body.phone,
+                    image: req.file.filename,
+                    isAdmin: false
+                }
 
                 Users.create(newUser, (error, userCreated) => {
                     if (error) {
@@ -50,7 +65,7 @@ const passportSignup = {
                         return done(error)
                     }
 
-                    infoLogger.info('Usuario registrado correctamente')
+                    infoLogger.info(`Usuario ${newUser.email} registrado correctamente`)
                     return done(null, userCreated)
                 })
             })

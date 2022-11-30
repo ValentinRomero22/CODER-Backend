@@ -18,8 +18,8 @@ const getAllProductsService = async () => {
 
 const getProductByIdService = async (productId) =>{
     try{
-        const isAnIdValid = idValidator(productToUpdate.id)
-        if(isAnIdValid == false){
+        const isValidId = idValidator(productId.valueOf())
+        if(isValidId == false){
             throw new Error('Error en los datos a utilizar')
         }
 
@@ -32,15 +32,12 @@ const getProductByIdService = async (productId) =>{
 
 const saveNewProductService = async(newProduct) =>{
     try{
-        const isAnIdValid = idValidator(productToUpdate.id)
-        if(isAnIdValid == false){
-            throw new Error('Error en los datos a utilizar')
-        }
-
-        const isValid = productValidator(newProduct)
-        if (isValid == false){
+        const isValidProduct = productValidator(newProduct)
+        if (isValidProduct == false){
             throw new Error('Complete los datos necesarios correctamente')
         }
+
+        newProduct.timestamp = new Date()
 
         const result = await saveNewProductDao(newProduct)
         return result
@@ -51,8 +48,8 @@ const saveNewProductService = async(newProduct) =>{
 
 const updateProductService = async (productToUpdate) =>{
     try{
-        const isAnIdValid = idValidator(productToUpdate.id)
-        if(isAnIdValid == false){
+        const isValidId = idValidator(productToUpdate.id)
+        if(isValidId == false){
             throw new Error('Error en los datos a utilizar')
         }
 
@@ -70,8 +67,8 @@ const updateProductService = async (productToUpdate) =>{
 
 const deleteProductService = async (productId) =>{
     try{
-        const isAnIdValid = idValidator(productToUpdate.id)
-        if(isAnIdValid == false){
+        const isValidId = idValidator(productId)
+        if(isValidId == false){
             throw new Error('Error en los datos a utilizar')
         }
 

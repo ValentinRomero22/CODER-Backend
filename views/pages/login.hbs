@@ -1,0 +1,19 @@
+{{> header}}
+
+<div class="login__container">
+    <h2>Ingresar</h2>
+    <form class="form_logout" method="post" action="/login">
+        <label title="email">Email</label>
+        <input type="email" placeholder="Email" name="username" required />
+        <label title="password">Contraseña</label>
+        <input type="text" placeholder="Contraseña" name="password" required/>
+        <input class="button--detail" type="submit" value="Ingresar" />
+    </form>
+    <p>No tienes cuenta? Registrate!</p>
+    <a class="anchor__login__button button--change" href="/signup">Ir a signup</a>
+</div>
+{{#if message}}
+<p>{{message}}</p>
+{{/if}}
+
+{{> footer}}
