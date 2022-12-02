@@ -1,5 +1,8 @@
 {{> header}}
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
 <div class="login__container">
   <h2>Registro</h2>
   <form enctype="multipart/form-data" class="form_logout" method="post" action="/signup">
@@ -8,15 +11,15 @@
     <label title="password">Contraseña</label>
     <input type="text" placeholder="Contraseña" name="password" required value="999" />
     <label title="name">Nombre</label>
-    <input type="text" placeholder="Nombre" name="name" required/>
+    <input type="text" placeholder="Nombre" name="name" required />
     <label title="address">Dirección</label>
-    <input type="text" placeholder="Dirección" name="address" required/>
-    <label title="phone">Teléfono</label>
-    <input type="text" placeholder="Teléfono" name="phone" required/>
+    <input type="text" placeholder="Dirección" name="address" required />
+    <label title="phone">Número de teléfono</label>
+    <input id="phone" type="tel" name="phone" placeholder="Consulte e ingrese el prefijo internacional sin el signo de +"/>
     <label title="age">Edad</label>
-    <input type="number" placeholder="Edad" name="age" required/>
+    <input type="number" placeholder="Edad" name="age" required />
     <label title="image">Imágen de perfil</label>
-    <input type="file" placeholder="Seleccione una imagen" name="image" required/>
+    <input type="file" placeholder="Seleccione una imagen" name="image" required />
     <input class="button--detail" type="submit" value="Registrarse" />
   </form>
   <p>Ya tienes una cuenta? Logueate!</p>
@@ -27,10 +30,13 @@
 <p>{{message}}</p>
 {{/if}}
 
-{{!-- <script>
-  const process = (event) =>{
-    event.preventDefault()
-  }
-</script> --}}
+
+<script>
+   const phoneInputField = document.querySelector("#phone")
+   const phoneInput = window.intlTelInput(phoneInputField, {
+     utilsScript:
+       "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+   })
+ </script>
 
 {{> footer}}

@@ -17,6 +17,7 @@ const postLogin = (req, res) => {
     try {
         const { username } = req.user
         req.session.username = username
+
         res.redirect('/')
     } catch (error) {
         errorLogger.error(`login-outController.js | postLogin(): ${error.message}`)

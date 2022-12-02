@@ -42,6 +42,8 @@ const passportSignup = {
                     return done(null, false)
                 }
 
+                console.log(req.body.phone)
+
                 const newUser = {
                     username: req.body.name,
                     password: createHash(password),

@@ -4,7 +4,8 @@ const {
     addToCart,
     deleteToCart,
     deleteToCartsAndProduct,
-    cleanCart
+    cleanCart,
+    checkout
 } = require('../controllers/cartController')
 const { isAuthenticated } = require('../middlewares/functions')
 
@@ -13,6 +14,8 @@ const cartRouter = Router()
 cartRouter.get('/cart/:userId', isAuthenticated, getCart)
 
 cartRouter.post('/cart/:productId', isAuthenticated, addToCart)
+
+cartRouter.post('/cart/user/checkout', isAuthenticated, checkout)
 
 cartRouter.delete('/cart/product/:productId', isAuthenticated, deleteToCartsAndProduct)
 

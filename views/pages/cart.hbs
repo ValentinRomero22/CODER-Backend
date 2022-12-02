@@ -26,10 +26,11 @@
             {{/each}}
         </div>
         <div class="cart__footer">
+            <p>TOTAL: ${{cart.total}}</p>
             <button name="btnVaciar" onclick="cleanCart(`{{user._id}}`)" class="button button--delete button--cart">
                 Vaciar carrito
             </button>
-            <button name="btnConfirmar" onclick="" class="button button--detail button--cart">
+            <button name="btnConfirmar" onclick="checkout()" class="button button--detail button--cart">
                 Confirmar compra
             </button>
         </div>

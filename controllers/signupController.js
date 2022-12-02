@@ -1,4 +1,5 @@
 const { errorLogger } = require('../utils/winstonLogger')
+const { sendRegisterMail } = require('../config/mailConfig')
 const { saveNewCart } = require('../controllers/cartController')
 
 const getSignup = (req, res) => {
@@ -19,7 +20,7 @@ const postSignup = async (req, res) => {
         const { username } = req.user
         req.session.username = username
 
-        //await sendMails(req.user)
+        await sendRegisterMail(req.user)
         await saveNewCart(req, res)
         res.redirect('/')
     } catch (error) {

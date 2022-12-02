@@ -22,8 +22,11 @@ header{
 }
 header .brand__container{
     display: flex;
+    align-items: center;
 }
 header .brand__container img{
+    width: 45px;
+    height: 45px;
     margin-right: 10px;
     object-fit: contain;
 }
@@ -282,7 +285,8 @@ nav .nav_salir:hover{
 .login__container form input[type=checkbox]{
     margin-right: 97%;
 }
-.login__container form input[type=text], input[type=email], input[type=number], input[type=file], [type=checkbox]{
+.login__container form input[type=text], input[type=email], input[type=number], input[type=file], [type=checkbox], [type=tel]{
+    width: 100%;
     margin: 5px 0px 10px;
     padding: 5px 10px;
     border: 1px solid #97A6A0;
@@ -343,7 +347,13 @@ footer .main__footer{
 }
 footer .main__footer .brand__footer{
     display: flex;
+    align-items: center;
     margin-bottom: 5px;
+}
+footer .main__footer .brand__footer img{
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
 }
 footer .main__footer .social__footer{
     margin: 30px 0px;
@@ -403,6 +413,10 @@ footer .signature__footer{
     padding: 5px 15px;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+}
+.cart__footer p{
+    margin-right: 20px;
 }
 .cart__footer .button--cart{
     width: 20%;
@@ -410,6 +424,9 @@ footer .signature__footer{
 }
 .cart__footer button:not(:last-child){
     margin-right: 20px;
+}
+.iti{
+    margin: 5px 0px 10px;
 }
 @keyframes fadeIn {
     0% {

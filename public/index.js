@@ -87,6 +87,7 @@ const updateProduct = (event) => {
                 message = 'Producto modificado correctamente'
                 backgroundColor = '#0B550E'
                 showMessage(message, backgroundColor)
+                setTimeout(() => window.location.href = '/', 2000)
             } else {
                 message = 'Error al modificar el producto'
                 backgroundColor = '#F23030'
@@ -98,8 +99,6 @@ const updateProduct = (event) => {
             backgroundColor = '#F23030'
             showMessage(message, backgroundColor)
         })
-
-    setTimeout(() => window.location.href = '/', 2000)
 }
 
 const saveProduct = (event) => {
@@ -129,6 +128,7 @@ const saveProduct = (event) => {
                 message = 'Producto agregado correctamente'
                 backgroundColor = '#0B550E'
                 showMessage(message, backgroundColor)
+                setTimeout(() => window.location.href = '/', 2000)
             } else {
                 message = 'Error al agregar el producto'
                 backgroundColor = '#F23030'
@@ -140,8 +140,6 @@ const saveProduct = (event) => {
             backgroundColor = '#F23030'
             showMessage(message, backgroundColor)
         })
-
-    setTimeout(() => window.location.href = '/', 2000)
 }
 
 const deleteProductToCart = (productId) => {
@@ -194,7 +192,35 @@ const cleanCart = (userId) => {
             }
         })
         .catch((error) => {
-            message = 'Error al eliminar el producto'
+            message = 'Error al vaciar el carrito'
+            backgroundColor = '#F23030'
+            showMessage(message, backgroundColor)
+        })
+}
+
+const checkout = () => {
+    const path = '/cart/user/checkout'
+
+    const requestInit = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    }
+
+    fetch(path, requestInit)
+        .then((res) => {
+            if (res.status == 200) {
+                message = 'Orden de compra generada correctamente'
+                backgroundColor = '#0B550E'
+                showMessage(message, backgroundColor)
+                setTimeout(() => window.location.href = '/', 2000)
+            } else {
+                message = 'Error al generar la orden de compra'
+                backgroundColor = '#F23030'
+                showMessage(message, backgroundColor)
+            }
+        })
+        .catch((error) => {
+            message = 'Error al generar la orden de compra'
             backgroundColor = '#F23030'
             showMessage(message, backgroundColor)
         })

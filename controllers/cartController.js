@@ -1,11 +1,11 @@
 const {
-    getCartService,
     getCartByUserIdService,
     saveNewCartService,
     addToCartService,
     deleteToCartService,
     deleteToCartsAndProductService,
-    cleanCartService
+    cleanCartService,
+    checkoutService
 } = require('../services/cartService')
 const { errorLogger } = require('../utils/winstonLogger')
 
@@ -48,7 +48,7 @@ const addToCart = async (req, res) => {
         const userId = req.user._id
         const { productId } = req.params
         await addToCartService(userId, productId)
-        
+
         res.status(200).json({
             message: 'Producto agregado al carrito'
         })
@@ -116,11 +116,29 @@ const cleanCart = async (req, res) => {
     }
 }
 
+const checkout = async (req, res) => {
+    try {
+        const user = req.user
+        await checkoutService(user)
+
+        res.status(200).json({
+            message: 'Pedido generado con éxito!'
+        })
+    } catch (error) {
+        errorLogger.error(`${req.user.username}: cartController.js | checkout(): ${error}`)
+        res.status(500).render('pages/error', {
+            error: 'Se produjo un error al intentar confirmar la compra',
+            user: req.user
+        })
+    }
+}
+
 module.exports = {
     getCart,
     saveNewCart,
     addToCart,
     deleteToCart,
     deleteToCartsAndProduct,
-    cleanCart
+    cleanCart,
+    checkout
 }
