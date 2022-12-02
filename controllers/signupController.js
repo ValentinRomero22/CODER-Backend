@@ -10,7 +10,7 @@ const getSignup = (req, res) => {
             res.render('pages/signup')
         }
     } catch (error) {
-        errorLogger.error(`signup: ${error.message}`)
+        errorLogger.error(`signup: ${ error.message }`)
         return res.status(500).send({ error: true })
     }
 }
@@ -24,7 +24,7 @@ const postSignup = async (req, res) => {
         await saveNewCart(req, res)
         res.redirect('/')
     } catch (error) {
-        errorLogger.error(`signup: ${error.message}`)
+        errorLogger.error(`signup: ${ error.message }`)
         return res.status(500).send({ error: true })
     }
 }

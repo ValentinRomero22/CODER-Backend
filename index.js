@@ -13,8 +13,8 @@ const { PORT, MODE } = require('./config/config')
 const {
     productRouter,
     cartRouter,
-    loginRouter, 
-    logoutRouter, 
+    loginRouter,
+    logoutRouter,
     signupRouter
 } = require('./routes/main.routes')
 
@@ -28,11 +28,6 @@ app.use((req, res, next) => {
     infoLogger.info(`URL: ${req.originalUrl} - METHOD: ${req.method}`)
     next()
 })
-
-//const MODE = 'fork'
-const adminMail = 'valentinrq22@gmail.com'
-const adminWhatsApp = '099856093'
-//const cart = new Cart()
 
 app.use('/public', express.static(__dirname + '/public'))
 
@@ -54,6 +49,7 @@ app.engine(
 )
 
 if (cluster.isPrimary && MODE.toUpperCase() == 'CLUSTER') {
+    httpServer.listen(PORT, () => infoLogger.info(`Servidor corriendo en el puerto ${PORT}`))
     infoLogger.info(`Master ${process.pid} está corriendo`)
 
     for (let i = 0; i < cpus.cpus(); i++) {
@@ -81,5 +77,8 @@ app.use('/', signupRouter)
 
 app.all('*', (req, res) => {
     warnlogger.warn(`Ruta ${req.originalUrl} no encontrada`)
-    res.render('pages/notFound', { ruta: req.originalUrl })
+    res.render('pages/notFound',{ 
+        ruta: req.originalUrl,
+        user: req.user 
+    })
 })

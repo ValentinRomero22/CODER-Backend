@@ -1,9 +1,9 @@
 const parseArgs = require('minimist')
 const dotenv = require('dotenv')
 
-const options = { default : { MODE: 'FORK' }, alias: { m: 'MODE' } }
+const options = { default: { PORT: 8080, MODE: 'FORK' }, alias: { p: 'PORT', m: 'MODE' } }
 const args = parseArgs(process.argv.slice(2), options)
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8080 /* args.PORT */ //PARA MODO CLUSTER - FORK
 const MODE = args.MODE
 
 dotenv.config()

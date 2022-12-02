@@ -179,9 +179,9 @@ const checkoutService = async (user) => {
         const smsBody = 'Su pedido ha sido confirmado! Lo recibirá dentro de las próximas 24 horas hábiles. Tu Pilcha UY'
         const whatsappBody = `Nuevo pedido de ${user.username}. Verifique su mail para más detalle.`
 
-        /* await sendSMS(smsBody, user.phone)
+        await sendSMS(smsBody, user.phone)
         await sendWhatsapp(whatsappBody, user.phone)
-        await sendOrderMail(htmlProductsList, user) */
+        await sendOrderMail(htmlProductsList, user)
         
         await cleanCartService(user._id)
         
