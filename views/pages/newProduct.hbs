@@ -1,0 +1,28 @@
+{{> header}}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<div class="login__container">
+    <h2>Agregar producto</h2>
+    <form onsubmit="return saveProduct(event)">
+        <label title="name">Nombre</label>
+        <input type="text" placeholder="Nombre del producto" name="name" id="name" required />
+        <label title="description">Descripción</label>
+        <input type="text" placeholder="Breve descripción del producto" name="description" id="description" required />
+        <label title="code">Código</label>
+        <input type="text" placeholder="Código identificador del producto" name="code" id="code" required />
+        <label title="code">Imágen</label>
+        <input type="text" placeholder="URL de la imágen del producto" name="image" id="image" required />
+        <label title="price">Precio</label>
+        <input type="number" placeholder="Precio del producto" name="price" id="price" required />
+        <label title="isAternative">Es una camiseta alternativa?</label>
+        <input type="checkbox" name="isAternative" id="isAlternative" />
+        <label title="isTeam">Es de un equipo de futbol? No marcar si es de una selección</label>
+        <input type="checkbox" name="isTeam" id="isTeam" />
+        <input class="button--detail" type="submit" value="Guardar" />
+    </form>
+</div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+{{> footer}}

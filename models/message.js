@@ -1,4 +1,27 @@
-const mongoose = require('mongoose')
+const joi = require('joi')
+
+class Messages {
+    constructor(author, date, text) {
+        this.author = author;
+        this.date = date;
+        this.text = text;
+    }
+
+    static messageValidate(message, required) {
+        const messageSchema = joi.object({
+            author: required ? joi.object().required() : joi.object(),
+            date: required ? joi.date().required() : joi.date(),
+            text: required ? joi.string().required : joi.string()
+        })
+
+        const { error } = messageSchema.validate(message)
+        if (error) throw error
+    }
+}
+
+module.exports = Messages
+
+/* const mongoose = require('mongoose')
 
 const messageSchema = new mongoose.Schema(
     {
@@ -18,4 +41,4 @@ const messageSchema = new mongoose.Schema(
     }
 )
 
-module.exports = mongoose.model('Messages', messageSchema)
+module.exports = mongoose.model('Messages', messageSchema) */

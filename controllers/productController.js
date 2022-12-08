@@ -1,7 +1,7 @@
-const { getProducts } = require('../services/productService')
+//const { getProducts } = require('../services/productService')
 const { errorLogger } = require('../utils/winstonLogger')
 
-const createProducts = (req, res) => {
+/* const createProducts = (req, res) => {
     getProducts()
         .then((response) => {
             if (response.length > 0) {
@@ -21,6 +21,6 @@ const createProducts = (req, res) => {
             errorLogger.error(`productController.js || createProducts(): ${error.message}`)
             res.status(500).send({ error: error })
         })
-}
+} */
 
 module.exports = { createProducts }

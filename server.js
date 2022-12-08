@@ -18,6 +18,7 @@ const { passportSession } = require('./middlewares/passportSession')
 const { PORT, MODE } = require('./config/config')
 const cluster = require('cluster')
 const cpus = require('os')
+const { viewEngineHandlebars } = require('./middlewares/viewEngineHandlebars')
 const { infoLogger, warnlogger, errorLogger } = require('./utils/winstonLogger')
 
 const app = express()
@@ -29,7 +30,6 @@ app.use('/public', express.static(__dirname + '/public'))
 
 //BLOQUE FOREVER
 if (cluster.isPrimary && MODE.toUpperCase() == "CLUSTER") {
-    //console.log(`Master ${process.pid} is running`)
     infoLogger.info(`Master ${process.pid} is running`)
 
     for (let i = 0; i < cpus.cpus().length; i++) {
@@ -42,47 +42,20 @@ if (cluster.isPrimary && MODE.toUpperCase() == "CLUSTER") {
         errorLogger.error(`Worker ${worker.process.pid} died`)
     })
 } else {
-    //httpServer.listen(PORT, () => console.log(`Server started on port ${PORT}`))
     httpServer.listen(PORT, () => infoLogger.info(`Server started on port ${PORT}`))
-    //console.log(`Worker ${process.pid} started`)
     infoLogger.info(`Worker ${process.pid} started`)
-    //httpServer.on('error', () => console.log('Server error'))
     httpServer.on('error', () => errorLogger.error('Server error'))
 }
-
-//BLOQUE PM2
-/* httpServer.listen(PORT, () => infoLogger.info(`Server started on port ${PORT}`))
-//console.log(`Worker ${process.pid} started`)
-infoLogger.info(`Worker ${process.pid} started`)
-//httpServer.on('error', () => console.log('Server error'))
-httpServer.on('error', () => errorLogger.error('Server error')) */
 
 app.use((req, res, next) => {
     infoLogger.info(`URL: ${req.originalUrl} - METHOD: ${req.method}`)
     next()
 })
 
-// la idea era configurar handlebars desde un middleware pero no pude 
-//viewEngineHandlebars(app, express)
+viewEngineHandlebars(app, express, __dirname)
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
-app.set('view engine', 'hbs')
-app.set('views', './views')
-
-app.engine(
-    'hbs',
-    engine({
-        extname: 'hbs',
-        defaultLayout: 'index.hbs',
-        layoutsDir: __dirname + '/views/layouts',
-        partialsDir: __dirname + '/views/partials',
-    })
-)
-
-mongoConnect()
-passportSession(app)
+/* mongoConnect() */
+/* passportSession(app) */
 
 app.use('/', productsRouter)
 app.use('/', loginRouter)

@@ -6,7 +6,10 @@
   "scripts": {
     "test": "node benchmark.js",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "watch": "nodemon server.js",
+    "dev": "set NODE_ENV=development&& node server.js",
+    "prod": "set NODE_ENV=production&& node server.js",
+    "dw": "set NODE_ENV=production&& nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -38,6 +41,7 @@
     "redis": "^4.3.1",
     "socket.io": "^4.5.1",
     "winston": "^3.8.2",
-    "@faker-js/faker": "^7.5.0"
+    "@faker-js/faker": "^7.5.0",
+    "joi": "^17.7.0"
   }
 }
