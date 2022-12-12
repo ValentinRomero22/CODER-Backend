@@ -1,6 +1,34 @@
 const { errorLogger } = require('../utils/winstonLogger')
 
-const signup = {
+class SignupController {
+    constructor() { }
+
+    getSingup = (req, res) => {
+        try {
+            req.isAuthenticated()
+                ? res.redirect('/')
+                : res.render('pages/signup')
+        } catch (error) {
+            errorLogger.error(`signupController.js | getSignup(): ${error}`)
+            return res.status(500).send({ error: true })
+        }
+    }
+
+    postSignup = (req, res) => {
+        try {
+            req.session.username = req.user.username
+
+            res.redirect('/')
+        } catch (error) {
+            errorLogger.error(`signupController.js | postSignup(): ${error}`)
+            return res.status(500).send({ error: true })
+        }
+    }
+}
+
+module.exports = SignupController
+
+/* const signup = {
     get: (req, res) => {
         try {
             if (req.isAuthenticated()) {
@@ -33,4 +61,4 @@ const signup = {
     }
 }
 
-module.exports = { signup }
+module.exports = { signup } */

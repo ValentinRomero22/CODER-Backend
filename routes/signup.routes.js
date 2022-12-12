@@ -1,13 +1,30 @@
-//import { Router } from "express"
 const { Router } = require('express')
-//import { signup } from "../controllers/signup.js"
-const { signup } = require('../controllers/signupController')
-//import passport from "passport"
+const SignupController = require('../controllers/signupController')
+//const { signup } = require('../controllers/signupController')
 const passport = require('passport')
 
 const signupRouter = Router()
 
-signupRouter.get('/signup', signup.get)
+class SignupRouter {
+    constructor() {
+        this.signupController = new SignupController()
+    }
+
+    start() {
+        signupRouter.get('/signup', this.signupController.getSingup)
+        signupRouter.post(
+            '/signup',
+            passport.authenticate("signup", { failureRedirect: '/signup' }),
+            this.signupController.postSignup
+        )
+
+        return signupRouter
+    }
+}
+
+module.exports = SignupRouter
+
+/* signupRouter.get('/signup', signup.get)
 
 signupRouter.get('/errorSignup', signup.error)
 
@@ -17,5 +34,4 @@ signupRouter.post(
     signup.post
 )
 
-//export default signupRouter
-module.exports = signupRouter
+module.exports = signupRouter */

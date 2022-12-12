@@ -5,7 +5,7 @@ const { errorLogger, infoLogger } = require('../utils/winstonLogger')
 const mongoConnect = () => {
     mongoose.connect(MONGO_CONNECTION, {
         useNewUrlParser: true,
-        useUniFiedTopology: true
+        useUnifiedTopology: true
     })
         .then(() => {
             infoLogger.info('Conectado a Atlas')

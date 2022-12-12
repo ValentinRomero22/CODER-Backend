@@ -1,410 +1,435 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:wght@400;700&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
-:root{
-    --raleway: 'Raleway', sans-serif;
-    --open-sans: 'Open Sans', sans-serif;
-}
-
 body{
-    background-color: #fff;
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: 'Rubik';
+    overflow-y: scroll; 
 }
-
 header{
     width: 100%;
-    min-height: 70px;
-    padding: 0 10%;
+    padding: 5px 15%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2044a5;
+    background-color: #0B2B40;
+    color: #FFFFFF;
 }
-
-h1{
-    margin: 15px;
-    text-align: center;
-    font-size: 2.5rem;
-    font-family: var(--raleway);
-    color: #2044a5;
-}
-
-h2{
-    font-size: 2rem;
-    font-family: var(--raleway);
-    color: #2044a5;
-}
-
-form{
-    height: 300px;
-    margin: 10px 0;
-    padding: 10px;
+header .brand__container{
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-family: var(--open-sans);
+    align-items: center;
 }
-
-form input{
-    font-family: var(--open-sans);
-    font-size: 1rem;
-    border: transparent;
-    border-bottom: 1px solid #808080;
+header .brand__container img{
+    width: 45px;
+    height: 45px;
+    margin-right: 10px;
+    object-fit: contain;
 }
-
-form input[type=text], [type=email]{
-    margin: 10px 0;
-}
-
-.boton{
-    width: max-content;
-    padding: 5px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 50px;
-    text-decoration: none;
-}
-
-.boton_main{
-    color: #2044a5;
-    background-color: #fff;
-    border: 3px solid #2044a5;
-}
-
-.boton:hover{
-    color: #fff;
-    background-color: #2044a5;
-    cursor: pointer;
-}
-
-.boton_salir{
-    color: #be1f34;
-    background-color: #fff;
-    border: 3px solid #be1f34;
-    margin-left: 10px;
-}
-
-.boton_salir:hover{
-    color: #fff;
-    background-color: #be1f34;
-    cursor: pointer;
-}
-
-.boton_change{
-    color: #0b6d29;
-    background-color: #fff;
-    border: 3px solid #0b6d29;
-    margin-left: 10px;
-}
-
-.boton_change:hover{
-    color: #fff;
-    background-color: #0b6d29;
-    cursor: pointer;
-}
-
-.brand{
-    font-family: var(--raleway);
+header .brand__container .brand__title{
+    font-family: Bebas Neue;
     font-size: 3rem;
     font-weight: bold;
-    color: #fff;
     text-decoration: none;
+    color: #FFFFFF;
 }
-
-.header__nav{
-    padding-bottom: 5px;
-    font-family: var(--raleway);
-    color: #fff;
-    text-decoration: none;
-    border-bottom: 3px solid transparent;
-}
-
-.header__nav:hover{
-    border-bottom: 3px solid #fff;
-}
-
-.main__container{
-    width: 80%;
-    margin: 50 auto;
+header .data__user__container{
     display: flex;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px;
-}
-
-.container{
-    width: 100%;
-    padding: 20px;
-    font-family: var(--open-sans);
-}
-
-.form--container{
-    width: 40%;
-}
-
-.chat_container{
-    display: flex;
-    justify-content: space-between;
-}
-
-.chat_container form{
-    width: 48%;
-}
-
-.chat_container .chat__box{
-    width: 48%;
-}
-
-.products__container{
-    width: 80%;
-    margin: 50 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px;
-    font-family: var(--open-sans);
-    font-size: 20px;
-}
-
-.products__container__titles{
-    width: 100%;
-    margin: 20px 0 20px;
-    padding: 0 10px;
-    display: flex;
-    font-weight: bold;
-    color: #000;
-}
-
-.products__container__message{
-    margin-top: 20px;
-    font-weight: bold;
-}
-
-.product{
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    border: 1px solid transparent;
-    border-radius: 10px;
 }
-
-.product:hover{
-    box-shadow: 0px 0px 10px 0px;
+header .data__user__container p{
+    margin-right: 10px;
 }
-
-.product__id{
-    width: 10%;
-    color: #808080;
-}
-
-.product__title{
-    width: 50%;
-    text-align: center;
-}
-
-.product__price{
-    width: 20%;
-    text-align: center;
-}
-
-.product__image__container{
-    width: 20%;
-    text-align: center;
-}
-
-.product__image{
-    display: block;
-    margin: 0 auto;
-    width: 80px;
-    height: 80px;
-    font-size: 14px;
-}
-
-footer{
-    height: max-content;
-    margin-top: auto;
-    padding: 25px 0;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    font-family: var(--open-sans);
-    color: #fff;
-    background-color: #2044a5;
-}
-
-.footer__brand{
-    font-family: var(--raleway);
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.success__text{
-    font-family: var(--open-sans);
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.chat__box{
-    border-radius: 5px;
-    background-color: rgb(240, 240, 240);
-    overflow-y: scroll;
-}
-
-.chat__message__box{
-    display: flex;
-    justify-content: space-between;
-}
-
-.chat__message{
-    width: 100%;
+header .data__user__container img{
+    width: 35px;
+    height: 35px;
     margin-right: 20px;
+    border-radius: 50%;
 }
-
-.compression_status{
-    margin-top: 10px;
-    font-size: 14px;
-    font-style: italic;
-    color: #6c8dfa;
+header .data__user__container a{
+    display: block;
+    padding: 5px 25px;
+    text-decoration: none;
+    color: #FFFFFF;
+    border: 1px solid transparent;
 }
-
-.item_chat_container{
+header .data__user__container a:hover{
+    border: 1px solid #CF0A0A;
+    border-radius: 5px;
+    background-color: #CF0A0A;
+}
+nav ul{
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px 0%;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+nav ul li{
     display: flex;
     align-items: center;
-    margin: 10px 5px;
+    white-space: nowrap;
 }
-
-.image_avatar{
-    width: 40px;
+nav ul li:not(:last-child){
+    margin-right: 10px;
 }
-
-.item_chat_id{
-    font-weight: bold;
-    color: #2044a5;
-    margin-right: 5px;
+nav ul li img{
+    margin-right: 10px;
 }
-
-.item_chat_date{
-    color: #94231f;
-    margin-right: 5px;
+nav ul li a{
+    display: block;
+    padding: 5px 25px;
+    text-decoration: none;
+    color: #FFFFFF;
+    border: 1px solid transparent;
 }
-
-.item_chat_text{
-    color: #004b00;
-    margin-right: 5px;
+nav ul li a:hover{
+    color: #0B2B40;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    border-radius: 5px;
 }
-
-.table{
-    width: 100%;
-    text-align: center;
+nav .nav_salir:hover{
+    color: #FFFFFF;
+    background-color: #CF0A0A;
+    border-color: #CF0A0A;
+    border-radius: 5px;
 }
-
-.login_header{
+.main__container {
+    margin: 50px 15%;
+    width: 70%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    animation: fadeIn 3s;
 }
-
-.logout_button{
-    width: max-content;
-    padding: 5px 30px;
-    font-family: var(--open-sans);
-    font-weight: bold;
-    font-size: 16px;
-    color: #2044a5;
-    background-color: #fff;
-    border: 3px solid #2044a5;
-    border-radius: 50px;
+.button--detail {
+    color: #0B2B40;
+    background-color: #FFFFFF;
+    border: 1px solid #0B2B40;
 }
-
-.logout_button:hover{
-    color: #fff;
-    background-color: #2044a5;
+.button--detail:hover {
+    color: #FFFFFF;
+    background-color: #0B2B40;
     cursor: pointer;
 }
-
-.redirect_label{
-    margin-top: 25px;
-    font-size: 14px;
-    font-style: italic;
+.button--change {
+    color: #0B550E;
+    background-color: #FFFFFF;
+    border: 1px solid #0B550E;
 }
-
-.form_logout{
-    height: auto;
+.button--change:hover {
+    color: #FFFFFF;
+    background-color: #0B550E;
+    cursor: pointer;
 }
-
-.login{
+.button--delete {
+    color: #CF0A0A;
+    background-color: #fff;
+    border: 1px solid #CF0A0A;
+}
+.button--delete:hover {
+    color: #fff;
+    background-color: #CF0A0A;
+    cursor: pointer;
+}
+.main__container h2 {
+    font-size: 2.5rem;
+    font-family: 'Bebas Neue';
+}
+.main__container .button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px 15px;
+    font-family: 'Rubik';
+    font-size: 1rem;
+    border-radius: 5px;
+}
+.main__container .product__form__container {
     width: 30%;
 }
-
-.login input[type=submit]{
-    margin-top: 20px;
+.main__container .product__form__container form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Rubik';
 }
-
-.login p{
-    padding: 10px;
-    font-size: 16px;
+.main__container .product__form__container form button {
+    width: 100%;
 }
-
-.welcome_message{
-    margin-top: 20px;
+.main__container .product__form__container form input[type=number], .main__container .product__form__container form [type=text] {
+    margin-bottom: 10px;
+    padding: 0px 5px;
+    width: 100%;
+    height: 30px;
+    font-family: 'Rubik';
+    font-size: 1rem;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
 }
-
-.welcome_box{
+.main__container .product__form__container form .form__label {
+    margin-bottom: 3px;
+}
+.main__container .catalog__container {
+    width: 100%;
+    margin-bottom: 100px;
+}
+.main__container .catalog__container .catalog__header {
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+}
+.main__container .catalog__container .catalog__header button {
+    width: 20%;
+}
+.main__container .catalog__container .catalog__header .button--new--product {
+    width: 20%;
+    text-align: center;
+    text-decoration: none;
+}
+.main__container .catalog__container .catalog__header form {
+    display: flex;
     align-items: center;
 }
-
-.form_fork{
-    height: 100px;
-    width: 250px;
+.main__container .catalog__container .catalog__header form input[type=submit] {
+    margin: 0;
 }
-
-.fork_number{
+.main__container .catalog__container .catalog__header form input[type=number] {
+    margin-right: 10px;
+    padding: 0px 5px;
     width: 100px;
+    height: 30px;
+    font-family: 'Rubik';
+    font-size: 1rem;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
 }
-
-.div_info{
+.main__container .catalog__container .catalog {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    justify-items: center;
+    row-gap: 5%;
+    column-gap: 3%;
+}
+.main__container .catalog__container .catalog .product {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 10px;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
+    background-color: #F7F7F7;
+}
+.main__container .catalog__container .catalog .product:hover {
+    box-shadow: 0px 0px 20px 0px;
+}
+.main__container .catalog__container .catalog .product img {
+    height: 240px;
+    width: 200px;
+    object-fit: contain;
+}
+.main__container .catalog__container .catalog .product .product__name__container {
+    width: 100%;
+    margin-bottom: 10px;
+    min-height: 45px;
+    font-size: 1.2rem;
+    text-align: left;
+}
+.main__container .catalog__container .catalog .product .product__price__container {
+    width: 100%;
+    text-align: left;
+    font-size: 1.2rem;
+    color: #808080;
+}
+.main__container .catalog__container .catalog .product .admin__controls__container {
+    width: 100%;
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.main__container .catalog__container .catalog .product .admin__controls__container .button {
+    margin-top: 0px;
+    width: 49%;
+    text-align: center;
+}
+.products__message {
+    font-size: 2.5rem;
+    font-family: 'Bebas Neue';
+}
+.login__container {
+    margin: 50px auto;
+    padding: 15px;
+    width: 480px;
+    height: auto;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
+    background-color: #F7F7F7;
+}
+.login__container h2{
+    text-align: center;
+    font-family: 'Bebas Neue';
+    font-size: 2.2rem;
+}
+.login__container form{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.login__container form input[type=text], input[type=email], input[type=number], input[type=file], [type=checkbox], [type=tel]{
+    width: 100%;
+    margin: 5px 0px 10px;
+    padding: 5px 10px;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-family: 'Rubik';
+}
+.login__container form input[type=submit]{
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px 15px;
+    font-family: 'Rubik';
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.login__container .anchor__login__button{
+    display: block;
+    margin-top: 5px;
+    padding: 5px 15px;
+    width: 100%;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+}
+.product .add__button{
+    margin-top: 5px;
+    width: 100%;
+    padding: 5px 0px;
+    color: #0B2B40;
+    border: 1px solid #0B2B40;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+}
+.product .add__button:hover{
+    color: #FFFFFF;
+    background-color: #0B2B40;
+}
+footer{
+    margin-top: auto;
+    padding: 15px 15%;
+    width: 100%;
+    color: #FFFFFF;
+    background-color: #0B2B40;
+}
+footer h2{
+    font-family: 'Bebas Neue';
+    font-size: 2.5rem;
+}
+footer .main__footer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+footer .main__footer .brand__footer{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+footer .main__footer .brand__footer img{
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+}
+footer .main__footer .social__footer{
+    margin: 30px 0px;
+    display: flex;
+    justify-content: flex-end;
+}
+footer .main__footer .social__footer img{
+    width: 25px;
+    height: 25px;
+}
+footer .main__footer .social__footer img:not(:first-child){
+    margin-left: 40px;
+}
+footer .main__footer .social__footer img:hover{
+    fill: #0B2B40;
+}
+footer .signature__footer{
+    margin-top: 15px;
+    font-size: 0.8rem;
+    text-align: center;
+}
+.cart__container{
     display: flex;
     flex-direction: column;
 }
-
-.table_info{
-    margin-top: 30px;
-    font-size: 20px;
-}
-
-.bold_info{
-    font-weight: bold;
-}
-
-.boton_nav{
+.cart__container .item__container{
+    width: 100%;
     padding: 5px 15px;
-    font-size: 1em;
-    font-weight: bold;
-    border: 1px solid transparent;
-    border-radius: 50px;
-    background-color: transparent;
-    text-decoration: none;
-    color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
+    font-size: 1.3rem;
 }
-
-.boton_nav:hover{
-    color: #2044a5;
+.cart__container .item__container:not(:last-child){
+    margin-bottom: 10px;
 }
-
-.notFound{
-    color: #94231f;
+.cart__container .item__container:hover{
+    box-shadow: 0px 0px 20px 0px;
+}
+.cart__container .item__container img{
+    height: 96px;
+    width: 80px;
+    object-fit: contain;
+}
+.cart__container .item__container button{
+    width: 20%;
+    margin: 0px;
+}
+.cart__container .item__container .cart__item__price{
+    color: #808080;
+}
+.cart__footer{
+    height: auto;
+    margin-top: 15px;
+    padding: 5px 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.cart__footer p{
+    margin-right: 20px;
+}
+.cart__footer .button--cart{
+    width: 20%;
+    margin: 0px;
+}
+.cart__footer button:not(:last-child){
+    margin-right: 20px;
+}
+.iti{
+    margin: 5px 0px 10px;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+   }
+    100% {
+        opacity: 1;
+   }
 }

@@ -2,17 +2,10 @@ const express = require('express')
 const http = require('http')
 const { Server } = require('socket.io')
 const {
-    productsRouter,
-    indexRouter,
-    loginRouter,
-    logoutRouter,
-    signupRouter,
-    randomRouter,
-    infoRouter
+    ProductRouter,
+    LoginRouter,
+    SignupRouter
 } = require('./routes/main.routes')
-const { getAllMessages, saveNewMessage } = require('./controllers/messageController')
-const { normalizedMessages } = require('./utils/messageNormalize')
-const { engine } = require('express-handlebars')
 const mongoConnect = require('./utils/mongoConnection')
 const { passportSession } = require('./middlewares/passportSession')
 const { PORT, MODE } = require('./config/config')
@@ -54,34 +47,19 @@ app.use((req, res, next) => {
 
 viewEngineHandlebars(app, express, __dirname)
 
-/* mongoConnect() */
-/* passportSession(app) */
+mongoConnect()
+passportSession(app)
 
-app.use('/', productsRouter)
-app.use('/', loginRouter)
-app.use('/', indexRouter)
-app.use('/', logoutRouter)
-app.use('/', signupRouter)
-app.use('/', randomRouter)
-app.use('/', infoRouter)
+const productRouter = new ProductRouter()
+const loginRouter = new LoginRouter()
+const signupRouter = new SignupRouter()
+
+app.use('/', productRouter.start())
+app.use('/', loginRouter.startLogin())
+app.use('/', loginRouter.startLogout())
+app.use('/', signupRouter.start())
 
 app.all('*', (req, res) => {
     warnlogger.warn(`Ruta ${req.originalUrl} no encontrada`)
     res.render('pages/notFound', { ruta: req.originalUrl })
-})
-
-io.on('connection', async (socket) => {
-    const messages = await getAllMessages()
-    
-    const normalized = normalizedMessages(messages)
-
-    io.sockets.emit('messages', normalized)
-
-    socket.on('newMessage', async (clientMessage) => {
-        let message = JSON.parse(clientMessage)
-        saveNewMessage(message)
-
-        const allMessages = await getAllMessages()        
-        io.sockets.emit('messages', normalizedMessages(allMessages))
-    })
 })

@@ -1,38 +1,67 @@
 {{> header}}
-<div class="products__container welcome_box">
-    <div class="login_header">
-        <h2>Bienvenido {{user}}!</h2>
-    </div>
-    <div>
-        <a class="boton_nav" href="/" id="a-main">Ver chat</a>
-        <a class="boton_nav" href="/info" id="logout">Ver info</a>
-        <a class="boton_nav" href="/api/random" id="logout">Números random</a>
-        <a class="boton boton_salir" href="/logout" id="logout">Salir</a>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+<div class="main__container">
+    <div class="catalog__container">
+        {{#if products}}
+        <div class="catalog__header">
+            <h2 class="products__message">Productos</h2>
+            {{!-- {{#if user.isAdmin}} --}}
+            <a href="/newProduct" class="button button--detail button--new--product">Agregar producto</a>
+            {{!-- {{/if}} --}}
+        </div>
+        <p id="mensaje"></p>
+        <div class="catalog">
+            {{!-- {{#if user.isAdmin}} --}}
+            {{#each products}}
+            <div class="product">
+                <img src="{{this.image}}" alt="{{this.name}}" />
+                <div class="product__name__container">
+                    <p>{{this.name}}</p>
+                </div>
+                <div class="product__price__container">
+                    <p>$ {{this.price}}</p>
+                </div>
+                {{!-- <button name="btnAgregar" onclick="addToCart(`{{this.id}}`)" class="button button--detail">
+                    Agregar al carrito
+                </button> --}}
+                <button name="btnEditar" onclick="formProduct(`{{this._id}}`)" class="button button--change">
+                    Editar
+                </button>
+                <button name="btnEliminar" onclick="deleteProduct(`{{this._id}}`)" class="button button--delete">
+                    Eliminar
+                </button>
+            </div>
+            {{/each}}
+            {{!-- {{else}}
+            {{#each products}}
+            <div class="product">
+                <img src="{{this.image}}" alt="{{this.name}}" />
+                <div class="product__name__container">
+                    <p>{{this.name}}</p>
+                </div>
+                <div class="product__price__container">
+                    <p>$ {{this.price}}</p>
+                </div>
+                <button name="btnAgregar" onclick="addToCart(`{{this._id}}`)" class="button button--detail">
+                    Agregar al carrito
+                </button>
+            </div>
+            {{/each}}
+            {{/if}} --}}
+        </div>
+        {{else}}
+        <div class="catalog__header">
+            <h2 class="products__message">No hay productos!</h2>
+            {{!-- {{#if user.isAdmin}} --}}
+            <a href="/product">Agregar producto</a>
+            {{!-- {{/if}} --}}
+        </div>
+        {{/if}}
     </div>
 </div>
-<div id="products__container" class="products__container welcome_message">
-    <div class="login_header">
-        <h2>Productos</h2>
-    </div>
-    {{#if productsExist}}
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Imagen</th>
-        </tr>
-        {{#each products}}
-        <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.name}}</td>
-            <td>{{this.price}}</td>
-            <td><img src="{{this.image}}" class="product-img" /></td>
-        </tr>
-        {{/each}}
-    </table>
-    {{else}}
-    <p>No hay productos!</p>
-    {{/if}}
-</div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 {{> footer}}

@@ -1,3 +1,22 @@
 <header>
-    <a href="/" class="brand">Servidor en capas</a>
+    <div class="brand__container">
+        {{!-- <img src="../../public/logo.png" alt="Logo"> --}}
+        <a class="brand__title" href="/">Esquema ApiRestful</a>
+    </div>
+    {{#if user}}
+    {{!-- <div class="data__user__container"> --}}
+        <p>Bienvenido {{user.username}}!</p>
+        {{!-- <img src="../../public/usersImages/{{user.image}}" alt="{{user.username}}" /> --}}
+    {{!-- </div> --}}
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Productos</a>
+            </li>
+            <li>
+                <a class="nav_salir" href="/logout" id="logout">Salir</a>
+            </li>
+        </ul>
+    </nav>
+    {{/if}}
 </header>

@@ -9,7 +9,7 @@ const mongoSession = (app) => {
                 mongoUrl: MONGO_CONNECTION,
                 mongoOptions: {
                     useNewUrlParser: true,
-                    useUnifiedTopology: true,
+                    useUnifiedTopology: true
                 },
             }),
             secret: SECRET_SESSION,
