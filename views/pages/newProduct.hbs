@@ -13,6 +13,8 @@
         <input type="text" placeholder="Código identificador del producto" name="code" id="code" required />
         <label title="code">Imágen</label>
         <input type="text" placeholder="URL de la imágen del producto" name="image" id="image" required />
+        <label title="stock">Stock</label>
+        <input type="number" placeholder="Stock actual del producto" name="stock" id="stock" required />
         <label title="price">Precio</label>
         <input type="number" placeholder="Precio del producto" name="price" id="price" required />
         <label title="isAternative">Es una camiseta alternativa?</label>
@@ -24,5 +26,6 @@
 </div>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="../../public/newProduct.js"></script>
 
 {{> footer}}

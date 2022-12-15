@@ -1,31 +1,6 @@
 [
     {
-        "_id": 1,
-        "timestamp": "01/08/2022",
-        "name": "Juventus Local 2022",
-        "description": "Juventus local temporada 2022. Tecnología Dry Fit. Marca Adidas",
-        "code": "JuvL2022",
-        "image": "https://drive.google.com/uc?export=view&id=1VEF0Hd1DC4eqJNzDEch80qGVdnXDGHIh",
-        "price": 1500,
-        "stock": 10,
-        "isAlternative": false,
-        "isTeam": true
-    },
-    {
-        "_id": 2,
-        "timestamp": "02/08/2022",
-        "name": "Barça Local 2022",
-        "description": "Barcelona local temporada 2022. Player edition. Marca Nike",
-        "code": "BarL2022",
-        "image": "https://drive.google.com/uc?export=view&id=12Q-0Jx4XTiQ1yCJq5_c2ApOTu1tP3JhW",
-        "price": 1500,
-        "stock": 15,
-        "isAlternative": false,
-        "isTeam": true
-    },
-    {
         "_id": 3,
-        "timestamp": "04/08/2022",
         "name": "Ayax Visitante 2022",
         "description": "Ayax Visitante temporada 2022. Fan edition. Marca Adidas",
         "code": "AyaL2022",
@@ -37,13 +12,12 @@
     },
     {
         "_id": 5,
-        "timestamp": "10/08/2022",
         "name": "Chelsea Visitante 2022",
         "description": "Chelsea Visitante temporada 2022. Player edition. Marca Adidas",
         "code": "CheL2022",
         "image": "https://drive.google.com/uc?export=view&id=1b1FPHKx15m8WS7nrZfZNaw_mGcCp53ip",
         "price": 1500,
-        "stock": 25,
+        "stock": 30,
         "isAlternative": true,
         "isTeam": true
     },
@@ -56,19 +30,50 @@
         "isAlternative": false,
         "isTeam": false,
         "stock": 10,
-        "timestamp": "2022-12-12T15:14:16.932Z",
         "_id": 6
     },
     {
         "name": "Boca Local 2022",
-        "description": "Camiseta Titular de Boquita 2022",
-        "code": "Boc2022",
-        "image": "https://http2.mlstatic.com/D_NQ_NP_2X_932476-MLU52336510842_112022-F.webp",
-        "price": 2790,
+        "description": "Camiseta Local de Boca 2022 Marca Adidas Fan Edition",
+        "code": "BocL2022",
+        "image": "https://http2.mlstatic.com/D_NQ_NP_932476-MLU52336510842_112022-V.jpg",
+        "price": 4500,
         "isAlternative": false,
-        "isTeam": true,
-        "stock": 10,
-        "timestamp": "2022-12-12T15:40:15.091Z",
+        "isTeam": false,
+        "stock": 20,
         "_id": 7
+    },
+    {
+        "_id": 8,
+        "name": "Francia Local 2022",
+        "description": "Camiseta Local de Francia Marca Nike Qatar 2022",
+        "code": "FraL2022",
+        "price": 3580,
+        "stock": 15,
+        "image": "https://http2.mlstatic.com/D_NQ_NP_858366-MLC52096325304_102022-O.jpg",
+        "isTeam": false,
+        "isAlternative": false
+    },
+    {
+        "_id": 9,
+        "name": "Peñarol 2022",
+        "description": "Camiseta Local Peñarol 2022 Marca Puma Player Edition",
+        "code": "PenL2022",
+        "price": 4250,
+        "stock": 40,
+        "image": "https://http2.mlstatic.com/D_NQ_NP_2X_917741-MLU49575745363_042022-F.webp",
+        "isTeam": false,
+        "isAlternative": false
+    },
+    {
+        "_id": 10,
+        "name": "Borussia Dortmund 2022",
+        "description": "Camiseta Local Dortmund 2022 Marca Puma Fan Edition",
+        "code": "DorL2022",
+        "price": 3500,
+        "stock": 15,
+        "image": "https://drive.google.com/uc?export=view&id=1sHf-wqF6H9Z-PTIzIePUtXolwAXLPBWp",
+        "isTeam": true,
+        "isAlternative": false
     }
 ]

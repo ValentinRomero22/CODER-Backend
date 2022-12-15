@@ -7,6 +7,7 @@ class LoginController {
         try {
             req.isAuthenticated()
                 ? res.redirect('/')
+                /* ? res.render('pages/products') */
                 : res.render('pages/login')
         } catch (error) {
             errorLogger.error(`loginController.js | getLogin(): ${error}`)
@@ -19,6 +20,7 @@ class LoginController {
             req.session.username = req.user.username
 
             res.redirect('/')
+            /* res.render('pages/products') */
         } catch (error) {
             errorLogger.error(`loginController.js | postLogin(): ${error}`)
             return res.status(500).send({ error: true })

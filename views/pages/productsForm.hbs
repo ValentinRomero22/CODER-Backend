@@ -6,26 +6,28 @@
     <h2>Editar producto</h2>
     <form onsubmit="return updateProduct(event)">
         <label title="id">Product ID</label>
-        <input type="text" name="id" id="id" value="{{product._id}}" disabled />
+        <input type="text" name="id" id="id" disabled />
         <label title="name">Nombre</label>
-        <input type="text" placeholder="Nombre del producto" name="name" id="name" required value="{{product.name}}" />
+        <input type="text" placeholder="Nombre del producto" name="name" id="name" required />
         <label title="description">Descripción</label>
-        <input type="text" placeholder="Breve descripción del producto" name="description" id="description" required
-            value="{{product.description}}" />
+        <input type="text" placeholder="Breve descripción del producto" name="description" id="description" required />
         <label title="code">Código</label>
-        <input type="text" placeholder="Código identificador del producto" name="code" id="code" required
-            value="{{product.code}}" />
+        <input type="text" placeholder="Código identificador del producto" name="code" id="code" required />
+        <label title="code">Imágen</label>
+        <input type="text" placeholder="URL de la imágen del producto" name="image" id="image" required />
+        <label title="stock">Stock</label>
+        <input type="number" placeholder="Stock actual del producto" name="stock" id="stock" required />
         <label title="price">Precio</label>
-        <input type="number" placeholder="Precio del producto" name="price" id="price" required
-            value="{{product.price}}" />
+        <input type="number" placeholder="Precio del producto" name="price" id="price" required />
         <label title="isAternative">Es una camiseta alternativa?</label>
-        <input type="checkbox" name="isAternative" id="isAlternative" {{#if product.isAlternative}} checked {{/if}} />
+        <input type="checkbox" name="isAternative" id="isAlternative" />
         <label title="isTeam">Es de un equipo de futbol? No marcar si es de una selección</label>
-        <input type="checkbox" name="isTeam" id="isTeam" {{#if product.isTeam}} checked {{/if}} />
+        <input type="checkbox" name="isTeam" id="isTeam" />
         <input class="button--detail" type="submit" value="Guardar cambios" />
     </form>
 </div>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="../../public/productsForm.js"></script>
 
 {{> footer}}

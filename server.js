@@ -14,6 +14,9 @@ const cpus = require('os')
 const { viewEngineHandlebars } = require('./middlewares/viewEngineHandlebars')
 const { infoLogger, warnlogger, errorLogger } = require('./utils/winstonLogger')
 
+const { graphqlHTTP } = require('express-graphql')
+//const { productGraphqlService } = require('./services/graphqlProductService.js')
+
 const app = express()
 const httpServer = http.createServer(app)
 const io = new Server(httpServer, {})
@@ -31,7 +34,6 @@ if (cluster.isPrimary && MODE.toUpperCase() == "CLUSTER") {
 
     cluster.on('exit', (worker, code, signal) => {
         cluster.fork()
-        //console.log(`Worker ${worker.process.pid} died`)
         errorLogger.error(`Worker ${worker.process.pid} died`)
     })
 } else {
@@ -45,6 +47,7 @@ app.use((req, res, next) => {
     next()
 })
 
+//productGraphqlService(app)
 viewEngineHandlebars(app, express, __dirname)
 
 mongoConnect()
@@ -58,6 +61,33 @@ app.use('/', productRouter.start())
 app.use('/', loginRouter.startLogin())
 app.use('/', loginRouter.startLogout())
 app.use('/', signupRouter.start())
+
+/* const productSchema = productGraphqlService.createSchema()
+const getProduct = productGraphqlService.getProduct
+const getProducts = productGraphqlService.getProducts */
+
+const {
+    productSchema, 
+    getProduct,
+    getProducts,
+    createProduct,
+    updateProduct,
+    deleteProduct
+} = require('./services/graphqlProductService')
+
+
+app.use('/graphql', graphqlHTTP({
+    schema: productSchema,
+    rootValue: {
+        getProduct,
+        getProducts,
+        createProduct,
+        updateProduct,
+        deleteProduct
+    },
+
+    graphiql: true
+}))
 
 app.all('*', (req, res) => {
     warnlogger.warn(`Ruta ${req.originalUrl} no encontrada`)

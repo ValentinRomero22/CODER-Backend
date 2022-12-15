@@ -6,7 +6,8 @@ class SignupController {
     getSingup = (req, res) => {
         try {
             req.isAuthenticated()
-                ? res.redirect('/')
+                /* ? res.redirect('/') */
+                ? res.render('pages/products')
                 : res.render('pages/signup')
         } catch (error) {
             errorLogger.error(`signupController.js | getSignup(): ${error}`)
@@ -18,7 +19,8 @@ class SignupController {
         try {
             req.session.username = req.user.username
 
-            res.redirect('/')
+            /* res.redirect('/') */
+            res.render('pages/products')
         } catch (error) {
             errorLogger.error(`signupController.js | postSignup(): ${error}`)
             return res.status(500).send({ error: true })

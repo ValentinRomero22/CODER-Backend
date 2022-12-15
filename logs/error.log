@@ -95,3 +95,56 @@
 [12-12-2022 17:09:14 ERROR: productController.js | getProducts(): Error: Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters]
 [12-12-2022 17:09:16 ERROR: productMongo.js | getProducts(): Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters]
 [12-12-2022 17:09:16 ERROR: productController.js | getProducts(): Error: Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters]
+[14-12-2022 13:10:24 ERROR: productMongo.js | getProducts(): Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters]
+[14-12-2022 13:10:34 ERROR: productMongo.js | getProducts(): Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters]
+[14-12-2022 13:28:05 ERROR: productMongo.js | getProducts(): Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters]
+[14-12-2022 13:29:33 ERROR: productMongo.js | getProducts(): Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters]
+[14-12-2022 18:06:15 ERROR: productFile.js | saveProduct(): ReferenceError: newProduct is not defined]
+[14-12-2022 18:44:34 ERROR: productMemory.js | deleteProduct(): Error: Producto no encontrado]
+[14-12-2022 18:45:03 ERROR: productMemory.js | deleteProduct(): Error: Producto no encontrado]
+[14-12-2022 18:50:04 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 18:51:04 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 19:00:23 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 19:04:58 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 19:07:27 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 19:09:29 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 19:10:40 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 19:11:13 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 19:11:37 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 19:11:52 ERROR: productFile.js | updateProduct(): TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle]
+[14-12-2022 19:39:50 ERROR: productMongo.js | getProducts(): Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters]
+[14-12-2022 19:43:57 ERROR: productMongo.js | saveProduct(): ReferenceError: _id is not defined]
+[14-12-2022 21:23:30 ERROR: productMongo.js | updateProduct(): TypeError: Cannot read properties of undefined (reading 'updateOne')]
+[14-12-2022 21:23:40 ERROR: Error al conectarse a Atlas: Error: querySrv ETIMEOUT _mongodb._tcp.cluster0.kuinqws.mongodb.net]
+[14-12-2022 21:33:09 ERROR: productMongo.js | deleteProduct(): Error: Argument passed in must be a single String of 12 bytes or a string of 24 hex characters]
+[14-12-2022 22:58:14 ERROR: Error usuario null no encontrado]

@@ -23,15 +23,3 @@ class SignupRouter {
 }
 
 module.exports = SignupRouter
-
-/* signupRouter.get('/signup', signup.get)
-
-signupRouter.get('/errorSignup', signup.error)
-
-signupRouter.post(
-    '/signup',
-    passport.authenticate("signup", { failureRedirect: '/errorSignup' }),
-    signup.post
-)
-
-module.exports = signupRouter */

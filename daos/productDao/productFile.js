@@ -20,8 +20,9 @@ class ProductFileDao extends ProductDao {
     getProducts = async (_id) => {
         try {
             if (_id) {
+                const valueId = Object.values(_id)
                 let products = await this.read(this.fileName)
-                let index = products.findIndex((product) => product._id == _id)
+                let index = products.findIndex((product) => product._id == valueId[0])
 
                 return index >= 0
                     ? products[index]
@@ -36,15 +37,24 @@ class ProductFileDao extends ProductDao {
         }
     }
 
-    saveProduct = async (produtsToSave) => {
+    saveProduct = async (productToSave) => {
         try {
             let products = await this.read(this.fileName)
             let _id = this.getNext_Id(products)
-            let newProduct = { ...produtsToSave, _id }
+
+            const { 
+                name, description, code, price, stock, image, isTeam, isAlternative
+            } = productToSave.data                        
+
+            const newProduct = {
+                _id, name, description, code, price, stock, image, isTeam, isAlternative
+            }
 
             products.push(newProduct)
 
             await this.save(this.fileName, products)
+
+            return newProduct
         } catch (error) {
             errorLogger.error(`productFile.js | saveProduct(): ${error}`)
             throw new Error(error)
@@ -63,6 +73,8 @@ class ProductFileDao extends ProductDao {
                 : products.push(productUpdated)
 
             await this.save(this.fileName, products)
+
+            return productUpdated
         } catch (error) {
             errorLogger.error(`productFile.js | updateProduct(): ${error}`)
             throw new Error(error)
@@ -71,13 +83,18 @@ class ProductFileDao extends ProductDao {
 
     deleteProduct = async (_id) => {
         try {
+            const valueId = Object.values(_id)
             let products = await this.read(this.fileName)
-            let index = this.getIndex(_id, products)
+            let index = this.getIndex(valueId[0], products)
 
             if (index == -1) throw new Error('Producto no encontrado')
+            
+            const productResult = products[index]
             products.splice(index, 1)[0]
 
             await this.save(this.fileName, products)
+
+            return productResult
         } catch (error) {
             errorLogger.error(`productMemory.js | deleteProduct(): ${error}`)
             throw new Error(error)

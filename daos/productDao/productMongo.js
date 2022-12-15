@@ -6,7 +6,7 @@ const { errorLogger } = require('../../utils/winstonLogger')
 class ProductMongoDao extends ProductDao {
     constructor(database, collection) {
         super();
-        
+
         (async () => {
             const connection = await MongoClient.connect(MONGO_CONNECTION, {
                 useNewUrlParser: true,
@@ -21,7 +21,8 @@ class ProductMongoDao extends ProductDao {
     getProducts = async (id) => {
         try {
             if (id) {
-                const product = await this._collection.findOne({ _id: ObjectId(id) })
+                const valueId = Object.values(id)
+                const product = await this._collection.findOne({ _id: ObjectId(valueId[0]) })
                 return product
             } else {
                 const products = await this._collection.find({}).toArray()
@@ -35,7 +36,17 @@ class ProductMongoDao extends ProductDao {
 
     saveProduct = async (productToSave) => {
         try {
-            await this._collection.insertOne(productToSave)
+            const {
+                name, description, code, price, stock, image, isTeam, isAlternative
+            } = productToSave.data
+
+            const newProduct = {
+                name, description, code, price, stock, image, isTeam, isAlternative
+            }
+
+            await this._collection.insertOne(newProduct)
+
+            return newProduct
         } catch (error) {
             errorLogger.error(`productMongo.js | saveProduct(): ${error}`)
             throw new Error(error)
@@ -44,10 +55,13 @@ class ProductMongoDao extends ProductDao {
 
     updateProduct = async (id, productToUpdate) => {
         try {
-            await this._collection.updateOne(
+            const result = await this._collection.updateOne(
                 { _id: ObjectId(id) },
                 { $set: productToUpdate }
             )
+            console.log(productToUpdate)
+
+            return productToUpdate
         } catch (error) {
             errorLogger.error(`productMongo.js | updateProduct(): ${error}`)
             throw new Error(error)
@@ -56,7 +70,12 @@ class ProductMongoDao extends ProductDao {
 
     deleteProduct = async (id) => {
         try {
-            await this._collection.deleteOne({ _id: ObjectId(id) })
+            const valueId = Object.values(id)
+            const productDeleted = await this._collection.findOne({ _id: ObjectId(valueId[0]) })
+
+            await this._collection.deleteOne({ _id: ObjectId((valueId[0])) })
+
+            return productDeleted
         } catch (error) {
             errorLogger.error(`productMongo.js | deleteProduct(): ${error}`)
             throw new Error(error)
