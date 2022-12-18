@@ -1,61 +1,227 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:wght@400;700&display=swap");
 
-.root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  max-width: 100vw;
-  font-family: "Rubik", sans-serif;
-  box-sizing: border-box;
-  text-align: center;
-  overflow-y: scroll;
+    font-family: "Rubik", sans-serif;
+    overflow-y: scroll;
 }
 
 header {
-  width: 100%;
-  max-height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Bebas Neue", sans-serif;
-  box-shadow: 0px 10px 15px -10px;
-  background-color: #0b2b40;
+    width: 100%;
+    padding: 10px 15%;
+    background-color: #0B2B40;
+    box-shadow: 0px 0px 15px 0px;
 }
 
 header h1 {
-  font-size: 3rem;
-  color: #ffffff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: #FFFFFF;
 }
 
 header a {
-  text-decoration: none;
+    text-decoration: none;
+}
+
+.main__container {
+    margin: 50px 15%;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    animation: fadeIn 3s;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px 15px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.button--new {
+    text-decoration: none;
+    text-align: center;
+    color: #0B2B40;
+    background-color: #FFFFFF;
+    border: 1px solid #0B2B40;
+}
+
+.button--new:hover {
+    color: #FFFFFF;
+    background-color: #0B2B40;
+    border: 1px solid #0B2B40;
+    cursor: pointer;
+}
+
+.button--edit {
+    text-decoration: none;
+    text-align: center;
+    color: #10612B;
+    background-color: #FFFFFF;
+    border: 1px solid #10612B;
+}
+
+.button--edit:hover {
+    color: #FFFFFF;
+    background-color: #10612b;
+    cursor: pointer;
+}
+
+.button--delete {
+    color: #AD2222;
+    background-color: #FFFFFF;
+    border: 1px solid #AD2222;
+}
+
+.button--delete:hover {
+    color: #FFFFFF;
+    background-color: #AD2222;
+    cursor: pointer;
+}
+
+.product__form__container {
+    width: 30%;
+}
+
+.product__form__container form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Rubik', sans-serif;
+}
+
+.product__form__container form button {
+    width: 100%;
+}
+
+.product__form__container form input[type=number],
+[type=text] {
+    margin-bottom: 10px;
+    padding: 0px 5px;
+    width: 100%;
+    height: 30px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1rem;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
+}
+
+.form__label {
+    margin-bottom: 3px;
+}
+
+.catalog__container {
+    margin-bottom: 50px;
+}
+
+.catalog__container .catalog__header {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.catalog__container .catalog__header .button {
+    width: 20%;
+}
+
+.catalog__container .catalog__header form {
+    display: flex;
+    align-items: center;
+}
+
+.catalog__container .catalog__header form input[type=submit] {
+    margin: 0;
+}
+
+.catalog__container .catalog__header form input[type=number] {
+    margin-right: 10px;
+    padding: 0px 5px;
+    width: 100px;
+    height: 30px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 1rem;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
+}
+
+.catalog__container .catalog {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    justify-items: center;
+    gap: 2%;
+}
+
+.catalog__container .catalog .product {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 10px;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
+}
+
+.catalog__container .catalog .product:hover {
+    box-shadow: 0px 0px 20px 0px;
+}
+
+.catalog__container .catalog .product img {
+    height: 240px;
+    width: 200px;
+    object-fit: contain;
+}
+
+.catalog__container .catalog .product .product__price__container {
+    width: 100%;
+    text-align: left;
+    font-size: 1.2rem;
+    color: #A6874E;
+}
+
+.catalog__container .catalog .product .product__name__container {
+    width: 100%;
+    margin-bottom: 10px;
+    min-height: 45px;
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.catalog__container .catalog .product .button {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
 }
 
 footer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: "Bebas Neue", sans-serif;
-  box-shadow: 0px -10px 15px -10px;
-  background-color: #0b2b40;
+    margin-top: auto;
+    padding: 15px 15%;
+    width: 100%;
+    color: #FFFFFF;
+    background-color: #0B2B40;
+    box-shadow: 0px -10px 20px 0px #97A6A0;
 }
 
 footer h2 {
-  margin: 10px 0px;
-  font-size: 2.5rem;
-  color: #ffffff;
+    text-align: center;
+    font-family: 'Bebas Neue';
+    font-size: 2.5rem;
 }
 
 footer p {
-  margin-top: 10px;
-  font-family: "Rubik", sans-serif;
-  font-size: 1rem;
-  color: #ffffff;
+    margin-top: 10px;
+    text-align: center;
 }
