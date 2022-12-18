@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { NotificacionProvider } from './context/NotificationContext'
 import Header from './components/Header'
 import ProductListContainer from './components/ProductListContainer'
 import NewProductForm from './components/NewProductForm'
@@ -9,14 +10,16 @@ import './App.css'
 function App() {
   return (
     <div className='app'>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path='/' element={<ProductListContainer />} />
-          <Route path='/newProduct' element={<NewProductForm />} />
-          <Route path='/editProduct/:id' element={<EditProductForm />} />
-        </Routes>
-      </BrowserRouter>
+      <NotificacionProvider>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path='/' element={<ProductListContainer />} />
+            <Route path='/newProduct' element={<NewProductForm />} />
+            <Route path='/editProduct/:id' element={<EditProductForm />} />
+          </Routes>
+        </BrowserRouter>
+      </NotificacionProvider>
       <Footer />
     </div>
   );

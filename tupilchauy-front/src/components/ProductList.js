@@ -1,32 +1,25 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import useNotification from "../hooks/useNotification"
 
-const ProductList = ({ product, products, setProduct, setListProductsUpdated, cartId }) => {
-    const [error, setError] = useState(false)
+const ProductList = ({ products, setListProductsUpdated }) => {
+    const showNotification = useNotification()
 
     const deleteProduct = (id) => {
-        const requestInit = { method: 'DELETE' }
-
-        try {
-            fetch('http://localhost:8080/api/productos/' + id, requestInit)
-                .then(res => {
-                    return res
-                }).catch(error => {
-                    setError(true)
-                })
-        } catch (error) {
-            setError(true)
+        const requestInit = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
         }
 
-        setListProductsUpdated(true)
-    }
+        fetch('http://localhost:8080/product/' + id, requestInit)
+            .then(res => res.json())
+            .then(res => {
+                showNotification(res.message, 'ok')
+            })
+            .catch(res => {
+                showNotification(res.message, 'ok')
+            })
 
-    if (error) {
-        return (
-            <div className="main__container">
-                <h2 className="products__message">Se produjo un error inesperado</h2>
-            </div>
-        )
+        setListProductsUpdated(true)
     }
 
     return (
@@ -44,7 +37,7 @@ const ProductList = ({ product, products, setProduct, setListProductsUpdated, ca
                         <Link to={`/editProduct/${p._id}`} className="button button--edit">
                             Editar
                         </Link>
-                        <button className="button button--delete" onClick={() => deleteProduct(p.id)}>
+                        <button className="button button--delete" onClick={() => deleteProduct(p._id)}>
                             Eliminar
                         </button>
                     </div>
