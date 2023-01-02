@@ -2,7 +2,7 @@
   "name": "proyecto_final",
   "version": "1.0.0",
   "engines": {
-    "node": "16.13.0",
+    "node": "15.x",
     "npm": "8.1.0"
   },
   "description": "",
