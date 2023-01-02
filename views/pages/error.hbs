@@ -1,15 +1,36 @@
 {{> header}}
 
+{{> nav}}
+
 <div class="main__container">
     <div class="catalog__container">
         <div class="catalog__header">
-            <h2>Se produjo un error inesperado</h2>
+            {{#if loginMessage}}
+            <div>
+                <h2 class="error__title">ERROR DE LOGUEO</h2>
+                <p class="error__text">{{loginMessage}}</p>
+                <p class="error__redirect">Redireccionando...</p>
+            </div>
+            {{else if signupMessage}}
+            <div>
+                <h2 class="error__title">ERROR DE REGISTRO</h2>
+                <p class="error__text">{{signupMessage}}</p>
+                <p class="error__redirect">Redireccionando...</p>
+            </div>                
+            {{else}}
+            <div>
+                <h2 class="error__title">Se produjo un error inesperado!</h2>
+                <p class="error__redirect">Redireccionando...</p>
+            </div>
+            {{/if}}
         </div>
     </div>
 </div>
 
 <script>
-    setTimeout(() => window.location.href = '/login', 2000)
+    setTimeout(() => {
+        window.location.href = '/productos'
+    }, 2500)
 </script>
 
 {{> footer}}

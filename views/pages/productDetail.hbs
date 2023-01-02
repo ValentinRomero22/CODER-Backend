@@ -1,0 +1,68 @@
+{{> header}}
+
+{{> nav}}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="../../public/index.js" defer></script>
+
+<div class="main__container product__detail">
+    {{#if product}}
+    <h2>Detalle del producto</h2>
+    <div class="product__detail__container">
+        <div class="product__detail__image">
+            <img src="{{product.image}}" alt="{{product.name}}">
+        </div>
+        <div class="product__detail__info">
+            <div class="product__detail__name">
+                <h3>{{product.name}}</h3>
+            </div>
+            <div class="product__detail__starts">
+                <p class="description__label">Recomendaciones:</p>
+            </div>
+            <div class="product__starts">
+                <input type="checkbox" disabled checked>
+                <label>★</label>
+                <input type="checkbox" disabled >
+                <label>★</label>
+                <input type="checkbox" disabled>
+                <label>★</label>
+                <input type="checkbox" disabled>
+                <label>★</label>
+                <input type="checkbox" disabled>
+                <label>★</label>
+            </div>
+            <div class="product__detail__description">
+                <p class="description__label">Descripción del producto:</p>
+                <p>{{product.description}}</p>
+            </div>
+            <div class="product__detail__precio">
+                <p class="description__label">Precio:</p>
+                <p>$ {{product.price}}</p>
+            </div>
+            <div class="product__detail__amount">
+                <p class="description__label">Cantidad:</p>
+                <div class="product__detail__counter">
+                    <button id="subtractAmount" onclick="subtractUnit(`{{product.stock}}`)" class="button__subtract">-</button>
+                    <p id="productAmount">1</p>
+                    <button id="addAmount" onclick="addUnit(`{{product.stock}}`)" class="button__add">+</button>
+                </div>
+            </div>
+            <div class="product__detail__return">
+                <p class="description__label">Política de devolución:</p>
+                <p>Recuerda que todos nuestros productos cuentan con devolución sin costo de reenvío, hasta 30 días después de entregados</p>
+            </div>
+            <div class="product__detail__addToCart">
+                <button name="btnEliminar" onclick="addToCart(`{{product._id}}`)" class="button button--detail">
+                    Agregar al carrito
+                </button>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <h2>Error! No se encontó el producto encontrado</h2>
+    {{/if}}
+</div>
+
+
+{{> footer}}

@@ -1,29 +1,36 @@
 const { Router } = require('express')
-const { 
+const {
     getAllProducts,
     getProductById,
+    getProductByCategory,
     getFormProduct,
-    getProductByIdForm,
     saveNewProduct,
     updateProduct,
-    deleteProduct
+    updateStock,
+    deleteProduct,
+    enableProduct,
+    getDetailProductById
 } = require('../controllers/productController')
 const { isAuthenticated } = require('../middlewares/functions')
 
 const productsRouter = Router()
 
-productsRouter.get('/', isAuthenticated , getAllProducts)
+productsRouter.get('/productos', isAuthenticated, getAllProducts)
 
-productsRouter.get('/product/:productId', isAuthenticated, getProductById)
+productsRouter.get('/productos/:productId', isAuthenticated, getProductById)
 
-productsRouter.get('/product', isAuthenticated, getFormProduct)
+productsRouter.get('/producto/form/nuevo', isAuthenticated, getFormProduct)
 
-productsRouter.get('/product/form/:productId', isAuthenticated, getProductByIdForm)
+productsRouter.get('/productos/form/:productId', isAuthenticated, getDetailProductById)
 
-productsRouter.post('/product', isAuthenticated, saveNewProduct)
+productsRouter.get('/productos/categoria/:category', isAuthenticated, getProductByCategory)
 
-productsRouter.put('/product/:productId', isAuthenticated, updateProduct)
+productsRouter.post('/productos', isAuthenticated, saveNewProduct)
 
-productsRouter.delete('/product/:productId', isAuthenticated, deleteProduct )
+productsRouter.put('/productos/:productId', isAuthenticated, updateProduct)
+
+productsRouter.put('/productos/habilitar/:productId', isAuthenticated, enableProduct)
+
+productsRouter.delete('/productos/:productId', isAuthenticated, deleteProduct)
 
 module.exports = productsRouter

@@ -3,9 +3,8 @@ const {
     saveNewCartService,
     addToCartService,
     deleteToCartService,
-    deleteToCartsAndProductService,
+    deleteProductToAllCartsService,
     cleanCartService,
-    checkoutService
 } = require('../services/cartService')
 const { errorLogger } = require('../utils/winstonLogger')
 
@@ -14,14 +13,14 @@ const getCart = async (req, res) => {
         const { userId } = req.params
         const cart = await getCartByUserIdService(userId)
 
-        res.status(200).render('pages/cart', {
-            cart: cart,
-            user: req.user
+        return res.status(200).render('pages/cart', {
+            user: req.user,
+            cart: cart
         })
     } catch (error) {
-        errorLogger.error(`${req.user.username}: cartController.js | getCart(): ${error}`)
-        res.status(500).render('pages/error', {
-            error: 'Se produjo un error al intentar recuperar el carrito',
+        errorLogger.error(`cartController.js | getCart(): ${error}`)
+        return res.status(500).render('pages/error', {
+            statusCode: 500,
             user: req.user
         })
     }
@@ -30,14 +29,28 @@ const getCart = async (req, res) => {
 const saveNewCart = async (req, res) => {
     try {
         const newCart = {
-            userId: req.user._id
+            userId: req.user._id,
+            userEmail: req.user.email,
+            deliveryAddress: req.body.address
         }
 
-        await saveNewCartService(newCart)
+        const result = await saveNewCartService(newCart)
+
+        if (result) {
+            return res.status(201).json({
+                statusCode: 201,
+                message: 'Carrito agregado con éxito',
+            })
+        } else {
+            return res.status(400).json({
+                statusCode: 400,
+                message: 'Se produjo un error inesperado. Favor reintentar'
+            })
+        }
     } catch (error) {
-        errorLogger.error(`${req.user.username}: cartController.js | saveNewCart(): ${error}`)
-        res.status(500).render('pages/error', {
-            error: 'Se produjo un error al intentar agregar un producto al carrito',
+        errorLogger.error(`cartController.js | saveNewCart(): ${error}`)
+        return res.status(500).render('pages/error', {
+            statusCode: 500,
             user: req.user
         })
     }
@@ -47,15 +60,32 @@ const addToCart = async (req, res) => {
     try {
         const userId = req.user._id
         const { productId } = req.params
-        await addToCartService(userId, productId)
+        const { quantity } = req.body
 
-        res.status(200).json({
-            message: 'Producto agregado al carrito'
-        })
+        const result = await addToCartService(userId, productId, quantity)
+
+        if (result.matchedCount == 1) {
+            if (result.modifiedCount == 1) {
+                return res.status(200).json({
+                    statusCode: 200,
+                    message: 'Producto agregado al carrito'
+                })
+            } else {
+                return res.status(404).json({
+                    statusCode: 404,
+                    message: 'No se encontró el producto indicado'
+                })
+            }
+        } else {
+            return res.status(404).json({
+                statusCode: 404,
+                message: 'No se encontró el carrito del usuario indicado'
+            })
+        }
     } catch (error) {
-        errorLogger.error(`${req.user.username}: cartController.js | addToCart(): ${error}`)
-        res.status(500).render('pages/error', {
-            error: 'Se produjo un error al intentar agregar un producto al carrito',
+        errorLogger.error(`cartController.js | addToCart(): ${error}`)
+        return res.status(500).render('pages/error', {
+            statusCode: 500,
             user: req.user
         })
     }
@@ -66,34 +96,57 @@ const deleteToCart = async (req, res) => {
         const { productId } = req.params
         const userId = req.user._id
 
-        await deleteToCartService(userId, productId)
+        const result = await deleteToCartService(userId, productId)
 
-        res.status(200).json({
-            message: 'Producto eliminado del carrito'
-        })
+        if (result.matchedCount == 1) {
+            if (result.modifiedCount == 1) {
+                return res.status(200).json({
+                    statusCode: 200,
+                    message: 'Se quitó el producto correctamente'
+                })
+            } else {
+                return res.status(404).json({
+                    statusCode: 404,
+                    message: 'No se encontró el producto indicado'
+                })
+            }
+        } else {
+            return res.status(404).json({
+                statusCode: 404,
+                message: 'No se encontró el carrito del usuario indicado'
+            })
+        }
     } catch (error) {
-        errorLogger.error(`${req.user.username}: cartController.js | deleteToCart(): ${error}`)
-        res.status(500).render('pages/error', {
-            error: 'Se produjo un error al intentar borrar un producto del carrito',
+        errorLogger.error(`cartController.js | deleteToCart(): ${error}`)
+        return res.status(500).render('pages/error', {
+            statusCode: 500,
             user: req.user
         })
     }
 }
 
-const deleteToCartsAndProduct = async (req, res) => {
+const deleteProductToAllCarts = async (req, res) => {
     try {
         const { productId } = req.params
         const cartId = req.user._id
 
-        await deleteToCartsAndProductService(cartId, productId)
+        const result = await deleteProductToAllCartsService(cartId, productId)
 
-        res.status(200).json({
-            message: 'Producto eliminado del carrito'
-        })
+        if (result) {
+            return res.status(200).json({
+                statusCode: 200,
+                message: 'Se quitó el producto de los carritos en los que estaba agregado'
+            })
+        } else {
+            return res.status(404).json({
+                statusCode: 404,
+                message: 'El producto no se encontraba dentro de ningún carrito'
+            })
+        }
     } catch (error) {
-        errorLogger.error(`${req.user.username}: cartController.js | deleteToCartsAndProduct(): ${error}`)
-        res.status(500).render('pages/error', {
-            error: 'Se produjo un error al intentar borrar un producto del carrito',
+        errorLogger.error(`cartController.js | deleteToCartsAndProduct(): ${error}`)
+        return res.status(500).render('pages/error', {
+            statusCode: 500,
             user: req.user
         })
     }
@@ -102,32 +155,23 @@ const deleteToCartsAndProduct = async (req, res) => {
 const cleanCart = async (req, res) => {
     try {
         const userId = req.user._id
-        await cleanCartService(userId)
+        const result = await cleanCartService(userId, '63a7503d3561dc66c2a5004e')
 
-        res.status(200).json({
-            message: 'Carrito vaciado con éxito'
-        })
+        if (result.matchedCount == 1) {
+            return res.status(200).json({
+                statusCode: 200,
+                message: 'Carrito vaciado con éxito'
+            })
+        } else {
+            return res.status(404).json({
+                statusCode: 404,
+                message: 'No se encontró el carrito del usuario indicado'
+            })
+        }
     } catch (error) {
-        errorLogger.error(`${req.user.username}: cartController.js | cleanCart(): ${error}`)
-        res.status(500).render('pages/error', {
-            error: 'Se produjo un error al intentar vaciar el carrito',
-            user: req.user
-        })
-    }
-}
-
-const checkout = async (req, res) => {
-    try {
-        const user = req.user
-        await checkoutService(user)
-
-        res.status(200).json({
-            message: 'Pedido generado con éxito!'
-        })
-    } catch (error) {
-        errorLogger.error(`${req.user.username}: cartController.js | checkout(): ${error}`)
-        res.status(500).render('pages/error', {
-            error: 'Se produjo un error al intentar confirmar la compra',
+        errorLogger.error(`cartController.js | cleanCart(): ${error}`)
+        return res.status(500).render('pages/error', {
+            statusCode: 500,
             user: req.user
         })
     }
@@ -138,7 +182,6 @@ module.exports = {
     saveNewCart,
     addToCart,
     deleteToCart,
-    deleteToCartsAndProduct,
-    cleanCart,
-    checkout
+    deleteProductToAllCarts,
+    cleanCart
 }

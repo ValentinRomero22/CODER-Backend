@@ -1,76 +1,96 @@
-let message
-let backgroundColor
+let notificationMessage = ''
+let backgroundColor = ''
+
+const productAmount = document.getElementById('productAmount')
 
 const addToCart = (productId) => {
-    const path = window.location.href + 'cart/' + productId
+    const path = '/carrito/' + productId
+
+    const itemQuantity = { quantity: parseInt(productAmount.innerHTML) }
 
     const requestInit = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(itemQuantity)
     }
 
     fetch(path, requestInit)
-        .then((res) => {
-            if (res.status == 200) {
-                message = 'Producto agregado con éxito'
-                backgroundColor = '#0B550E'
-                showMessage(message, backgroundColor)
+        .then(res => res.json())
+        .then(res => {
+            if (res.statusCode == 200) {
+                localStorage.setItem('message', JSON.stringify('Producto agregado con éxito'))
+                window.location.href = '/productos'
             } else {
-                message = 'Error al agregar el producto'
+                notificationMessage = 'Error al agregar el producto'
                 backgroundColor = '#F23030'
-                showMessage(message, backgroundColor)
+                showMessage(notificationMessage, backgroundColor)
             }
         })
         .catch((error) => {
-            message = 'Error al agregar el producto'
+            notificationMessage = 'Error inesperado'
             backgroundColor = '#F23030'
-            showMessage(message, backgroundColor)
+            showMessage(notificationMessage, backgroundColor)
         })
+}
+
+const viewProductDetail = (productId) => {
+    window.location.href = '/productos/form/' + productId
 }
 
 const formProduct = (productId) => {
-    window.location.href = 'product/form/' + productId
+    window.location = ''
+    window.location.href = '/productos/form/' + productId
+}
+
+const getCheckout = () => {
+    window.location.href = '/orden'
 }
 
 const deleteProduct = (productId) => {
-    const path = '/cart/product/' + productId
+    const path = '/productos/' + productId
 
     const requestInit = {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+
     }
 
     fetch(path, requestInit)
+        .then((res) => res.json())
         .then((res) => {
-            if (res.status == 200) {
-                message = 'Producto eliminado correctamente'
-                backgroundColor = '#0B550E'
-                showMessage(message, backgroundColor)
+            if (res.statusCode == 200) {
+                localStorage.setItem('message', JSON.stringify(res.message))
                 window.location.reload()
             } else {
-                message = 'Error al eliminar el producto'
+                notificationMessage = 'Error al habilitar / eliminar el producto'
                 backgroundColor = '#F23030'
-                showMessage(message, backgroundColor)
+                showMessage(notificationMessage, backgroundColor)
             }
         })
         .catch((error) => {
-            message = 'Error al eliminar el producto'
+            notificationMessage = 'Error inesperado'
             backgroundColor = '#F23030'
-            showMessage(message, backgroundColor)
+            showMessage(notificationMessage, backgroundColor)
         })
 }
 
 const updateProduct = (event) => {
     event.preventDefault()
 
+    let category = ''
+    document.getElementById('category').value == 'Equipo de fútbol'
+        ? category = 'team'
+        : category = 'national'
+
     const productToUpdate = {
         id: document.getElementById('id').value,
         name: document.getElementById('name').value,
         description: document.getElementById('description').value,
         code: document.getElementById('code').value,
+        image: document.getElementById('image').value,
         price: document.getElementById('price').value,
-        isAlternative: document.getElementById('isAlternative').checked,
-        isTeam: document.getElementById('isTeam').checked
+        stock: document.getElementById('stock').value,
+        category
     }
 
     const requestInit = {
@@ -79,30 +99,34 @@ const updateProduct = (event) => {
         body: JSON.stringify(productToUpdate)
     }
 
-    const path = '/product/' + productToUpdate.id
+    const path = '/productos/' + productToUpdate.id
 
     fetch(path, requestInit)
+        .then((res) => res.json())
         .then((res) => {
-            if (res.status == 200) {
-                message = 'Producto modificado correctamente'
-                backgroundColor = '#0B550E'
-                showMessage(message, backgroundColor)
-                setTimeout(() => window.location.href = '/', 2000)
+            if (res.statusCode == 200) {
+                localStorage.setItem('message', JSON.stringify(res.message))
+                window.location.href = '/productos'
             } else {
-                message = 'Error al modificar el producto'
+                notificationMessage = 'Error al modificar el producto'
                 backgroundColor = '#F23030'
-                showMessage(message, backgroundColor)
+                showMessage(notificationMessage, backgroundColor)
             }
         })
         .catch((error) => {
-            message = 'Error al modificar el producto'
+            notificationMessage = 'Error inesperado'
             backgroundColor = '#F23030'
-            showMessage(message, backgroundColor)
+            showMessage(notificationMessage, backgroundColor)
         })
 }
 
 const saveProduct = (event) => {
     event.preventDefault()
+
+    let category = ''
+    document.getElementById('category').value == 'Equipo de fútbol'
+        ? category = 'team'
+        : category = 'national'
 
     const productToSave = {
         name: document.getElementById('name').value,
@@ -110,8 +134,8 @@ const saveProduct = (event) => {
         code: document.getElementById('code').value,
         image: document.getElementById('image').value,
         price: document.getElementById('price').value,
-        isAlternative: document.getElementById('isAlternative').checked,
-        isTeam: document.getElementById('isTeam').checked
+        stock: document.getElementById('stock').value,
+        category
     }
 
     const requestInit = {
@@ -120,30 +144,29 @@ const saveProduct = (event) => {
         body: JSON.stringify(productToSave)
     }
 
-    const path = '/product'
+    const path = '/productos'
 
     fetch(path, requestInit)
+        .then((res) => res.json())
         .then((res) => {
-            if (res.status == 200) {
-                message = 'Producto agregado correctamente'
-                backgroundColor = '#0B550E'
-                showMessage(message, backgroundColor)
-                setTimeout(() => window.location.href = '/', 2000)
+            if (res.statusCode == 201) {
+                localStorage.setItem('message', JSON.stringify(res.message))
+                window.location.href = '/productos'
             } else {
-                message = 'Error al agregar el producto'
+                notificationMessage = 'Error al agregar el producto'
                 backgroundColor = '#F23030'
-                showMessage(message, backgroundColor)
+                showMessage(notificationMessage, backgroundColor)
             }
         })
         .catch((error) => {
-            message = 'Error al agregar el producto'
+            notificationMessage = 'Error inesperado'
             backgroundColor = '#F23030'
-            showMessage(message, backgroundColor)
+            showMessage(notificationMessage, backgroundColor)
         })
 }
 
 const deleteProductToCart = (productId) => {
-    const path = '/cart/' + productId
+    const path = '/carrito/' + productId
 
     const requestInit = {
         method: 'DELETE',
@@ -151,27 +174,26 @@ const deleteProductToCart = (productId) => {
     }
 
     fetch(path, requestInit)
-        .then((res) => {
-            if (res.status == 200) {
-                message = 'Producto eliminado correctamente'
-                backgroundColor = '#0B550E'
-                showMessage(message, backgroundColor)
+        .then(res => res.json())
+        .then(res => {
+            if (res.statusCode == 200) {
+                localStorage.setItem('message', JSON.stringify('Producto eliminado con éxito'))
                 window.location.reload()
             } else {
-                message = 'Error al eliminar el producto'
+                notificationMessage = 'Error al eliminar el producto del carrito'
                 backgroundColor = '#F23030'
-                showMessage(message, backgroundColor)
+                showMessage(notificationMessage, backgroundColor)
             }
         })
         .catch((error) => {
-            message = 'Error al eliminar el producto'
+            notificationMessage = 'Error inesperado'
             backgroundColor = '#F23030'
-            showMessage(message, backgroundColor)
+            showMessage(notificationMessage, backgroundColor)
         })
 }
 
 const cleanCart = (userId) => {
-    const path = '/cart/clean/' + userId
+    const path = '/carrito/vaciar/' + userId
 
     const requestInit = {
         method: 'DELETE',
@@ -179,56 +201,152 @@ const cleanCart = (userId) => {
     }
 
     fetch(path, requestInit)
-        .then((res) => {
-            if (res.status == 200) {
-                message = 'Su carrito fue vaciado!'
-                backgroundColor = '#0B550E'
-                showMessage(message, backgroundColor)
+        .then(res => res.json())
+        .then(res => {
+            if (res.statusCode == 200) {
+                localStorage.setItem('message', JSON.stringify('Su carrito fue vaciado!'))
                 window.location.reload()
             } else {
-                message = 'Error al vaciar el carrito'
+                notificationMessage = 'Error al vaciar el carrito'
                 backgroundColor = '#F23030'
-                showMessage(message, backgroundColor)
+                showMessage(notificationMessage, backgroundColor)
             }
         })
         .catch((error) => {
-            message = 'Error al vaciar el carrito'
+            notificationMessage = 'Error inesperado'
             backgroundColor = '#F23030'
-            showMessage(message, backgroundColor)
+            showMessage(notificationMessage, backgroundColor)
         })
 }
 
-const checkout = () => {
-    const path = '/cart/user/checkout'
+const updateUser = (event) => {
+    event.preventDefault()
+
+    const username = document.getElementById('name').value
+    const address = document.getElementById('address').value
+    const age = parseInt(document.getElementById('age').value)
+    const phone = document.getElementById('phone').value
+
+    const userToUpdate = {
+        username,
+        address,
+        age,
+        phone
+    }
+
+    const path = '/usuario'
+
+    const requestInit = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userToUpdate)
+    }
+
+    fetch(path, requestInit)
+        .then(res => res.json())
+        .then(res => {
+            if (res.statusCode == 200) {
+                localStorage.setItem('message', JSON.stringify(res.message))
+                window.location.href = '/productos'
+            } else {
+                notificationMessage = 'Se produjo un error al intentar actualizar el usuario'
+                backgroundColor = '#F23030'
+                showMessage(notificationMessage, backgroundColor)
+            }
+        })
+        .catch((error) => {
+            notificationMessage = 'Error inesperado'
+            backgroundColor = '#F23030'
+            showMessage(notificationMessage, backgroundColor)
+        })
+}
+
+const categoryRefresh = (event) => {
+    event.preventDefault()
+
+    if (event.target.value == 'Todos') {
+        window.location.href = '/productos'
+    } else {
+        let category = ''
+        event.target.value == 'Equipo de fútbol'
+            ? category = 'team'
+            : category = 'national'
+
+        window.location.href = '/productos/categoria/' + category
+    }
+}
+
+const orderForm = (event) => {
+    event.preventDefault()
+
+    const deliveryAddress = document.getElementById('deliveryAddress').value
+    const paymentMethod = document.getElementById('paymentMethod').value
+
+    const primaryOrden = {
+        deliveryAddress,
+        paymentMethod
+    }
+
+    const path = '/orden'
 
     const requestInit = {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(primaryOrden)
+    }
+
+    fetch(path, requestInit)
+        .then(res => res.json())
+        .then(res => {
+            if (res.statusCode == 201) {
+                localStorage.setItem('message', JSON.stringify(res.message))
+                window.location.href = '/productos'
+            } else {
+                res.message.includes('No hay stock suficiente')
+                    ? notificationMessage = res.message
+                    : notificationMessage = 'Error al generar la orden de compra'
+
+                backgroundColor = '#F23030'
+                showMessage(notificationMessage, backgroundColor)
+            }
+        })
+        .catch((error) => {
+            notificationMessage = 'Error inesperado'
+            backgroundColor = '#F23030'
+            showMessage(notificationMessage, backgroundColor)
+        })
+}
+
+const updateOrder = (orderNumber) => {
+    const path = '/orden/' + orderNumber
+
+    const requestInit = {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' }
     }
 
     fetch(path, requestInit)
-        .then((res) => {
-            if (res.status == 200) {
-                message = 'Orden de compra generada correctamente'
-                backgroundColor = '#0B550E'
-                showMessage(message, backgroundColor)
-                setTimeout(() => window.location.href = '/', 2000)
+        .then(res => res.json())
+        .then(res => {
+            if (res.statusCode == 200) {
+                localStorage.setItem('message', JSON.stringify(res.message))
+                window.location.href = '/orden/todas'
             } else {
-                message = 'Error al generar la orden de compra'
+                notificationMessage = 'Se produjo un error al intentar actualizar la orden'
                 backgroundColor = '#F23030'
-                showMessage(message, backgroundColor)
+                showMessage(notificationMessage, backgroundColor)
             }
         })
         .catch((error) => {
-            message = 'Error al generar la orden de compra'
+            notificationMessage = 'Error inesperado'
             backgroundColor = '#F23030'
-            showMessage(message, backgroundColor)
+            showMessage(notificationMessage, backgroundColor)
         })
 }
 
-const showMessage = (message, backgroundColor) => {
+const showMessage = (notificationMessage, backgroundColor) => {
     Toastify({
-        text: message,
+        text: notificationMessage,
         style: {
             color: "#FFFFFF",
             background: backgroundColor,
@@ -237,3 +355,36 @@ const showMessage = (message, backgroundColor) => {
         }
     }).showToast()
 }
+
+const addUnit = (productStock) => {
+    const currentValue = parseInt(productAmount.innerText)
+
+    currentValue < productStock
+        ? productAmount.innerHTML = currentValue + 1
+        : productAmount.innerHTML = currentValue
+}
+
+const subtractUnit = () => {
+    const currentValue = parseInt(productAmount.innerText)
+
+    currentValue > 1
+        ? productAmount.innerHTML = currentValue - 1
+        : productAmount.innerHTML = currentValue
+}
+
+const checkMessage = () => {
+    if (localStorage.getItem('message') !== null) {
+
+        const message = JSON.parse(localStorage.getItem('message'))
+
+        message.includes('Error')
+            ? backgroundColor = '#F23030'
+            : backgroundColor = '#0B550E'
+
+        showMessage(message, backgroundColor)
+
+        localStorage.removeItem('message')
+    }
+}
+
+checkMessage()

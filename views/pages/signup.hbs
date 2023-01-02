@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
-<div class="login__container">
+<div class="login__container margin__login">
   <h2>Registro</h2>
   <form enctype="multipart/form-data" class="form_logout" method="post" action="/signup">
     <label title="email">Email</label>
@@ -15,7 +15,7 @@
     <label title="address">Dirección</label>
     <input type="text" placeholder="Dirección" name="address" required />
     <label title="phone">Número de teléfono</label>
-    <input id="phone" type="tel" name="phone" placeholder="Consulte e ingrese el prefijo internacional sin el signo de +"/>
+    <input id="phone" type="tel" name="phone" placeholder="Ingrese su teléfono fijo o celular" required/>
     <label title="age">Edad</label>
     <input type="number" placeholder="Edad" name="age" required />
     <label title="image">Imágen de perfil</label>
@@ -26,17 +26,5 @@
   <a class="anchor__login__button button--change" href="/login">Ir a login</a>
 </div>
 </body>
-{{#if message}}
-<p>{{message}}</p>
-{{/if}}
-
-
-<script>
-   const phoneInputField = document.querySelector("#phone")
-   const phoneInput = window.intlTelInput(phoneInputField, {
-     utilsScript:
-       "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-   })
- </script>
 
 {{> footer}}

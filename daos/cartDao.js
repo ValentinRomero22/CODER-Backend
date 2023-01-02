@@ -1,14 +1,5 @@
 const cartModel = require('../models/cartModel')
 
-const getCartDao = async (cartId) => {
-    try {
-        const cartFound = await cartModel.findById(cartId)
-        return cartFound
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-
 const getCartByUserIdDao = async (userId) => {
     try {
         const cartFound = await cartModel.findOne(
@@ -17,7 +8,7 @@ const getCartByUserIdDao = async (userId) => {
 
         return cartFound
     } catch (error) {
-        throw new Error(error)
+        throw error
     }
 }
 
@@ -26,82 +17,105 @@ const saveNewCartDao = async (newCart) => {
         const result = await cartModel.create(newCart)
         return result
     } catch (error) {
-        throw new Error(error)
+        throw error
     }
 }
 
-const addToCartDao = async (userId, productId) => {
+const addToCartDao = async (userId, item) => {
     try {
-        const result = await cartModel.findOneAndUpdate(
+        const result = await cartModel.updateOne(
             { userId: userId },
-            { $addToSet: { products: productId } }
+            {
+                $push: { items: item }
+            }
         )
 
         return result
     } catch (error) {
-        throw new Error(error)
+        throw error
     }
 }
 
 const deleteToCartDao = async (userId, productId) => {
     try {
-        const result = await cartModel.findOneAndUpdate(
+        const result = await cartModel.updateOne(
             { userId: userId },
             {
                 $pull: {
-                    products: { $in: productId }
+                    items: {
+                        product: { _id: productId }
+                    }
                 }
             }
         )
 
         return result
     } catch (error) {
-        throw new Error(error)
+        throw error
     }
 }
 
-const deleteToAllCartsDao = async (productId) => {
+const deleteProductToAllCartsDao = async (productId) => {
     try {
         const cartsFound = await cartModel.find({})
 
+        let result = null
+
         for (let i = 0; i < cartsFound.length; i++) {
-            for (let j = 0; j < cartsFound[i].products.length; j++) {
-                if (cartsFound[i].products[j]?.valueOf() == productId) {
-                    await cartModel.findByIdAndUpdate(
+            for (let j = 0; j < cartsFound[i].items.length; j++) {
+                if (cartsFound[i].items[j]?.valueOf() == productId) {
+                    result = await cartModel.updateOne(
                         { _id: cartsFound[i]._id },
                         {
                             $pull: {
-                                products: { $in: productId }
+                                items: {
+                                    product: { _id: productId }
+                                }
                             }
                         }
                     )
                 }
             }
         }
+
+        return result
     } catch (error) {
-        throw new Error(error)
+        throw error
     }
 }
 
 const cleanCartDao = async (userId) => {
     try {
-        const result = await cartModel.findOneAndUpdate(
+        const result = await cartModel.updateOne(
             { userId: userId },
-            { products: [] }
+            { items: [] }
         )
 
         return result
     } catch (error) {
-        throw new Error(error)
+        throw error
+    }
+}
+
+const updateItemQuantityDao = async (userId, productId, quantity) => {
+    try {
+        const result = await cartModel.updateOne(
+            { userId: userId, items: { $elemMatch: { product: productId } } },
+            { $inc: { "items.$.quantity": + quantity } }
+        )
+
+        return result
+    } catch (error) {
+        throw error
     }
 }
 
 module.exports = {
-    getCartDao,
     getCartByUserIdDao,
     saveNewCartDao,
     addToCartDao,
     deleteToCartDao,
-    deleteToAllCartsDao,
-    cleanCartDao
+    deleteProductToAllCartsDao,
+    cleanCartDao,
+    updateItemQuantityDao
 }

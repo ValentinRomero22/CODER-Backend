@@ -1,6 +1,10 @@
 {{> header}}
 
+{{> nav}}
+
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="../../public/index.js" defer></script>
 
 <div class="login__container">
     <h2>Agregar producto</h2>
@@ -15,10 +19,14 @@
         <input type="text" placeholder="URL de la imágen del producto" name="image" id="image" required/>
         <label title="price">Precio</label>
         <input type="number" placeholder="Precio del producto" name="price" id="price" required/>
-        <label title="isAternative">Es una camiseta alternativa?</label>
-        <input type="checkbox" name="isAternative" id="isAlternative"/>
-        <label title="isTeam">Es de un equipo de futbol? No marcar si es de una selección</label>
-        <input type="checkbox" name="isTeam" id="isTeam"/>
+        <label title="stock">Stock</label>
+        <input type="number" placeholder="Stock actual del producto" name="stock" id="stock" required min="1"
+            value="{{product.stock}}" />
+        <label title="category">Categoría</label>
+        <select id="category">
+            <option>Equipo de fútbol</option>
+            <option>Selección nacional</option>
+        </select>
         <input class="button--detail" type="submit" value="Guardar" />
     </form>
 </div>

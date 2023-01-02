@@ -1,6 +1,7 @@
 const passport = require('passport')
 const { Strategy: LocalStrategy } = require('passport-local')
 const Users = require('../models/userModel')
+const { saveNewCartService } = require('../services/cartService')
 const { createHash, isValidPassword } = require('../utils/bcryptPassword')
 const { infoLogger, errorLogger } = require('../utils/winstonLogger')
 
@@ -42,20 +43,12 @@ const passportSignup = {
                     return done(null, false)
                 }
 
-                console.log(req.body.phone)
-
                 const newUser = {
                     username: req.body.name,
                     password: createHash(password),
-                    /* email: email,
-                    address: 'direccion',
-                    age: 27,
-                    phone: '099099099',
-                    avatar: 'http://imagendemail.com',
-                    isAdmin: false, */
                     email: email,
                     address: req.body.address,
-                    age: req.body.age,
+                    age: parseInt(req.body.age),
                     phone: req.body.phone,
                     image: req.file.filename,
                     isAdmin: false

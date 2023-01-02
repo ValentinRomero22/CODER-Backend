@@ -1,0 +1,28 @@
+<nav>
+  <ul>
+    {{#if user.isAdmin}}
+      <li>
+        <a href="/producto/form/nuevo">Agregar Producto</a>
+      </li>
+      <li>
+        <a href="/carrito/{{user._id}}">Soporte a usuarios</a>
+      </li>
+      <li>
+        <a href="/orden/todas/">Actualizar órdenes</a>
+      </li>
+    {{else}}
+      <li>
+        <a href="/carrito/{{user._id}}">Mi carrito</a>
+      </li>
+      <li>
+        <a href="/carrito/{{user._id}}">Chat</a>
+      </li>
+      <li>
+        <a href="/orden/todas/{{user._id}}">Mis órdenes</a>
+      </li>
+    {{/if}}
+    <li>
+      <a href="/usuario/{{user._id}}">Mis datos</a>
+    </li>
+  </ul>
+</nav>

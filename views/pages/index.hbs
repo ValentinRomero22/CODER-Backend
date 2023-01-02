@@ -1,55 +1,72 @@
 {{> header}}
 
+{{> nav}}
+
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-<script src="../../public/index.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="../../public/index.js" defer></script>
 
 <div class="main__container">
     <div class="catalog__container">
         {{#if products}}
         <div class="catalog__header">
             <h2 class="products__message">Productos</h2>
-            {{#if user.isAdmin}}
-            <a href="/product" class="button button--detail button--new--product">Agregar producto</a>
-            {{/if}}
+            {{!-- {{#if user.isAdmin}}
+                <a href="/product" class="button button--detail button--new--product">Agregar producto</a>
+            {{/if}} --}}
+            <div class="product__filter__container">
+                <p>Filtrar por categoría</p>
+                <select id="category__select" onchange="categoryRefresh(event)">
+                    <option>Seleccione una</option>
+                    <option>Todos</option>
+                    <option>Equipo de fútbol</option>
+                    <option>Selección nacional</option>
+                </select>
+            </div>
         </div>
         <p id="mensaje"></p>
         <div class="catalog">
             {{#if user.isAdmin}}
-            {{#each products}}
-            <div class="product">
-                <img src="{{this.image}}" alt="{{this.name}}" />
-                <div class="product__name__container">
-                    <p>{{this.name}}</p>
+                {{#each products}}
+                <div class="product product__enabled__{{this.enabled}}">
+                    <img src="{{this.image}}" alt="{{this.name}}" />
+                    <div class="product__name__container">
+                        <p>{{this.name}}</p>
+                    </div>
+                    <div class="product__price__container">
+                        <p>$ {{this.price}}</p>
+                    </div>
+                    <button name="btnEditar" onclick="formProduct(`{{this.id}}`)" class="button button--detail">
+                        Editar
+                    </button>
+                        {{#if this.enabled}}
+                        <button name="btnEliminar" onclick="deleteProduct(`{{this.id}}`)" class="button button--delete">
+                            Eliminar
+                        </button>
+                        {{else}}
+                        <button name="btnEliminar" onclick="deleteProduct(`{{this.id}}`)" class="button button--change">
+                            Habilitar
+                        </button>
+                        {{/if}}
                 </div>
-                <div class="product__price__container">
-                    <p>$ {{this.price}}</p>
-                </div>
-                <button name="btnAgregar" onclick="addToCart(`{{this.id}}`)" class="button button--detail">
-                    Agregar al carrito
-                </button>
-                <button name="btnEditar" onclick="formProduct(`{{this.id}}`)" class="button button--change">
-                    Editar
-                </button>
-                <button name="btnEliminar" onclick="deleteProduct(`{{this.id}}`)" class="button button--delete">
-                    Eliminar
-                </button>
-            </div>
-            {{/each}}
+                {{/each}}
             {{else}}
-            {{#each products}}
-            <div class="product">
-                <img src="{{this.image}}" alt="{{this.name}}" />
-                <div class="product__name__container">
-                    <p>{{this.name}}</p>
-                </div>
-                <div class="product__price__container">
-                    <p>$ {{this.price}}</p>
-                </div>
-                <button name="btnAgregar" onclick="addToCart(`{{this._id}}`)" class="button button--detail">
-                    Agregar al carrito
-                </button>
-            </div>
-            {{/each}}
+                {{#each products}}
+                    {{#if this.enabled}}
+                    <div class="product">
+                        <img src="{{this.image}}" alt="{{this.name}}" />
+                        <div class="product__name__container">
+                            <p>{{this.name}}</p>
+                        </div>
+                        <div class="product__price__container">
+                            <p>$ {{this.price}}</p>
+                        </div>
+                        <button name="btnAgregar" onclick="viewProductDetail(`{{this._id}}`)" class="button button--detail">
+                            Ver detalle
+                        </button>
+                    </div>
+                    {{/if}}
+                {{/each}}
             {{/if}}
         </div>
         {{else}}
@@ -62,7 +79,5 @@
         {{/if}}
     </div>
 </div>
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 {{> footer}}

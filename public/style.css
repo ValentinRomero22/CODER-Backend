@@ -1,17 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rubik:wght@400;700&display=swap');
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
+
+body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     font-family: 'Rubik';
-    overflow-y: scroll; 
+    overflow-y: scroll;
 }
-header{
+
+header {
     width: 100%;
     padding: 5px 15%;
     display: flex;
@@ -19,128 +22,153 @@ header{
     align-items: center;
     background-color: #0B2B40;
     color: #FFFFFF;
+    box-shadow: 0px 0px 20px 0px #0B2B40;
 }
-header .brand__container{
+
+header .brand__container {
     display: flex;
     align-items: center;
 }
-header .brand__container img{
+
+header .brand__container img {
     width: 45px;
     height: 45px;
     margin-right: 10px;
     object-fit: contain;
 }
-header .brand__container .brand__title{
+
+header .brand__container .brand__title {
     font-family: Bebas Neue;
     font-size: 3rem;
     font-weight: bold;
     text-decoration: none;
     color: #FFFFFF;
 }
-header .data__user__container{
+
+header .data__user__container {
     display: flex;
     align-items: center;
 }
-header .data__user__container p{
+
+header .data__user__container p {
     margin-right: 10px;
 }
-header .data__user__container img{
+
+header .data__user__container img {
     width: 35px;
     height: 35px;
     margin-right: 20px;
     border-radius: 50%;
 }
-header .data__user__container a{
+
+header .data__user__container a {
     display: block;
     padding: 5px 25px;
     text-decoration: none;
     color: #FFFFFF;
     border: 1px solid transparent;
 }
-header .data__user__container a:hover{
+
+header .data__user__container a:hover {
     border: 1px solid #CF0A0A;
     border-radius: 5px;
     background-color: #CF0A0A;
 }
-nav ul{
+
+nav ul {
     width: 50%;
-    margin: 0 auto;
+    margin: 10px auto 0px;
     padding: 10px 0%;
     list-style: none;
     display: flex;
     justify-content: space-around;
 }
-nav ul li{
+
+nav ul li {
     display: flex;
     align-items: center;
     white-space: nowrap;
 }
-nav ul li:not(:last-child){
+
+nav ul li:not(:last-child) {
     margin-right: 10px;
 }
-nav ul li img{
+
+nav ul li img {
     margin-right: 10px;
 }
-nav ul li a{
+
+nav ul li a {
     display: block;
     padding: 5px 25px;
     text-decoration: none;
-    color: #FFFFFF;
+    color: #0B2B40;
     border: 1px solid transparent;
 }
-nav ul li a:hover{
-    color: #0B2B40;
-    background-color: #FFFFFF;
-    border-color: #FFFFFF;
+
+nav ul li a:hover {
+    color: #F7F7F7;
+    background-color: #0B2B40;
+    border-color: #0B2B40;
     border-radius: 5px;
 }
-nav .nav_salir:hover{
+
+nav .nav_salir:hover {
     color: #FFFFFF;
     background-color: #CF0A0A;
     border-color: #CF0A0A;
     border-radius: 5px;
 }
+
 .main__container {
-    margin: 50px 15%;
+    margin: 10px 15% 100px;
     width: 70%;
     display: flex;
     justify-content: space-between;
     animation: fadeIn 3s;
 }
+
 .button--detail {
     color: #0B2B40;
     background-color: #FFFFFF;
     border: 1px solid #0B2B40;
 }
+
 .button--detail:hover {
     color: #FFFFFF;
     background-color: #0B2B40;
     cursor: pointer;
 }
+
 .button--change {
     color: #0B550E;
     background-color: #FFFFFF;
     border: 1px solid #0B550E;
 }
+
 .button--change:hover {
     color: #FFFFFF;
     background-color: #0B550E;
     cursor: pointer;
 }
+
 .button--delete {
     color: #CF0A0A;
     background-color: #fff;
     border: 1px solid #CF0A0A;
 }
+
 .button--delete:hover {
     color: #fff;
     background-color: #CF0A0A;
     cursor: pointer;
 }
+
 .main__container h2 {
     font-size: 2.5rem;
     font-family: 'Bebas Neue';
 }
+
 .main__container .button {
     margin-top: 10px;
     width: 100%;
@@ -149,19 +177,24 @@ nav .nav_salir:hover{
     font-size: 1rem;
     border-radius: 5px;
 }
+
 .main__container .product__form__container {
     width: 30%;
 }
+
 .main__container .product__form__container form {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
     font-family: 'Rubik';
 }
+
 .main__container .product__form__container form button {
     width: 100%;
 }
-.main__container .product__form__container form input[type=number], .main__container .product__form__container form [type=text] {
+
+.main__container .product__form__container form input[type=number],
+.main__container .product__form__container form [type=text] {
     margin-bottom: 10px;
     padding: 0px 5px;
     width: 100%;
@@ -171,34 +204,42 @@ nav .nav_salir:hover{
     border: 1px solid #97A6A0;
     border-radius: 5px;
 }
+
 .main__container .product__form__container form .form__label {
     margin-bottom: 3px;
 }
+
 .main__container .catalog__container {
     width: 100%;
     margin-bottom: 100px;
 }
+
 .main__container .catalog__container .catalog__header {
     margin-bottom: 30px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 }
+
 .main__container .catalog__container .catalog__header button {
     width: 20%;
 }
+
 .main__container .catalog__container .catalog__header .button--new--product {
     width: 20%;
     text-align: center;
     text-decoration: none;
 }
+
 .main__container .catalog__container .catalog__header form {
     display: flex;
     align-items: center;
 }
+
 .main__container .catalog__container .catalog__header form input[type=submit] {
     margin: 0;
 }
+
 .main__container .catalog__container .catalog__header form input[type=number] {
     margin-right: 10px;
     padding: 0px 5px;
@@ -209,6 +250,7 @@ nav .nav_salir:hover{
     border: 1px solid #97A6A0;
     border-radius: 5px;
 }
+
 .main__container .catalog__container .catalog {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -217,24 +259,36 @@ nav .nav_salir:hover{
     row-gap: 5%;
     column-gap: 3%;
 }
+
 .main__container .catalog__container .catalog .product {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px 10px;
-    border: 1px solid #97A6A0;
+    border: 1px solid #0B2B40;
     border-radius: 5px;
-    background-color: #F7F7F7;
+    /* background-color: #F7F7F7; */
 }
+
+.main__container .catalog__container .catalog .product__enabled__false {
+    border-color: #CF0A0A;
+}
+
 .main__container .catalog__container .catalog .product:hover {
-    box-shadow: 0px 0px 20px 0px;
+    box-shadow: 0px 0px 20px 0px #0B2B40;
 }
+
+.main__container .catalog__container .catalog .product__enabled__false:hover {
+    box-shadow: 0px 0px 20px 0px #CF0A0A;
+}
+
 .main__container .catalog__container .catalog .product img {
     height: 240px;
     width: 200px;
     object-fit: contain;
 }
+
 .main__container .catalog__container .catalog .product .product__name__container {
     width: 100%;
     margin-bottom: 10px;
@@ -242,29 +296,34 @@ nav .nav_salir:hover{
     font-size: 1.2rem;
     text-align: left;
 }
+
 .main__container .catalog__container .catalog .product .product__price__container {
     width: 100%;
     text-align: left;
     font-size: 1.2rem;
     color: #808080;
 }
+
 .main__container .catalog__container .catalog .product .admin__controls__container {
     width: 100%;
     margin-top: 5px;
     display: flex;
     justify-content: space-between;
 }
+
 .main__container .catalog__container .catalog .product .admin__controls__container .button {
     margin-top: 0px;
     width: 49%;
     text-align: center;
 }
+
 .products__message {
     font-size: 2.5rem;
     font-family: 'Bebas Neue';
 }
+
 .login__container {
-    margin: 50px auto;
+    margin: 20px auto 50px;
     padding: 15px;
     width: 480px;
     height: auto;
@@ -272,20 +331,29 @@ nav .nav_salir:hover{
     border-radius: 5px;
     background-color: #F7F7F7;
 }
-.login__container h2{
+
+.login__container h2 {
     text-align: center;
     font-family: 'Bebas Neue';
     font-size: 2.2rem;
 }
-.login__container form{
+
+.login__container form {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
 }
-.login__container form input[type=checkbox]{
+
+.login__container form input[type=checkbox] {
     margin-right: 97%;
 }
-.login__container form input[type=text], input[type=email], input[type=number], input[type=file], [type=checkbox], [type=tel]{
+
+.login__container form input[type=text],
+input[type=email],
+input[type=number],
+input[type=file],
+[type=checkbox],
+[type=tel] {
     width: 100%;
     margin: 5px 0px 10px;
     padding: 5px 10px;
@@ -294,7 +362,8 @@ nav .nav_salir:hover{
     font-size: 0.9rem;
     font-family: 'Rubik';
 }
-.login__container form input[type=submit]{
+
+.login__container form input[type=submit] {
     margin-top: 10px;
     width: 100%;
     padding: 5px 15px;
@@ -303,7 +372,8 @@ nav .nav_salir:hover{
     border-radius: 5px;
     text-decoration: none;
 }
-.login__container .anchor__login__button{
+
+.login__container .anchor__login__button {
     display: block;
     margin-top: 5px;
     padding: 5px 15px;
@@ -312,7 +382,8 @@ nav .nav_salir:hover{
     text-align: center;
     text-decoration: none;
 }
-.product .add__button{
+
+.product .add__button {
     margin-top: 5px;
     width: 100%;
     padding: 5px 0px;
@@ -322,22 +393,27 @@ nav .nav_salir:hover{
     text-align: center;
     text-decoration: none;
 }
-.product .add__button:hover{
+
+.product .add__button:hover {
     color: #FFFFFF;
     background-color: #0B2B40;
 }
-footer{
+
+footer {
     margin-top: auto;
     padding: 15px 15%;
     width: 100%;
     color: #FFFFFF;
     background-color: #0B2B40;
+    box-shadow: 0px -10px 20px -10px #000000;
 }
-footer h2{
+
+footer h2 {
     font-family: 'Bebas Neue';
     font-size: 2.5rem;
 }
-footer .main__footer{
+
+footer .main__footer {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -345,41 +421,51 @@ footer .main__footer{
     align-items: center;
     text-align: center;
 }
-footer .main__footer .brand__footer{
+
+footer .main__footer .brand__footer {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
 }
-footer .main__footer .brand__footer img{
+
+footer .main__footer .brand__footer img {
     width: 35px;
     height: 35px;
     margin-right: 10px;
 }
-footer .main__footer .social__footer{
+
+footer .main__footer .social__footer {
     margin: 30px 0px;
     display: flex;
     justify-content: flex-end;
 }
-footer .main__footer .social__footer img{
+
+footer .main__footer .social__footer img {
     width: 25px;
     height: 25px;
 }
-footer .main__footer .social__footer img:not(:first-child){
+
+footer .main__footer .social__footer img:not(:first-child) {
     margin-left: 40px;
 }
-footer .main__footer .social__footer img:hover{
+
+footer .main__footer .social__footer img:hover {
     fill: #0B2B40;
 }
-footer .signature__footer{
+
+footer .signature__footer {
     margin-top: 15px;
     font-size: 0.8rem;
     text-align: center;
 }
-.cart__container{
+
+.cart__container {
+    margin-bottom: 0px;
     display: flex;
     flex-direction: column;
 }
-.cart__container .item__container{
+
+.cart__container .item__container {
     width: 100%;
     padding: 5px 15px;
     display: flex;
@@ -387,27 +473,46 @@ footer .signature__footer{
     align-items: center;
     border: 1px solid #97A6A0;
     border-radius: 5px;
-    font-size: 1.3rem;
+    font-size: 1rem;
 }
-.cart__container .item__container:not(:last-child){
+
+.cart__container .item__container:not(:last-child) {
     margin-bottom: 10px;
 }
-.cart__container .item__container:hover{
+
+.cart__container .item__container:hover {
     box-shadow: 0px 0px 20px 0px;
 }
-.cart__container .item__container img{
+
+.cart__container .item__container img {
     height: 96px;
     width: 80px;
     object-fit: contain;
 }
-.cart__container .item__container button{
+
+.cart__container .item__container button {
     width: 20%;
     margin: 0px;
 }
-.cart__container .item__container .cart__item__price{
+
+.cart__container .item__container .cart__item__image {
+    width: 10%;
+}
+
+.cart__container .item__container .cart__item__name {
+    width: 35%;
+}
+
+.cart__container .item__container .cart__item__price {
+    width: 15%;
     color: #808080;
 }
-.cart__footer{
+
+.cart__container .item__container .cart__item__quantity {
+    width: 20%;
+}
+
+.cart__footer {
     height: auto;
     margin-top: 15px;
     padding: 5px 15px;
@@ -415,24 +520,342 @@ footer .signature__footer{
     justify-content: flex-end;
     align-items: center;
 }
-.cart__footer p{
+
+.cart__footer p {
     margin-right: 20px;
 }
-.cart__footer .button--cart{
+
+.cart__footer .button--cart {
     width: 20%;
     margin: 0px;
 }
-.cart__footer button:not(:last-child){
+
+.cart__footer button:not(:last-child) {
     margin-right: 20px;
 }
-.iti{
-    margin: 5px 0px 10px;
+
+.product__detail {
+    margin: 10px 15% 100px;
+    display: flex;
+    flex-direction: column;
 }
+
+.product__detail__container {
+    margin-top: 30px;
+    padding: 15px 0px;
+    width: 100%;
+    display: flex;
+    border: 1px solid #97A6A0;
+    border-radius: 10px;
+}
+
+.product__detail__image {
+    width: 60%;
+    padding: 10px;
+}
+
+.product__detail__image img {
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+}
+
+.product__detail__info {
+    position: relative;
+    padding-right: 20px;
+}
+
+.product__detail__info .description__label {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #97A6A0
+}
+
+.product__detail__name {
+    margin-bottom: 10px;
+}
+
+.product__detail__name h3 {
+    font-family: 'Bebas Neue';
+    font-size: 2.5rem;
+}
+
+.product__detail__description {
+    margin-bottom: 10px;
+}
+
+.product__detail__description p {
+    font-size: 1.5rem;
+}
+
+.product__detail__precio {
+    margin-bottom: 10px;
+}
+
+.product__detail__precio p {
+    font-size: 1.5rem;
+    color: #816f05;
+}
+
+.product__detail__addToCart {
+    width: 95%;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    left: 0px;
+}
+
+.product__starts {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.product__starts:not(:checked)>input {
+    position: absolute;
+    top: -9999px;
+}
+
+.product__starts:not(:checked)>label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    color: #ccc;
+    font-size: 1.5em;
+    font-style: normal;
+}
+
+.product__starts:not(:checked)>label:before {
+    content: '★ ';
+}
+
+.product__starts>input:checked~label {
+    color: #ffc700;
+}
+
+.product__detail__return {
+    margin-bottom: 10px;
+}
+
+.product__detail__amount {
+    margin-bottom: 10px;
+}
+
+.product__detail__amount .product__detail__counter {
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
+}
+
+.product__detail__amount .product__detail__counter button {
+    width: 25px;
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: 1px solid #97A6A0;
+}
+
+.product__detail__amount .product__detail__counter button:hover {
+    color: #FFFFFF;
+    background-color: #0B2B40;
+    border: 1px solid #0B2B40;
+    cursor: pointer;
+}
+
+.button__subtract:hover {
+    border-radius: 5px 0px 0px 5px;
+}
+
+.button__add:hover {
+    border-radius: 0px 5px 5px 0px;
+}
+
+.product__filter__container {
+    display: flex;
+    align-items: center;
+}
+
+.product__filter__container p {
+    font-size: 1.6rem;
+    font-family: 'Bebas Neue';
+}
+
+.product__filter__container select {
+    margin-left: 10px;
+    padding-left: 5px;
+    font-family: 'Bebas Neue';
+    font-size: 1.3rem;
+    border: 1px solid #0B2B40;
+    border-radius: 5px;
+}
+
+.order__container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.order__container h3 {
+    margin-bottom: 20px;
+    font-family: 'Bebas Neue';
+    font-size: 2.2rem;
+}
+
+.order__container .order__container__details {
+    width: 45%;
+    padding: 15px 0px;
+}
+
+.order__container .order__container__details .order__total {
+    margin-top: 20px;
+    font-size: 1.8rem;
+    font-family: 'Bebas Neue';
+}
+
+.order__container .order__container__details .order__items {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    font-size: 1.1rem;
+}
+
+.order__container .order__container__details .order__items .order__item__name {
+    width: 50%;
+}
+
+.order__container .order__container__details .order__items .order__item__price {
+    width: 20%;
+    color: #816f05;
+}
+
+.order__container .order__container__details .order__items .order__item__quantity {
+    width: 30%;
+    text-align: end;
+}
+
+.order__container .order__container__info {
+    padding: 15px;
+    width: 45%;
+    height: auto;
+    border: 1px solid #97A6A0;
+    border-radius: 5px;
+    background-color: #F7F7F7;
+}
+
+.order__container .order__container__info form {
+    display: flex;
+    flex-direction: column;
+}
+
+.order__container .order__container__info form input[type=text],
+select {
+    margin: 10px 0px;
+    padding: 5px 10px;
+    font-family: 'Rubik';
+    font-size: 1rem;
+}
+
+.orders__list__container {
+    margin-top: 30px;
+    padding: 20px 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #97A6A0;
+    border-radius: 10px;
+}
+
+.order__list__headers {
+    width: 100%;
+    padding: 0px 10px;
+    display: flex;
+    text-align: center;
+    font-family: 'Bebas Neue';
+    font-size: 1.5rem;
+    color: #808080;
+}
+
+.order__header__10 {
+    width: 10%;
+}
+
+.order__header__15 {
+    width: 15%;
+}
+
+.order__header__20 {
+    width: 20%;
+}
+
+.order__header__30 {
+    width: 30%;
+}
+
+.order__header__40 {
+    width: 40%;
+}
+
+.order__list__items {
+    margin-top: 20px;
+    padding: 15px 5px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #808080;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #0B2B40;
+}
+
+.logout__container {
+    margin-top: 20px;
+}
+
+.margin__login {
+    margin-top: 50px;
+}
+
+.order__button {
+    padding: 5px 50px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #0B2B40;
+    font-family: 'Rubik';
+    font-size: 1rem;
+}
+
+.order__button:hover {
+    border-color: #0B2B40;
+    background-color: #0B2B40;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.error__title {
+    color: #CF0A0A
+}
+
+.error__text {
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+.error__redirect {
+    margin-top: 20px;
+    color: #808080;
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
-   }
+    }
+
     100% {
         opacity: 1;
-   }
+    }
 }

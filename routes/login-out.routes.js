@@ -2,6 +2,7 @@ const { Router } = require('express')
 const {
     getLogin,
     postLogin,
+    errorLogin,
     getLogout
 } = require('../controllers/login-outController')
 const passport = require('passport')
@@ -11,13 +12,17 @@ const loginRouter = Router()
 const logoutRouter = Router()
 
 loginRouter.get('/login', getLogin)
-loginRouter.post('/login', 
-    passport.authenticate('login', { failureRedirect: '/login' }),
+
+loginRouter.get('/errorlogin', errorLogin)
+
+loginRouter.post('/login',
+    passport.authenticate('login', { failureRedirect: '/errorLogin' }),
     postLogin
 )
+
 logoutRouter.get('/logout', isAuthenticated, getLogout)
 
-module.exports = { 
+module.exports = {
     loginRouter,
-    logoutRouter 
+    logoutRouter
 }

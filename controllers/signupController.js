@@ -1,17 +1,21 @@
 const { errorLogger } = require('../utils/winstonLogger')
 const { sendRegisterMail } = require('../config/mailConfig')
-const { saveNewCart } = require('../controllers/cartController')
+//const { saveNewCart } = require('../controllers/cartController')
+const { saveNewCartService } = require('../services/cartService')
 
 const getSignup = (req, res) => {
     try {
         if (req.isAuthenticated()) {
-            res.redirect('/')
+            return res.redirect('/productos')
         } else {
-            res.render('pages/signup')
+            return res.render('pages/signup')
         }
     } catch (error) {
-        errorLogger.error(`signup: ${ error.message }`)
-        return res.status(500).send({ error: true })
+        errorLogger.error(`signupController.js | getSignup(): ${error.message}`)
+        return res.status(500).render('pages/error', {
+            statusCode: 500,
+            user: req.user
+        })
     }
 }
 
@@ -21,15 +25,41 @@ const postSignup = async (req, res) => {
         req.session.username = username
 
         await sendRegisterMail(req.user)
-        await saveNewCart(req, res)
-        res.redirect('/')
+
+        const newCart = {
+            userId: req.user._id,
+            userEmail: req.user.email,
+            deliveryAddress: req.body.address
+        }
+
+        await saveNewCartService(newCart)
+
+        return res.redirect('/productos')
     } catch (error) {
-        errorLogger.error(`signup: ${ error.message }`)
-        return res.status(500).send({ error: true })
+        errorLogger.error(`signupController.js | postSignup(): ${error.message}`)
+        return res.status(500).render('pages/error', {
+            statusCode: 500,
+            user: req.user
+        })
+    }
+}
+
+const errorSignup = async (req, res) => {
+    try {
+        return res.status(500).render('pages/error', {
+            statusCode: 500,
+            signupMessage: 'Se produjo un error al registrarse. Intente nuevamente'
+        })
+    } catch (error) {
+        errorLogger.error(`signupController.js | errorSignup(): ${error.message}`)
+        return res.status(500).render('pages/error', {
+            statusCode: 500
+        })
     }
 }
 
 module.exports = {
     getSignup,
-    postSignup
+    postSignup,
+    errorSignup
 }

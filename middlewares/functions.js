@@ -1,7 +1,7 @@
-const isAuthenticated = (req, res, next) =>{
+const isAuthenticated = (req, res, next) => {
     req.isAuthenticated()
-    ? next()
-    : res.redirect('/login')
+        ? next()
+        : res.redirect('/login')
 }
 
 module.exports = { isAuthenticated }

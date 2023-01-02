@@ -1,0 +1,33 @@
+{{> header}}
+
+{{> nav}}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="../../public/index.js" defer></script>
+
+<div class="main__container product__detail">
+    <h2>ACTUALIZAR ÓRDENES PENDIENTES</h2>
+    <div class="orders__list__container">
+        <div class="order__list__headers">
+            <p class="order__header__10">NÚMERO</p>
+            <p class="order__header__20">FECHA</p>
+            <p class="order__header__40">CLIENTE</p>
+            <p class="order__header__30"></p>
+        </div>
+        {{#each orders}}
+            <div class="order__list__items">
+                <p class="order__header__10">{{this.number}}</p>
+                <p class="order__header__20">{{this.timestamp}}</p>
+                <p class="order__header__40">{{this.userEmail}}</p>
+                <div class="order__header__30">
+                    <button name="btnActualizar" onclick="updateOrder(`{{this.number}}`)" class="order__button">
+                        Marcar como entregada
+                    </button>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+{{> footer}}

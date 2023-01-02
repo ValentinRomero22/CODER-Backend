@@ -1,0 +1,25 @@
+{{> header}}
+
+{{> nav}}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="../../public/index.js" defer></script>
+
+<div class="login__container">
+  <h2>Editar datos de usuario</h2>
+  <form onsubmit="return updateUser(event)">
+    <label title="name">Nombre</label>
+    <input type="text" placeholder="Nombre" id="name" value="{{user.username}}" required />
+    <label title="address">Dirección</label>
+    <input type="text" placeholder="Dirección" id="address" value="{{user.address}}" required />
+    <label title="phone">Número de teléfono</label>
+    <input id="phone" type="tel" id="phone" placeholder="Ingrese su teléfono fijo o celular" value="{{user.phone}}" required/>
+    <label title="age">Edad</label>
+    <input type="number" placeholder="Edad" id="age" value="{{user.age}}" required />
+    <input class="button--detail" type="submit" value="Actualizar" />
+  </form>
+</div>
+</body>
+
+{{> footer}}

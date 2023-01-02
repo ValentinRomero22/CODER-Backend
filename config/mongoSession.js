@@ -1,6 +1,6 @@
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
-const { MONGO_CONNECTION, SECRET_SESSION } = require('./config')
+const { MONGO_CONNECTION, SECRET_SESSION, SESSION_MAX_AGE } = require('./config')
 
 const mongoSession = (app) => {
     app.use(
@@ -16,7 +16,7 @@ const mongoSession = (app) => {
             cookie: {
                 httpOnly: false,
                 secure: false,
-                maxAge: 600000,
+                maxAge: parseInt(SESSION_MAX_AGE),
             },
             rolling: true,
             resave: true,

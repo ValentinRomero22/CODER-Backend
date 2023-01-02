@@ -1,0 +1,48 @@
+{{> header}}
+
+{{> nav}}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="../../public/index.js" defer></script>
+
+<div class="main__container product__detail">
+    <h2>GENERAR ORDEN DE COMPRA</h2>
+    <div class="order__container">
+        <div class="order__container__details">
+            <h3>Productos</h3>
+            {{#each cart.items}}
+                <div class="order__items">
+                    <div class="order__item__name">
+                        <p>{{this.product.name}}</p>
+                    </div>
+                    <div class="order__item__price">
+                        <p>$ {{this.product.price}}</p>
+                    </div>
+                    <div class="order__item__quantity">
+                        <p>{{this.quantity}} unidades</p>
+                    </div>
+                </div>
+            {{/each}}
+            <div class="order__total">
+                <p>TOTAL: $ {{cart.total}}</p>
+            </div>
+        </div>
+        <div class="order__container__info">
+            <h3>Ingresar</h3>
+            <form onsubmit="return orderForm(event)">
+                <label title="deliveryAddres">Dirección de entrega</label>
+                <input type="text" placeholder="Dirección a entregar el producto" id="deliveryAddress" value="{{cart.deliveryAddress}}" required />
+                <label title="password">Método de pago</label>
+                <select id="paymentMethod">
+                    <option>Efectivo</option>
+                    <option>Crédito</option>
+                    <option>Débito</option>
+                </select>
+                <input class="button button--detail" type="submit" value="Confirmar compra" />
+            </form>
+        </div>
+    </div>
+</div>
+
+{{> footer}}
