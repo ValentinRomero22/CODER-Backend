@@ -6,10 +6,7 @@
   {{#if user}}
     <div class="data__user__container">
       <p>Bienvenid@ {{user.username}}!</p>
-      <img
-        src="../../public/usersImages/{{user.image}}"
-        alt="{{user.username}}"
-      />
+      <img src="../../public/{{user.image}}" alt="{{user.username}}" />
       <a class="nav_salir" href="/logout" id="logout">Salir</a>
     </div>
   {{/if}}

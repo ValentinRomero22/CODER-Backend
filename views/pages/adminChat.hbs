@@ -1,0 +1,60 @@
+{{> header}}
+
+{{> nav}}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="../../public/index.js" defer></script>
+<script src="../../public/adminChat.js" defer></script>
+
+<div class="main__chat__container">
+    <h2>CHAT DE SOPORTE A USUARIOS</h2>
+    <p class="chat__label">Responda las consultas de los clientes</p>
+    {{#if users}}
+        <div class="admin__dashboard__chat">
+            <div class="user__chat__container">
+            {{#each users}}
+                <div class="user__chat">
+                    <div class="info__chat__container">
+                        <img src="../../public/usersImages/{{this.image}}" alt="User avatar"/>
+                        <p>{{this.username}}</p>
+                    </div>
+                    <p class="user__chat__email">{{this.email}}</p>
+                    <button class="button--detail" onclick="getMessages('{{this.email}}')">Mostrar chat</button>
+                </div>
+            {{/each}}
+            </div>
+            <div class="chat__box admin__chat__box chat__box__hidden" id="chatBox">
+                <div class="chat__messages__container" id="chatMessagesContainer">
+                    {{#each messages}}
+                        {{#if this.response}}
+                            <div class="message__to__left">
+                                <div class="message__response__box">
+                                    <p>{{this.text}}</p>
+                                    <p class="message__date__response">{{this.date}}</p>
+                                </div>
+                            </div>
+                        {{else}}
+                            <div class="message__to__right">
+                                <div class="message__box">
+                                    <p>{{this.text}}</p>
+                                    <p class="message__date">{{this.date}}</p>
+                                </div>
+                            </div>
+                        {{/if}}            
+                    {{/each}}
+                </div>
+                <div class="chat__box_send">
+                    <input class="chat__message" type="text" name="text" id="text">
+                    <button class="button--detail" onclick="sendMessage()">
+                        Enviar
+                    </button>
+                </div>
+            </div>
+        </div>
+    {{else}}
+        <p class="support__label">Aún no hay usuarios en el sistema!</p>
+    {{/if}}
+</div>
+
+{{> footer}}

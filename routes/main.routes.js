@@ -5,6 +5,7 @@ const orderRouter = require('./order.routes')
 const { loginRouter, logoutRouter } = require('./login-out.routes')
 const signupRouter = require('./signup.routes')
 const indexRouter = require('./index.routes')
+const messageRouter = require('./message.routes')
 
 module.exports = {
     productRouter,
@@ -14,5 +15,6 @@ module.exports = {
     logoutRouter,
     signupRouter,
     orderRouter,
-    indexRouter
+    indexRouter,
+    messageRouter
 }

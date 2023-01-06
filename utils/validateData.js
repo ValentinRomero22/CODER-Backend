@@ -55,8 +55,8 @@ const cartValidator = (cartToValidate) => {
 }
 
 const emailValidator = (emailToValidate) => {
-    //validar email!!!!!!!!!!!!!!!
-    return true
+    const re = /\S+@\S+\.\S+/;
+    return re.test(emailToValidate)
 }
 
 const orderValidator = (orderToValidate) => {
@@ -75,11 +75,20 @@ const orderValidator = (orderToValidate) => {
     return true
 }
 
+const messageValidator = (messageToValidate) => {
+    const { text } = messageToValidate
+
+    if (text.trim() == '') return false
+
+    return true
+}
+
 module.exports = {
     idValidator,
     productValidator,
     userValidator,
     cartValidator,
     emailValidator,
-    orderValidator
+    orderValidator,
+    messageValidator
 }

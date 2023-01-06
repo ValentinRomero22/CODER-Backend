@@ -1,3 +1,5 @@
+const socket = io()
+
 let notificationMessage = ''
 let backgroundColor = ''
 
@@ -53,6 +55,33 @@ const deleteProduct = (productId) => {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
 
+    }
+
+    fetch(path, requestInit)
+        .then((res) => res.json())
+        .then((res) => {
+            if (res.statusCode == 200) {
+                localStorage.setItem('message', JSON.stringify(res.message))
+                window.location.reload()
+            } else {
+                notificationMessage = 'Error al habilitar / eliminar el producto'
+                backgroundColor = '#F23030'
+                showMessage(notificationMessage, backgroundColor)
+            }
+        })
+        .catch((error) => {
+            notificationMessage = 'Error inesperado'
+            backgroundColor = '#F23030'
+            showMessage(notificationMessage, backgroundColor)
+        })
+}
+
+const enableProduct = (productId) => {
+    const path = '/productos/habilitar/' + productId
+
+    const requestInit = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
     }
 
     fetch(path, requestInit)

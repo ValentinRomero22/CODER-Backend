@@ -7,6 +7,7 @@ const {
     deleteProductService,
     enableProductService
 } = require('../services/productService')
+const { deleteProductToAllCartsService } = require('../services/cartService')
 const { errorLogger } = require('../utils/winstonLogger')
 
 const getAllProducts = async (req, res) => {
@@ -198,6 +199,9 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
     try {
         const { productId } = req.params
+
+        await deleteProductToAllCartsService(productId)
+
         const result = await deleteProductService(productId)
 
         if (result) {

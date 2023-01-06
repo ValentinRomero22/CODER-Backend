@@ -5,7 +5,8 @@ const {
     deleteToCartDao,
     deleteProductToAllCartsDao,
     cleanCartDao,
-    updateItemQuantityDao
+    updateItemQuantityDao,
+    updateDeliveryAddressDao
 } = require('../daos/cartDao')
 const {
     getProductByIdService
@@ -153,6 +154,14 @@ const cleanCartService = async (userId) => {
     }
 }
 
+const updateDeliveryAddressService = async (userId, newAddress) => {
+    try {
+        await updateDeliveryAddressDao(userId, newAddress)
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     getCartByUserIdService,
     saveNewCartService,
@@ -160,4 +169,5 @@ module.exports = {
     deleteToCartService,
     deleteProductToAllCartsService,
     cleanCartService,
+    updateDeliveryAddressService
 }

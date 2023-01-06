@@ -23,7 +23,7 @@ const sendRegisterMail = async (user) => {
             attachments: [
                 {
                     filename: `${user.image}`,
-                    path: path.join(__dirname, '../public/usersImages/') + user.image
+                    path: path.join(__dirname, '../public/') + user.image
                 }
             ],
             html: '<h1>Nuevo registro</h1></br>' +

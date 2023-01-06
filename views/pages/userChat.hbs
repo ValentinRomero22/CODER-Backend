@@ -5,9 +5,38 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="../../public/index.js" defer></script>
+<script src="../../public/userChat.js" defer></script>
 
-<div class="main__container">
+<div class="main__chat__container">
     <h2>CHAT</h2>
+    <p class="chat__label">Escríbanos su consulta</p>
+    <div class="chat__box">
+        <div class="chat__messages__container" id="chatMessagesContainer">
+            {{#each messages}}
+                {{#if this.response}}
+                    <div class="message__to__left">
+                        <div class="message__response__box">
+                            <p>{{this.text}}</p>
+                            <p class="message__date__response">{{this.date}}</p>
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="message__to__right">
+                        <div class="message__box">
+                            <p>{{this.text}}</p>
+                            <p class="message__date">{{this.date}}</p>
+                        </div>
+                    </div>
+                {{/if}}            
+            {{/each}}
+        </div>
+        <div class="chat__box_send">
+            <input class="chat__message" type="text" name="text" id="text" placeholder="Escriba un mensaje" autofocus>
+            <button class="button--detail" onclick="sendMessage('{{user.email}}')">
+                Enviar
+            </button>
+        </div>
+    </div>
 </div>
 
 {{> footer}}

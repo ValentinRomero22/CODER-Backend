@@ -72,9 +72,6 @@ const deleteProductDao = async (productId) => {
             }]
         )
 
-        console.log(result);
-
-
         return result
     } catch (error) {
         throw error

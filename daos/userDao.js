@@ -10,6 +10,18 @@ const getUserByIdDao = async (userId) => {
     }
 }
 
+const getAllUsersDao = async () => {
+    try {
+        const usersFound = await userModel.find(
+            { isAdmin: false }
+        )
+
+        return usersFound
+    } catch (error) {
+        throw error
+    }
+}
+
 const updateUserDao = async (userId, userToUpdate) => {
     try {
         const result = await userModel.findByIdAndUpdate(userId, userToUpdate)
@@ -21,5 +33,6 @@ const updateUserDao = async (userId, userToUpdate) => {
 
 module.exports = {
     getUserByIdDao,
+    getAllUsersDao,
     updateUserDao
 }

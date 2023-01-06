@@ -63,7 +63,7 @@ const deleteProductToAllCartsDao = async (productId) => {
 
         for (let i = 0; i < cartsFound.length; i++) {
             for (let j = 0; j < cartsFound[i].items.length; j++) {
-                if (cartsFound[i].items[j]?.valueOf() == productId) {
+                if (cartsFound[i].items[j].product.valueOf() == productId) {
                     result = await cartModel.updateOne(
                         { _id: cartsFound[i]._id },
                         {
@@ -110,6 +110,17 @@ const updateItemQuantityDao = async (userId, productId, quantity) => {
     }
 }
 
+const updateDeliveryAddressDao = async (userId, newAddress) => {
+    try {
+        await cartModel.updateOne(
+            { userId: userId },
+            { deliveryAddress: newAddress }
+        )
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     getCartByUserIdDao,
     saveNewCartDao,
@@ -117,5 +128,6 @@ module.exports = {
     deleteToCartDao,
     deleteProductToAllCartsDao,
     cleanCartDao,
-    updateItemQuantityDao
+    updateItemQuantityDao,
+    updateDeliveryAddressDao
 }

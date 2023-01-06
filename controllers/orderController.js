@@ -120,6 +120,8 @@ const getOrderForm = async (req, res) => {
         const orderCart = await getOrderFormService(req.user._id)
 
         if (orderCart.items.length > 0) {
+            console.log(req.user);
+
             return res.status(200).render('pages/newOrder', {
                 cart: orderCart,
                 user: req.user

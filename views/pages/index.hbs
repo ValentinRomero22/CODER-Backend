@@ -11,9 +11,9 @@
         {{#if products}}
         <div class="catalog__header">
             <h2 class="products__message">Productos</h2>
-            {{!-- {{#if user.isAdmin}}
-                <a href="/product" class="button button--detail button--new--product">Agregar producto</a>
-            {{/if}} --}}
+            {{#if user.isAdmin}}
+                <a href="/producto/form/nuevo" class="button button--detail button--new--product">Agregar producto</a>
+            {{/if}}
             <div class="product__filter__container">
                 <p>Filtrar por categoría</p>
                 <select id="category__select" onchange="categoryRefresh(event)">
@@ -39,15 +39,15 @@
                     <button name="btnEditar" onclick="formProduct(`{{this.id}}`)" class="button button--detail">
                         Editar
                     </button>
-                        {{#if this.enabled}}
-                        <button name="btnEliminar" onclick="deleteProduct(`{{this.id}}`)" class="button button--delete">
-                            Eliminar
-                        </button>
-                        {{else}}
-                        <button name="btnEliminar" onclick="deleteProduct(`{{this.id}}`)" class="button button--change">
-                            Habilitar
-                        </button>
-                        {{/if}}
+                    {{#if this.enabled}}
+                    <button name="btnEliminar" onclick="deleteProduct(`{{this.id}}`)" class="button button--delete">
+                        Eliminar
+                    </button>
+                    {{else}}
+                    <button name="btnEliminar" onclick="enableProduct(`{{this.id}}`)" class="button button--change">
+                        Habilitar
+                    </button>
+                    {{/if}}
                 </div>
                 {{/each}}
             {{else}}
@@ -73,7 +73,7 @@
         <div class="catalog__header">
             <h2 class="products__message">No hay productos!</h2>
             {{#if user.isAdmin}}
-            <a href="/product">Agregar producto</a>
+                <a href="/producto/form/nuevo" class="button button--detail button--new--product">Agregar producto</a>
             {{/if}}
         </div>
         {{/if}}

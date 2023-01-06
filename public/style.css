@@ -103,7 +103,8 @@ nav ul li a {
     padding: 5px 25px;
     text-decoration: none;
     color: #0B2B40;
-    border: 1px solid transparent;
+    border: 1px solid #0B2B40;
+    border-radius: 5px;
 }
 
 nav ul li a:hover {
@@ -350,6 +351,7 @@ nav .nav_salir:hover {
 
 .login__container form input[type=text],
 input[type=email],
+input[type=password],
 input[type=number],
 input[type=file],
 [type=checkbox],
@@ -848,6 +850,176 @@ select {
     color: #808080;
     font-size: 1.2rem;
     font-style: italic;
+}
+
+.message__orders__empty {
+    margin-top: 30px;
+    font-size: 1.5rem;
+}
+
+.main__chat__container {
+    margin: 10px 15% 100px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main__chat__container h2 {
+    font-size: 2.5rem;
+    font-family: 'Bebas Neue';
+}
+
+.chat__box {
+    margin-top: 20px;
+    width: 100%;
+    border: 1px solid #808080;
+    border-radius: 10px;
+    animation: fadeIn 3s;
+}
+
+.chat__messages__container {
+    height: 350px;
+    padding: 20px 20px;
+    overflow-y: scroll;
+}
+
+.chat__label {
+    font-size: 1.1rem;
+}
+
+.support__label {
+    margin-top: 20px;
+    color: #CF0A0A;
+}
+
+.chat__box .chat__box_send {
+    width: 100%;
+    margin: 10px 0px;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: center;
+    background-color: #FFFFFF;
+}
+
+.chat__box .chat__box_send input {
+    width: 85%;
+    padding: 5px 10px;
+    border: 1px solid #808080;
+    border-radius: 5px;
+    font-family: 'Rubik';
+    font-size: 1rem;
+}
+
+.chat__box .chat__box_send button {
+    margin-left: 5px;
+    width: 15%;
+    border-radius: 5px;
+    font-family: 'Rubik';
+    font-size: 1rem;
+}
+
+.message__to__left {
+    display: flex;
+    justify-content: left;
+}
+
+.message__to__right {
+    display: flex;
+    justify-content: right;
+}
+
+.message__box {
+    margin-bottom: 10px;
+    padding: 15px;
+    color: #FFFFFF;
+    background-color: #0B2B40;
+    border: 1px solid #0B2B40;
+    border-radius: 5px;
+    box-shadow: 0px 5px 5px -2px #0B2B40;
+}
+
+.message__response__box {
+    max-width: 60%;
+    margin-bottom: 10px;
+    padding: 15px;
+    color: #000000;
+    border: 1px solid #808080;
+    border-radius: 5px;
+    box-shadow: 0px 5px 5px -2px #808080;
+}
+
+.message__date__response {
+    margin-top: 3px;
+    font-size: .8rem;
+    font-style: italic;
+    color: #808080;
+    text-align: right;
+}
+
+.message__date {
+    margin-top: 3px;
+    font-size: .8rem;
+    font-style: italic;
+    color: #F7F7F7;
+    text-align: right;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.admin__dashboard__chat {
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin__chat__box {
+    width: 65%;
+}
+
+.chat__box__hidden {
+    display: none;
+}
+
+.user__chat__container {
+    width: 30%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.user__chat {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.info__chat__container {
+    display: flex;
+    align-items: center;
+}
+
+.user__chat img {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    border-radius: 50%
+}
+
+.user__chat__email {
+    color: #808080;
+    font-style: italic;
+}
+
+.user__chat button {
+    margin-top: 10px;
+    padding: 5px 0px;
+    width: 100%;
+    font-family: 'Rubik';
+    font-size: 1rem;
+    border-radius: 5px;
 }
 
 @keyframes fadeIn {
