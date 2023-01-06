@@ -6,6 +6,7 @@ const { loginRouter, logoutRouter } = require('./login-out.routes')
 const signupRouter = require('./signup.routes')
 const indexRouter = require('./index.routes')
 const messageRouter = require('./message.routes')
+const notFoundRouter = require('./notFound.routes')
 
 module.exports = {
     productRouter,
@@ -16,5 +17,6 @@ module.exports = {
     signupRouter,
     orderRouter,
     indexRouter,
-    messageRouter
+    messageRouter,
+    notFoundRouter
 }

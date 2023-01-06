@@ -16,7 +16,7 @@
             {{#each users}}
                 <div class="user__chat">
                     <div class="info__chat__container">
-                        <img src="../../public/usersImages/{{this.image}}" alt="User avatar"/>
+                        <img src="../../public/{{this.image}}" alt="User avatar"/>
                         <p>{{this.username}}</p>
                     </div>
                     <p class="user__chat__email">{{this.email}}</p>
@@ -45,7 +45,7 @@
                     {{/each}}
                 </div>
                 <div class="chat__box_send">
-                    <input class="chat__message" type="text" name="text" id="text">
+                    <input class="chat__message" type="text" name="text" id="text" autofocus>
                     <button class="button--detail" onclick="sendMessage()">
                         Enviar
                     </button>

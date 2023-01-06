@@ -44,24 +44,28 @@ const sendMessage = () => {
 socket.on('allUserChat', (messages) => {
     chatMessagesContainer.innerHTML = ''
 
-    for (message of messages) {
-        if (message.response) {
-            chatMessagesContainer.innerHTML +=
-                `<div class="message__to__left">
-                    <div class="message__response__box">
-                        <p>${message.text}</p>
-                        <p class="message__date__response">${message.date}</p>
-                    </div>
-                </div>`
-        } else {
-            chatMessagesContainer.innerHTML +=
-                `<div class="message__to__right">
-                    <div class="message__box">
-                        <p>${message.text}</p>
-                        <p class="message__date">${message.date}</p>
-                    </div>
-                </div>`
+    if (messages.length > 0) {
+        for (message of messages) {
+            if (message.response) {
+                chatMessagesContainer.innerHTML +=
+                    `<div class="message__to__right">
+                        <div class="message__box">
+                            <p>${message.text}</p>
+                            <p class="message__date__response">${message.date}</p>
+                        </div>
+                    </div>`
+            } else {
+                chatMessagesContainer.innerHTML +=
+                    `<div class="message__to__left">
+                        <div class="message__response__box">
+                            <p>${message.text}</p>
+                            <p class="message__date">${message.date}</p>
+                        </div>
+                    </div>`
+            }
         }
+    } else {
+        chatMessagesContainer.innerHTML += '<p>El cliente aún no tiene mensajes!</p>'
     }
 
     textMessage.setAttribute('placeholder', `Escriba un mensage a ${JSON.parse(localStorage.getItem('userEmail'))}`)

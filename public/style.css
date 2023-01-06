@@ -9,6 +9,7 @@
 body {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     min-height: 100vh;
     font-family: 'Rubik';
     overflow-y: scroll;
@@ -212,7 +213,6 @@ nav .nav_salir:hover {
 
 .main__container .catalog__container {
     width: 100%;
-    margin-bottom: 100px;
 }
 
 .main__container .catalog__container .catalog__header {
@@ -227,6 +227,7 @@ nav .nav_salir:hover {
 }
 
 .main__container .catalog__container .catalog__header .button--new--product {
+    margin: 0;
     width: 20%;
     text-align: center;
     text-decoration: none;
@@ -253,11 +254,12 @@ nav .nav_salir:hover {
 }
 
 .main__container .catalog__container .catalog {
+    margin-bottom: 300px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
     justify-items: center;
-    row-gap: 5%;
+    row-gap: 1.5%;
     column-gap: 3%;
 }
 
@@ -269,7 +271,6 @@ nav .nav_salir:hover {
     padding: 10px 10px;
     border: 1px solid #0B2B40;
     border-radius: 5px;
-    /* background-color: #F7F7F7; */
 }
 
 .main__container .catalog__container .catalog .product__enabled__false {
@@ -929,6 +930,7 @@ select {
 }
 
 .message__box {
+    max-width: 60%;
     margin-bottom: 10px;
     padding: 15px;
     color: #FFFFFF;

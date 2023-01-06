@@ -1,6 +1,5 @@
 const { errorLogger } = require('../utils/winstonLogger')
 const { sendRegisterMail } = require('../config/mailConfig')
-//const { saveNewCart } = require('../controllers/cartController')
 const { saveNewCartService } = require('../services/cartService')
 
 const getSignup = (req, res) => {
