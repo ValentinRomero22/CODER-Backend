@@ -10,6 +10,7 @@ scrollChats()
 const sendMessage = (email) => {
     try {
         if (textMessage.value) {
+            socket
             socket.emit('saveUserChat', {
                 email,
                 text: textMessage.value,
