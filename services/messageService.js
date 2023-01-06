@@ -27,7 +27,6 @@ const getAllUserMessagesService = async (userEmail) => {
 const saveMessageService = async (newMessage) => {
     try {
         const isValidEmail = emailValidator(newMessage.email)
-        console.log(isValidEmail)
 
         if (isValidEmail == false) throw Error('Error en los datos a utilizar')
 

@@ -9,11 +9,12 @@ const scrollChats = () => {
 scrollChats()
 
 const getMessages = (email) => {
+    console.log(email)
     if (chatBox.classList.contains('chat__box__hidden')) {
         chatBox.classList.remove('chat__box__hidden')
     }
 
-    localStorage.setItem('userEmail', JSON.stringify(email))
+    sessionStorage.setItem('userEmail', JSON.stringify(email))
 
     try {
         socket.emit('getMessages', { email })
@@ -24,7 +25,9 @@ const getMessages = (email) => {
 
 const sendMessage = () => {
     try {
-        const userEmail = JSON.parse(localStorage.getItem('userEmail'))
+        const userEmail = JSON.parse(sessionStorage.getItem('userEmail'))
+        console.log(userEmail);
+
         if (textMessage.value) {
             socket.emit('saveUserChat', {
                 email: userEmail,
@@ -68,7 +71,7 @@ socket.on('allUserChat', (messages) => {
         chatMessagesContainer.innerHTML += '<p>El cliente aún no tiene mensajes!</p>'
     }
 
-    textMessage.setAttribute('placeholder', `Escriba un mensage a ${JSON.parse(localStorage.getItem('userEmail'))}`)
+    textMessage.setAttribute('placeholder', `Escriba un mensage a ${JSON.parse(sessionStorage.getItem('userEmail'))}`)
 
     scrollChats()
 })
