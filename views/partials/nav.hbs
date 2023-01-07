@@ -15,7 +15,10 @@
         <a href="/carrito/{{user._id}}">Mi carrito</a>
       </li>
       <li>
-        <a href="/chat">Chat</a>
+        {{! <a href="/chat">Chat</a> }}
+        <button class="button__chat" onclick="getChatForm('{{user.email}}')">
+          Chat
+        </button>
       </li>
       <li>
         <a href="/orden/todas/{{user._id}}">Mis órdenes</a>

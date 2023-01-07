@@ -54,7 +54,6 @@ const deleteProduct = (productId) => {
     const requestInit = {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-
     }
 
     fetch(path, requestInit)
@@ -371,6 +370,12 @@ const updateOrder = (orderNumber) => {
             backgroundColor = '#F23030'
             showMessage(notificationMessage, backgroundColor)
         })
+}
+
+const getChatForm = (userEmail) => {
+    localStorage.setItem('currentEmail', JSON.stringify(userEmail))
+
+    window.location.href = '/chat'
 }
 
 const showMessage = (notificationMessage, backgroundColor) => {

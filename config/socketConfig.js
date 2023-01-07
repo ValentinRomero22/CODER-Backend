@@ -20,7 +20,10 @@ const socketConfig = (io) => {
                 await saveMessageService(newMessage)
 
                 const allMessages = await getAllUserMessagesService(args.email)
-                io.sockets.emit('adminAllUserChat', allMessages)
+                io.sockets.emit('allMessages', {
+                    allMessages,
+                    userEmail: args.email
+                })
             } catch (error) {
                 errorLogger.error(`socketConfig.js | socketConfig(): ${error}`)
                 throw new Error(error)
@@ -41,7 +44,10 @@ const socketConfig = (io) => {
                 await saveMessageService(newMessage)
 
                 const allMessages = await getAllUserMessagesService(args.email)
-                io.sockets.emit('allUserChat', allMessages)
+                io.sockets.emit('allMessages', {
+                    allMessages,
+                    userEmail: args.email
+                })
             } catch (error) {
                 errorLogger.error(`socketConfig.js | socketConfig(): ${error}`)
                 throw new Error(error)
@@ -50,8 +56,12 @@ const socketConfig = (io) => {
 
         socket.on('getMessages', async (args) => {
             try {
-                const userMessages = await getAllUserMessagesService(args.email)
-                io.sockets.emit('adminAllUserChat', userMessages)
+                const allMessages = await getAllUserMessagesService(args.email)
+
+                io.sockets.emit('allMessages', {
+                    allMessages,
+                    userEmail: args.email
+                })
             } catch (error) {
                 errorLogger.error(`socketConfig.js | socketConfig(): ${error}`)
                 throw new Error(error)

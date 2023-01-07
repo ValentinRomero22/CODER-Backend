@@ -111,8 +111,24 @@ nav ul li a {
 nav ul li a:hover {
     color: #F7F7F7;
     background-color: #0B2B40;
-    border-color: #0B2B40;
+}
+
+.button__chat {
+    display: block;
+    padding: 5px 25px;
+    text-decoration: none;
+    font-family: 'Rubik';
+    font-size: 1rem;
+    color: #0B2B40;
+    background-color: #F7F7F7;
+    border: 1px solid #0B2B40;
     border-radius: 5px;
+}
+
+.button__chat:hover {
+    color: #F7F7F7;
+    background-color: #0B2B40;
+    cursor: pointer;
 }
 
 nav .nav_salir:hover {
@@ -966,6 +982,14 @@ select {
     text-align: right;
 }
 
+.data__response__admin {
+    color: #F7F7F7;
+}
+
+.date__admin {
+    color: #F7F7F7;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -1023,6 +1047,8 @@ select {
     font-size: 1rem;
     border-radius: 5px;
 }
+
+.button__chat {}
 
 @keyframes fadeIn {
     0% {

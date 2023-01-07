@@ -1,0 +1,2 @@
+[06-01-2023 20:52:13 ERROR: socketConfig.js | socketConfig(): ReferenceError: allMessages is not defined]
+[06-01-2023 20:55:10 ERROR: socketConfig.js | socketConfig(): Error: Error en los datos a utilizar]

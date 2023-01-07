@@ -1,7 +1,6 @@
 const textMessage = document.getElementById('text')
 const chatMessagesContainer = document.getElementById('chatMessagesContainer')
 const chatBox = document.getElementById('chatBox')
-let userEmail
 
 const scrollChats = () => {
     chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight
@@ -14,7 +13,7 @@ const getMessages = (email) => {
         chatBox.classList.remove('chat__box__hidden')
     }
 
-    userEmail = localStorage.setItem('userEmail', JSON.stringify(email))
+    localStorage.setItem('userEmail', JSON.stringify(email))
 
     try {
         socket.emit('getMessages', { email })
@@ -25,11 +24,9 @@ const getMessages = (email) => {
 
 const sendMessage = () => {
     try {
-        const userEmail = JSON.parse(localStorage.getItem('userEmail'))
-
         if (textMessage.value) {
             socket.emit('adminSaveUserChat', {
-                email: userEmail,
+                email: JSON.parse(localStorage.getItem('userEmail')),
                 text: textMessage.value,
                 response: true
             })
@@ -43,36 +40,40 @@ const sendMessage = () => {
     }
 }
 
-socket.on('adminAllUserChat', (messages) => {
-    chatMessagesContainer.innerHTML = ''
+socket.on('allMessages', (args) => {
+    const currentUser = JSON.parse(localStorage.getItem('userEmail'))
 
-    if (messages.length > 0) {
-        for (message of messages) {
-            if (message.response) {
-                chatMessagesContainer.innerHTML +=
-                    `<div class="message__to__right">
+    if (args.userEmail == currentUser) {
+        chatMessagesContainer.innerHTML = ''
+
+        if (args.allMessages.length > 0) {
+            for (message of args.allMessages) {
+                if (message.response) {
+                    chatMessagesContainer.innerHTML +=
+                        `<div class="message__to__right">
                         <div class="message__box">
-                            <p>${message.text}</p>
-                            <p class="message__date__response">${message.date}</p>
-                        </div>
-                    </div>`
-            } else {
-                chatMessagesContainer.innerHTML +=
-                    `<div class="message__to__left">
-                        <div class="message__response__box">
                             <p>${message.text}</p>
                             <p class="message__date">${message.date}</p>
                         </div>
                     </div>`
+                } else {
+                    chatMessagesContainer.innerHTML +=
+                        `<div class="message__to__left">
+                        <div class="message__response__box">
+                            <p>${message.text}</p>
+                            <p class="message__date__response">${message.date}</p>
+                        </div>
+                    </div>`
+                }
             }
+        } else {
+            chatMessagesContainer.innerHTML += '<p>El cliente aún no tiene mensajes!</p>'
         }
-    } else {
-        chatMessagesContainer.innerHTML += '<p>El cliente aún no tiene mensajes!</p>'
+
+        textMessage.setAttribute('placeholder', `Escriba un mensage a ${JSON.parse(localStorage.getItem('userEmail'))}`)
+
+        scrollChats()
     }
-
-    textMessage.setAttribute('placeholder', `Escriba un mensage a ${JSON.parse(localStorage.getItem('userEmail'))}`)
-
-    scrollChats()
 })
 
 const showChatMessage = (notificationMessage, backgroundColor) => {
